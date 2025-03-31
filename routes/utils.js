@@ -40,13 +40,6 @@ I8p2QHiF8pi4LurF4pnH1iWY6GSL95mVys3W8vyRwvB/UOSbcSMj9aDcihshLhQK
 8AdtmB6OhVV+P3NmkGx86A==
 -----END PRIVATE KEY-----`;
 
-// let uploadFile = multer( { 
-//     storage: storage,
-//     limits: { fileSize: maxSize }
-// } ).single( "file" )
-
-// let uploadFileMiddleware = util.promisify( uploadFile )
-
 export const generateStr = () => {
     let result = ""
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345689"

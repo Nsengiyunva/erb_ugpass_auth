@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-// require( "dotenv" ).config
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -13,7 +12,7 @@ const app = express()
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ extended: true, limit: "200mb" }));
 
-const port = 8752
+const port = 8753
 
 app.options('*', cors());
 app.use(function (req, res, next) {
