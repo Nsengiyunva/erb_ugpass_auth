@@ -1,12 +1,12 @@
-@url = http://localhost:8750/api
-# @url = https://auth.cert.works.go.ug/api
+# @url = http://localhost:8750/api
+@url = https://auth.cert.works.go.ug/api
 
 ###
 GET {{url}}
 Content-Type: application/json
 
 ### remote
-GET {{url}}/getToken
+GET {{url}}/generateAuthUrl
 Content-Type: application/json
 
 ### UgPass Access Tokenugpass_access_token

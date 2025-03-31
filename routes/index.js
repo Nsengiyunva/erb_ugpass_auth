@@ -49,7 +49,7 @@ const upload = multer( { storage } )
 router.get( "/", async ( _, res ) => {
     try {
         res.status( 200 ).send( {
-            message: "The server is successfully running..."
+            message: "This is the ERB Server..."
         } )
     } catch ( error ) {
         res.status( 500 ).send( {
