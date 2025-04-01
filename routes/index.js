@@ -1,11 +1,10 @@
 import express from 'express'
 // import needle from 'needle'
-import Axios from "axios"
+import axios from "axios"
 import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './utils.js'
 import multer from "multer"
 import FormData from 'form-data'
 // import fs from "fs"
-// uploadFile
 
 const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
 const secretKey = "D32IEain1O9sqwoHDbNG8De1z2Qa"
@@ -59,7 +58,7 @@ router.get( "/", async ( _, res ) => {
 } )
 
 //create an authorization endpoint
-router.get( `/generateAuthUrl`, async ( _, res ) => {
+router.get( `/authorization`, async ( _, res ) => {
     const authUrl = `${baseUrl}/authorization?client_id=${clientID}&redirect_uri=${redirectUrl}&response_type=${code}&scope=${scope}&state=${state}&nonce=${nonce}&request=${formatJWT( clientID, baseUrl, redirectUrl )}`
     res.status( 200 ).send( {
         "url": authUrl,
@@ -73,7 +72,7 @@ router.get( `/generateAuthUrl`, async ( _, res ) => {
 //generate ughub token
 router.get( `/getToken`, async ( _, res ) => {
     try {
-        const response = await Axios.post( `${ughubtokenUrl}/token`, {
+        const response = await axios.post( `${ughubtokenUrl}/token`, {
             "grant_type": "client_credentials"
         }, {
                 headers: {
@@ -111,8 +110,8 @@ router.get( `/getJWT`, async ( _, res ) => {
 } )
 
 //get ugpass access token with authorization code 
-router.post( `/getAuthorization`, async ( req, res ) => {
-    let fetchedToken =  req.body.token
+router.post( `/getAuthorizationCode`, async ( req, res ) => {
+    // let fetchedToken =  req.body.token
     let fetchedCode = req.body.code
 
 
@@ -126,9 +125,8 @@ router.post( `/getAuthorization`, async ( req, res ) => {
     }
     
     try {
-        const response = await Axios.post( `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/idp/api/Authentication/token`, payload, {
+        const response = await axios.post( `${baseUrl}/api/Authentication/token`, payload, {
             headers: {
-                Authorization: `Bearer ${fetchedToken}`,
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         } )
@@ -155,7 +153,7 @@ router.get( `/getUserInfo`, async ( _, res ) => {
     const UgPassAccessToken = getUgPassAccessToken()
 
     try {
-        const response = await Axios.get( `${ughubaseUrl}/api/UserInfo/userinfo`, {
+        const response = await axios.get( `${ughubaseUrl}/api/UserInfo/userinfo`, {
             headers: {
                 UgPassAuthorization: `Bearer ${UgPassAccessToken}`,
                 Authorization: `Bearer ${ughubtoken}`,
@@ -179,7 +177,7 @@ router.get( `/getUserInfo`, async ( _, res ) => {
 router.get( `/logout`, async ( _, res ) => {
     let IDToken = ""
     try {
-        const response = await Axios.get( `${baseUrl}/OIDCLogout?id_token=${IDToken}&post_logout_redirect_uri=${logoutURL}&state=${state}` )
+        const response = await axios.get( `${baseUrl}/OIDCLogout?id_token=${IDToken}&post_logout_redirect_uri=${logoutURL}&state=${state}` )
         if( response.data ) {
             res.status( 200 ).json( {
                 data: response.data
@@ -193,7 +191,7 @@ router.get( `/logout`, async ( _, res ) => {
 //JWKS Url
 router.get( `/jwks`, async ( _, res ) => {
     try {
-        const response = await Axios.get( `${baseurl}/api/Jwks/jwksuri` )
+        const response = await axios.get( `${baseurl}/api/Jwks/jwksuri` )
         if( response.data ) {
             // res.status( 500 ).json()
         }
@@ -208,7 +206,7 @@ router.get( `/signing`, async ( req, res ) => {
     let ugpasstoken = getUgPassAccessToken()
 
     try {
-        const response = await Axios.post( `${signbaseUrl}/api/digital/signature/post/sign`, {
+        const response = await axios.post( `${signbaseUrl}/api/digital/signature/post/sign`, {
             documentType: "PADES",
             subscriberUniqueId: "",
             placeHolderCoordinates: "",
@@ -235,7 +233,7 @@ router.get( `/signing`, async ( req, res ) => {
 //verification base url
 router.get( `/verification`, async ( _, res ) => {
     try {
-        const response = await Axios.post( `${verificationbaseUrl}/api/digital/signature/post/verify`, {
+        const response = await axios.post( `${verificationbaseUrl}/api/digital/signature/post/verify`, {
             documentType: "PADES",
             docData: "",
             signature: "",
@@ -252,7 +250,7 @@ router.get( `/verification`, async ( _, res ) => {
 
 router.post( `/ugpass_access_token`, async ( req, res ) => {
     try {
-        const response = await Axios.post( `${proxyUrl}/t/nita.go.ug/daes/1.0.0/idp/api/Authentication/token`, 
+        const response = await axios.post( `${proxyUrl}/t/nita.go.ug/daes/1.0.0/idp/api/Authentication/token`, 
             req.body.params, {
             headers: {
                 Authorization: `Bearer ${req.body.token}`,
@@ -290,7 +288,7 @@ router.post( `/sign_document`, upload.single( "file" ), async ( req, res ) => {
     };
 
     //updates the server
-    Axios.request( config ).then( ( response ) => {
+    axios.request( config ).then( ( response ) => {
         res.status( 201 ).send( response.data )
     } )
     .catch( ( error ) => {
@@ -301,7 +299,7 @@ router.post( `/sign_document`, upload.single( "file" ), async ( req, res ) => {
 
 router.post( `/verify_document`, async( req, res ) => {
     try {
-        const response = await Axios.post( `${verificationbaseUrl}/api/digital/signature/post/verify`, {
+        const response = await axios.post( `${verificationbaseUrl}/api/digital/signature/post/verify`, {
             documentType: req.body.documentType,
             docData: req.body.docData,
             signature: "",
@@ -318,7 +316,7 @@ router.post( `/verify_document`, async( req, res ) => {
 
 router.post( `/logout_daes`, async( req, res ) => {
     try {
-        const response = await Axios.get( `${baseUrl}/OIDClogout?id_token_hint=${req.body.idToken}&post_logout_redirect_uri=${logoutURL}&state=${req.body.state}` )
+        const response = await axios.get( `${baseUrl}/OIDClogout?id_token_hint=${req.body.idToken}&post_logout_redirect_uri=${logoutURL}&state=${req.body.state}` )
         if( response.data ) {
             res.status( 200 ).send( response.data )
         }
