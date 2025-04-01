@@ -109,9 +109,8 @@ router.get( `/getJWT`, async ( _, res ) => {
     }
 } )
 
-//get ugpass access token with authorization code 
+//authorization code
 router.post( `/getAuthorizationCode`, async ( req, res ) => {
-    // let fetchedToken =  req.body.token
     let fetchedCode = req.body.code
 
 
@@ -121,7 +120,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         redirect_url: redirectUrl,
         client_id: clientID,
         client_assertion_type: clientAssertionType,
-        client_assertion: formatJWT( clientID, baseUrl, redirectUrl )
+        client_assertion: formatJWT(clientID,baseUrl,redirectUrl)
     }
     
     try {
