@@ -63,7 +63,8 @@ router.get( `/generateAuthUrl`, async ( _, res ) => {
     const authUrl = `${baseUrl}/authorization?client_id=${clientID}&redirect_uri=${redirectUrl}&response_type=${code}&scope=${scope}&state=${state}&nonce=${nonce}&request=${formatJWT( clientID, baseUrl, redirectUrl )}`
     res.status( 200 ).send( {
         "url": authUrl,
-        "state": state
+        "state": state,
+        "code": code
     } )
 } )
 
