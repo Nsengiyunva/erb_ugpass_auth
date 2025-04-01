@@ -5,22 +5,18 @@
 GET {{url}}
 Content-Type: application/json
 
-### remote
-GET {{url}}/generateAuthUrl
+### authorization
+GET {{url}}/authorization
 Content-Type: application/json
 
-### UgPass Access Tokenugpass_access_token
-POST {{url}}/ugpass_access_token
+
+### Access Token
+POST {{url}}/getAuthorizationCode
 Content-Type: application/json 
 
 {
-    "params": "Code=P3DXbIpH0gZ1ljTrmQPwxgey3tAgpp7PHufMWVmB03iPPsI3RXeudWNDkEZTAhTnCH7CtrfLbpoxbzQ4dkHvMcBaIMKE&client_assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDAxMzUwMjMsImlzcyI6IlFEek5HNWtndnJ0UTdQamVXZXpFTjg0NXc2NmNyMHR5NjhUakkxeEdGNWFld2hiVSIsImF1ZCI6Imh0dHBzOi8vc3RnYXBpLnVncGFzcy5nby51Zy9pZHAiLCJleHAiOjE3MDAxNDIyMjMsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vY2VydC53b3Jrcy5nby51ZyJ9.NYJvfE0l2tAZOxVYNsqq-SPtTKopFo-1iKRHXRD3r4vSmrFWHqDDhDYZprgpf34Ql-h76WTQ9uEo5l7Bpt_DFVZ1I_PY4_Cfi0-aqAJuho6gb__Fi38QMajRE3y0Zj9cHCrOsRLn1yAQzS_2sezN-ZktPcal6OkmKMd79P79jDjBz_tyd5L6bp9-sY819fcQgP6VfYYEkwKv1ZfMJu-5HJMB5SxpgJR-wu-DQv_jroYnOZ_U8ntE0BaUliXppFSnrdUigAk8lVHWMce7mdu-NRM7IeW7TlFjNugWDrtZi8pKENU0SX0dJalLsxGG2DwyRpmtwkjOwURzYWLOhs8t8Q&client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3Aclient-assertion-type%3Ajwtbearer&client_id=QDzNG5kgvrtQ7PjeWezEN845w66cr0ty68TjI1xGF5aewhbU&grant_type=authorization_code&redirect_uri=https%3A%2F%2Fcert.works.go.ug",
-    "token": "eyJzdWIiOiJhcGltX3Jlc2VydmVkX3VzZXIiLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6InVYU1B3TmZWN0pfR19hWVkyUGIzT2FNS2ZVWWEiLCJuYmYiOjE3MDAxMzQ5MTksImF6cCI6InVYU1B3TmZWN0pfR19hWVkyUGIzT2FNS2ZVWWEiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvaXNtZ3QtdWF0LmludGVncmF0aW9uLmdvLnVnXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxNzAwMTM4NTE5LCJpYXQiOjE3MDAxMzQ5MTksImp0aSI6ImMwZmM3YzIwLWJjNDYtNDk0NS1iZGFiLTM3ZmY5YTNlZGRjMyJ9"
+    "code": ""
 }
-
-### Get the UGPASS
-GET {{url}}/generateAuthUrl
-Content-Type: application/json
 
 ###
 GET {{url}}/getJWT
