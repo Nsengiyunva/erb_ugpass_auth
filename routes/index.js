@@ -121,9 +121,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         client_id: clientID,
         client_assertion_type: clientAssertionType,
         client_assertion: formatJWT(clientID,baseUrl,redirectUrl)
-    }
-
-    // res.json( payload )
+    };
     
     try {
         const response = await axios.post( `${baseUrl}/api/Authentication/token`, payload, {
