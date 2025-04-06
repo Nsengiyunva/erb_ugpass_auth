@@ -122,26 +122,28 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         client_assertion_type: clientAssertionType,
         client_assertion: formatJWT(clientID,baseUrl,redirectUrl)
     }
-    
-    try {
-        const response = await axios.post( `${baseUrl}/api/Authentication/token`, payload, {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        } )
-        
-        if( response.data ) {
-            res.status( 200 ).json( {
-                data: response,
-                
-            } )
-        }
 
-     } catch ( error ) {
-        res.status( 500 ).json( {
-            error
-        } )
-    }
+    res.json( payload )
+    
+    // try {
+    //     const response = await axios.post( `${baseUrl}/api/Authentication/token`, payload, {
+    //         headers: {
+    //             "Content-Type": "application/x-www-form-urlencoded"
+    //         }
+    //     } )
+        
+    //     if( response.data ) {
+    //         res.status( 200 ).json( {
+    //             data: response,
+                
+    //         } )
+    //     }
+
+    //  } catch ( error ) {
+    //     res.status( 500 ).json( {
+    //         error
+    //     } )
+    // }
 } );
 
 
