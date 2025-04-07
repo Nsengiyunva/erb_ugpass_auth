@@ -142,14 +142,16 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         // console.log(JSON.stringify(response.data));
         res.send( {
             status: "success",
-            result: response
+            result: response,
+            payload
         } );
       })
       .catch((error) => {
         // console.log(error);
         res.send( {
             status: "failed",
-            result: error
+            result: error,
+            payload
         } );
       });
 } );
