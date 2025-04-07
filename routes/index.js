@@ -13,6 +13,7 @@ const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bea
 
 
 const baseUrl = `https://stgapi.ugpass.go.ug/idp`
+const aud = `https://stgapi.ugpass.go.ug/idp/api/Authentication/token`
 const ughubaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/idp`
 const ughubtokenUrl = `https://api-uat.integration.go.ug`
 const proxyUrl = `https://intra.works.go.ug`
@@ -120,7 +121,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         redirect_uri: redirectUrl,
         client_id: clientID,
         client_assertion_type: clientAssertionType,
-        client_assertion: formatJWT(clientID,baseUrl,redirectUrl)
+        client_assertion: formatJWT(clientID,aud,redirectUrl)
     };
     
     try {

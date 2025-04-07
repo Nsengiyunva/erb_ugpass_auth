@@ -52,14 +52,14 @@ export const generateStr = () => {
     return result
 }
 
-export const formatJWT = ( clientID, baseUrl, redirectUrl ) => {
+export const formatJWT = ( clientID, aud, redirectUrl ) => {
     let current = new Date()
 
     //format the payload
     const payload = {
         "iat": parseInt( current.getTime() / 1000 ),
         "iss": clientID,
-        "aud": baseUrl,
+        "aud": aud,
         "exp": parseInt( current.getTime() / 1000 ) + 7200,
         "redirect_uri": redirectUrl
     }
