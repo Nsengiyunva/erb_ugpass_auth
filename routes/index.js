@@ -117,7 +117,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
     const payload = {
         grant_type: "authorization_code",
         code: fetchedCode,
-        redirect_url: redirectUrl,
+        redirect_uri: redirectUrl,
         client_id: clientID,
         client_assertion_type: clientAssertionType,
         client_assertion: formatJWT(clientID,baseUrl,redirectUrl)
