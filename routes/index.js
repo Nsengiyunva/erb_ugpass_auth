@@ -115,39 +115,37 @@ router.get( `/getJWT`, async ( _, res ) => {
 
 //authorization code
 router.post( `/getAuthorizationCode`, async ( req, res ) => {
-    let fetchedCode = req.body.code
-
 
     const payload = {
         grant_type: "authorization_code",
-        code: fetchedCode,
+        code: req.body.code,
         redirect_uri: redirectUrl,
         client_id: clientID,
         client_assertion_type: clientAssertionType,
-        client_assertion: formatJWT(clientID,aud,redirectUrl)
+        client_assertion: formatJWT( clientID,aud,redirectUrl )
     };
     
     let data = qs.stringify(payload);
+    res.send( data );
+    //   let config = {
+    //     method: 'post',
+    //     maxBodyLength: Infinity,
+    //     url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
+    //     headers: { 
+    //       'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     data
+    //   };
       
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
-        headers: { 
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data : data
-      };
-      
-      axios.request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        res.status( 200 ).json( response );
-      })
-      .catch((error) => {
-        console.log(error);
-        res.json( error );
-      });
+    //   axios.request(config)
+    //   .then((response) => {
+    //     // console.log(JSON.stringify(response.data));
+    //     res.status( 200 ).send( response );
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     res.send( error );
+    //   });
 } );
 
 
