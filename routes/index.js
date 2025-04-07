@@ -126,26 +126,32 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
     };
     
     let data = qs.stringify(payload);
-    res.send( data );
-    //   let config = {
-    //     method: 'post',
-    //     maxBodyLength: Infinity,
-    //     url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
-    //     headers: { 
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
-    //     data
-    //   };
+    
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data
+      };
       
-    //   axios.request(config)
-    //   .then((response) => {
-    //     // console.log(JSON.stringify(response.data));
-    //     res.status( 200 ).send( response );
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     res.send( error );
-    //   });
+      axios.request(config)
+      .then((response) => {
+        // console.log(JSON.stringify(response.data));
+        res.send( {
+            status: "success",
+            result: response
+        } );
+      })
+      .catch((error) => {
+        // console.log(error);
+        res.send( {
+            status: "failed",
+            result: error
+        } );
+      });
 } );
 
 
