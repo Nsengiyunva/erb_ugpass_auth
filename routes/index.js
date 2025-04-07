@@ -138,18 +138,14 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
 
         console.log( "result", response?.data )
         
-        res.status( 200 ).json( {
-            data: response,
-            payload
-        } )
-       
+        res.send( response );       
 
      } catch ( error ) {
         console.log( "error", error )
-        res.json( {
-            error,
-            payload
-        } )
+        // res.json( {
+        //     error,
+        //     payload
+        // } )
     }
 } );
 
