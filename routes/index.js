@@ -4,6 +4,8 @@ import axios from "axios"
 import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './utils.js'
 import multer from "multer"
 import FormData from 'form-data'
+
+const qs = require('qs');
 // import fs from "fs"
 
 const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
@@ -124,30 +126,27 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         client_assertion: formatJWT(clientID,aud,redirectUrl)
     };
     
-    res.send( payload );
-    // try {
-    //     const response = await axios.post( 
-    //         `${baseUrl}/api/Authentication/token`, 
-    //         payload, 
-    //         {
-    //             headers: {
-    //             "Content-Type": "application/x-www-form-urlencoded"
-    //         }
-    //     } )
-        
-    //     console.log( "response", response )
-
-    //     console.log( "result", response?.data )
-        
-    //     res.send( response );       
-
-    //  } catch ( error ) {
-    //     console.log( "error", error )
-    //     // res.json( {
-    //     //     error,
-    //     //     payload
-    //     // } )
-    // }
+    let data = qs.stringify(payload);
+      
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        res.status( 200 ).json( response );
+      })
+      .catch((error) => {
+        console.log(error);
+        res.json( error );
+      });
 } );
 
 
