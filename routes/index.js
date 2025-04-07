@@ -76,20 +76,21 @@ router.get( `/authorization`, async ( _, res ) => {
 //generate ughub token
 router.get( `/getToken`, async ( _, res ) => {
     try {
-        const response = await axios.post( `${ughubtokenUrl}/token`, {
-            "grant_type": "client_credentials"
-        }, {
-                headers: {
-                    Authorization: `Basic ${basic}`,
-                    "Content-Type" : "application/x-www-form-urlencoded"
-                }
-        } )
+        // const response = await axios.post( `${ughubtokenUrl}/token`, {
+        //     "grant_type": "client_credentials"
+        // }, {
+        //         headers: {
+        //             Authorization: `Basic ${basic}`,
+        //             "Content-Type" : "application/x-www-form-urlencoded"
+        //         }
+        // } )
+        
 
-        if( response?.data ) {
+        // if( response?.data ) {
             return res.status(200).json( {
-                data: response?.data
+                token: formatJWT( clientID,aud,redirectUrl )
             } )
-        }
+        // }
     }
     catch( error ) {
         res.status( 500 ).json( {
