@@ -4,8 +4,9 @@ import axios from "axios"
 import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './utils.js'
 import multer from "multer"
 import FormData from 'form-data'
+import qs from 'qs'
 
-const qs = require('qs');
+// const qs = require('qs');
 // import fs from "fs"
 
 const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
