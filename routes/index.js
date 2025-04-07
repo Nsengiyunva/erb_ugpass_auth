@@ -85,7 +85,6 @@ router.get( `/getToken`, async ( _, res ) => {
         //         }
         // } )
         
-
         // if( response?.data ) {
             return res.status( 200 ).json( {
                 token: formatJWT( clientID,aud,redirectUrl )
