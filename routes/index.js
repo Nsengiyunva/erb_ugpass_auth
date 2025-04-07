@@ -9,7 +9,7 @@ import FormData from 'form-data'
 const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
 const secretKey = "D32IEain1O9sqwoHDbNG8De1z2Qa"
 let basic = "NmN1Z3RfNjNGYlZTeTNTRzBSeHR4TWh1T0JFYTpCTlVCcG90Mzk5S29FckR5X3pTZzRuaDhDa0Fh"
-const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwtbearer"
+const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
 
 
 const baseUrl = `https://stgapi.ugpass.go.ug/idp`
