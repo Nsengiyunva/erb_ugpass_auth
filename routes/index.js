@@ -124,29 +124,30 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         client_assertion: formatJWT(clientID,aud,redirectUrl)
     };
     
-    try {
-        const response = await axios.post( 
-            `${baseUrl}/api/Authentication/token`, 
-            payload, 
-            {
-                headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        } )
+    res.send( payload );
+    // try {
+    //     const response = await axios.post( 
+    //         `${baseUrl}/api/Authentication/token`, 
+    //         payload, 
+    //         {
+    //             headers: {
+    //             "Content-Type": "application/x-www-form-urlencoded"
+    //         }
+    //     } )
         
-        console.log( "response", response )
+    //     console.log( "response", response )
 
-        console.log( "result", response?.data )
+    //     console.log( "result", response?.data )
         
-        res.send( response );       
+    //     res.send( response );       
 
-     } catch ( error ) {
-        console.log( "error", error )
-        // res.json( {
-        //     error,
-        //     payload
-        // } )
-    }
+    //  } catch ( error ) {
+    //     console.log( "error", error )
+    //     // res.json( {
+    //     //     error,
+    //     //     payload
+    //     // } )
+    // }
 } );
 
 
