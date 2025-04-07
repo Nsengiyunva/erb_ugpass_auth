@@ -123,15 +123,20 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         client_assertion_type: clientAssertionType,
         client_assertion: formatJWT(clientID,aud,redirectUrl)
     };
+
+    res.status( 200 ).send( payload );
     
     // try {
-        const response = await axios.post( `${baseUrl}/api/Authentication/token`, payload, {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        } )
+        // const response = await axios.post( 
+        //     `${baseUrl}/api/Authentication/token`, 
+        //     payload, 
+        //     {
+        //         headers: {
+        //         "Content-Type": "application/x-www-form-urlencoded"
+        //     }
+        // } )
 
-        res.status( 200 ).json( response );
+        // res.status( 200 ).json( response );
         
         // if( response.data ) {
         //     res.status( 200 ).json( {
