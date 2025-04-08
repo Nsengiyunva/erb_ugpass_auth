@@ -9,22 +9,29 @@ import qs from 'qs'
 // const qs = require('qs');
 // import fs from "fs"
 
-const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
-const secretKey = "D32IEain1O9sqwoHDbNG8De1z2Qa"
-let basic = "NmN1Z3RfNjNGYlZTeTNTRzBSeHR4TWh1T0JFYTpCTlVCcG90Mzk5S29FckR5X3pTZzRuaDhDa0Fh"
+// const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
+// const secretKey = "D32IEain1O9sqwoHDbNG8De1z2Qa"
+// let basic = "NmN1Z3RfNjNGYlZTeTNTRzBSeHR4TWh1T0JFYTpCTlVCcG90Mzk5S29FckR5X3pTZzRuaDhDa0Fh"
 const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
 
 
-const baseUrl = `https://stgapi.ugpass.go.ug/idp`
-const aud = `https://stgapi.ugpass.go.ug/idp/api/Authentication/token`
+// const baseUrl = `https://stgapi.ugpass.go.ug/idp`
+const baseUrl = `https://ugpass.go.ug/idp`
+
+// const aud = `https://stgapi.ugpass.go.ug/idp/api/Authentication/token`
+const aud = `https://ugpass.go.ug/idp/api/Authentication/token`
+
 const ughubaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/idp`
 const ughubtokenUrl = `https://api-uat.integration.go.ug`
 const proxyUrl = `https://intra.works.go.ug`
 const signbaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/signingservice/SignatureWebService/`
 const verificationbaseUrl = `https://stgapi.ugpass.go.ug/signing-service/SignatureWebService` 
 
-const clientID = `aUdRFvdXrSQGmmemdFXDdD6S65lrMFFHBOMxMRLP50MJL9MD`
-const clientSecret = `6mM1PXYsD9tyEj0Iap9B028cP8oCgB8a4uM6vWUKDFbakKjw5xhhfE5feHSw0erJ`
+// const clientID = `aUdRFvdXrSQGmmemdFXDdD6S65lrMFFHBOMxMRLP50MJL9MD`
+// const clientSecret = `6mM1PXYsD9tyEj0Iap9B028cP8oCgB8a4uM6vWUKDFbakKjw5xhhfE5feHSw0erJ`
+const clientID = `yMieGGgLmhPvlxvElChn1OeAcb4fEPxvxAEyYLGIJlXvWimA`
+const clientSecret = `CJykRyPwcSpRVk0kiBWShS4VD2KS1fPPEgYEEensmADSuCbPbESRcWr4ayOR2gI6`
+
 const redirectUrl = `https://registration.erb.go.ug/redirect_auth`
 const logoutURL = `registration.erb.go.ug/logout_auth`
 
