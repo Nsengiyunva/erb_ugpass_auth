@@ -16,10 +16,10 @@ const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bea
 
 
 // const baseUrl = `https://stgapi.ugpass.go.ug/idp`
-const baseUrl = `https://ugpass.go.ug/idp`
+const baseUrl = `https://api.ugpass.go.ug/idp`
 
 // const aud = `https://stgapi.ugpass.go.ug/idp/api/Authentication/token`
-const aud = `https://ugpass.go.ug/idp/api/Authentication/token`
+const aud = `https://api.ugpass.go.ug/idp/api/Authentication/token`
 
 const ughubaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/idp`
 const ughubtokenUrl = `https://api-uat.integration.go.ug`
@@ -29,7 +29,7 @@ const proxyUrl = `https://intra.works.go.ug`
 const signbaseUrl = `https://integration.go.ug/t/nita.go.ug/daes/1.0.0/signingservice/SignatureWebService/`
 
 // const verificationbaseUrl = `https://stgapi.ugpass.go.ug/signing-service/SignatureWebService` 
-const verificationbaseUrl = `https://ugpass.go.ug/signing-service/SignatureWebService` 
+const verificationbaseUrl = `https://api.ugpass.go.ug/signing-service/SignatureWebService` 
 
 // const clientID = `aUdRFvdXrSQGmmemdFXDdD6S65lrMFFHBOMxMRLP50MJL9MD`
 // const clientSecret = `6mM1PXYsD9tyEj0Iap9B028cP8oCgB8a4uM6vWUKDFbakKjw5xhhfE5feHSw0erJ`
@@ -141,7 +141,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://stgapi.ugpass.go.ug/idp/api/Authentication/token',
+        url: 'https://api.ugpass.go.ug/idp/api/Authentication/token',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded'
         },
