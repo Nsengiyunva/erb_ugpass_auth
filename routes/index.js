@@ -38,7 +38,7 @@ const clientSecret = `6mM1PXYsD9tyEj0Iap9B028cP8oCgB8a4uM6vWUKDFbakKjw5xhhfE5feH
 // const clientSecret = `CJykRyPwcSpRVk0kiBWShS4VD2KS1fPPEgYEEensmADSuCbPbESRcWr4ayOR2gI6`
 
 const redirectUrl = `https://staging.erb.go.ug/redirect_auth`
-const logoutURL = `registration.erb.go.ug/logout_auth`
+const logoutURL = `https://staging.erb.go.ug/logout_auth`
 
 const code  = `code`
 const scope = `openid urn:idp:digitalid:profile urn:idp:digitalid:sign`
