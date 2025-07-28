@@ -11,5 +11,9 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 - come to signing setup 
 - then check out the agent 
 - uia - export pdf issues, filters
-
+--------------------------------------------------------------
+- regenerate the public key and private key on the itco server.
+- start checking the authentication with James
+- get the authorization code.
+- initiate the sign off first
 
