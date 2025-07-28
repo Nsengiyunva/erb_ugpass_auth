@@ -5,44 +5,21 @@ import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './u
 import multer from "multer"
 import FormData from 'form-data'
 import qs from 'qs'
+import dotenv from 'dotenv'
+dotenv.config()
 
-// const qs = require('qs');
-// import fs from "fs"
+const clientAssertionType = process.env.CLIENT_ASSERTION_TYPE;
+const baseUrl = process.env.BASE_URL;
+const aud = process.env.AUD;
 
-// const consumerKey = "vIM5ulvxqRylVRkj4AWWDJyDJtoa"
-// const secretKey = "D32IEain1O9sqwoHDbNG8De1z2Qa"
-// let basic = "NmN1Z3RfNjNGYlZTeTNTRzBSeHR4TWh1T0JFYTpCTlVCcG90Mzk5S29FckR5X3pTZzRuaDhDa0Fh"
-const clientAssertionType = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer"
+const signbaseUrl = process.env.SIGN_BASE_URL
+const verificationbaseUrl = process.env.VERIFICATION_BASE_URL 
 
+const clientID = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
 
-// const baseUrl = `https://stgapi.ugpass.go.ug/idp`
-const baseUrl = `https://api.ugpass.go.ug/idp`
-
-// const aud = `https://stgapi.ugpass.go.ug/idp/api/Authentication/token`
-const aud = `https://api.ugpass.go.ug/idp/api/Authentication/token`
-
-const ughubaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/idp`
-const ughubtokenUrl = `https://api-uat.integration.go.ug`
-const proxyUrl = `https://intra.works.go.ug`
-
-// const signbaseUrl = `https://api-uat.integration.go.ug/t/nita.go.ug/daes/1.0.0/signingservice/SignatureWebService/`
-const signbaseUrl = `https://integration.go.ug/t/nita.go.ug/daes/1.0.0/signingservice/SignatureWebService/`
-
-// const verificationbaseUrl = `https://stgapi.ugpass.go.ug/signing-service/SignatureWebService` 
-const verificationbaseUrl = `https://api.ugpass.go.ug/signing-service/SignatureWebService` 
-
-// const clientID = `aUdRFvdXrSQGmmemdFXDdD6S65lrMFFHBOMxMRLP50MJL9MD`
-// const clientSecret = `6mM1PXYsD9tyEj0Iap9B028cP8oCgB8a4uM6vWUKDFbakKjw5xhhfE5feHSw0erJ`
-
-
-const clientID = `yMieGGgLmhPvlxvElChn1OeAcb4fEPxvxAEyYLGIJlXvWimA`
-const clientSecret = `CJykRyPwcSpRVk0kiBWShS4VD2KS1fPPEgYEEensmADSuCbPbESRcWr4ayOR2gI6`
-
-// const redirectUrl = `https://staging.erb.go.ug/redirect_auth`
-// const logoutURL = `https://staging.erb.go.ug/logout_auth`
-
-const redirectUrl = `https://registration.erb.go.ug/redirect_auth`
-const logoutURL = `https://registration.erb.go.ug/logout_auth`
+const redirectUrl = process.env.REDIRECT_URL
+const logoutURL = process.env.LOGOUT_URL 
 
 const code  = `code`
 const scope = `openid urn:idp:digitalid:profile urn:idp:digitalid:sign`
