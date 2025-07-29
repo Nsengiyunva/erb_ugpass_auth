@@ -7,6 +7,7 @@ import qs from 'qs'
 import dotenv from 'dotenv'
 dotenv.config()
 
+
 const clientAssertionType = process.env.CLIENT_ASSERTION_TYPE;
 const baseUrl = process.env.BASE_URL;
 const aud = process.env.AUD;

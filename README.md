@@ -6,7 +6,7 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 #GET {BaseURL}/OIDClogout? id_token_hint = {id_token} & post_logout_redirect_uri = {SP Logout Url} & state = {state}
 
 
-# 
+## Info
 - first re-deploy the application 
 - come to signing setup 
 - then check out the agent 
