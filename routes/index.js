@@ -31,7 +31,7 @@ const router = express.Router()
 
 //files
 const storage = multer.diskStorage( {
-    destination: function( _, file, cb ) {
+    destination: function( _,  cb ) {
         cb( null, "/" )
     },
     filename: function( _, file, cb ) {
