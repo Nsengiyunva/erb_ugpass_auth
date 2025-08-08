@@ -1,17 +1,9 @@
 import jwt from 'jsonwebtoken'
 import fs from 'fs'
 import Axios from 'axios'
-// import util from "util"
 import multer from "multer"
 
-
-// import { uploadFileMiddleware } from "../middleware/file_upload"
-
-//2MB please
-// const maxSize = 2 * 1024 * 1024
-
-// const privateKey = () => fs.readFileSync(require.resolve("./private.pem"), { encoding: "utf8" });
-const privateKey = `-----BEGIN PRIVATE KEY-----
+let privateKey = `-----BEGIN PRIVATE KEY-----
 MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDpdR8sk/3wSuFG
 blZ9pNaNHnHpf+OQHqne2KuhkvbBqqcTebW9wyz6drzPwvI9y24jOsIlE70l1kOx
 pdqFxWRSbHDKStUZazCVo2R4Q9KtxCPqlasUDLhd906cd8iy9qDblrho0aqgzp7+
@@ -54,8 +46,7 @@ export const generateStr = () => {
 
 export const formatJWT = ( clientID, aud, redirectUrl ) => {
     let current = new Date()
-
-    //format the payload
+    
     const payload = {
         "iat": parseInt( current.getTime() / 1000 ),
         "iss": clientID,

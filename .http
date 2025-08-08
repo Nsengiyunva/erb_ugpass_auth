@@ -6,7 +6,7 @@
 GET {{url}}
 Content-Type: application/json
 
-### authorization
+### authentication
 GET {{url}}/authorization
 Content-Type: application/json
 
