@@ -8,18 +8,18 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 
-const clientAssertionType = process.env.CLIENT_ASSERTION_TYPE;
-const baseUrl = process.env.BASE_URL;
-const aud = process.env.AUD;
+const clientAssertionType = `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`;
+const baseUrl = `https://api.ugpass.go.ug/idp`;
+const aud = `https://api.ugpass.go.ug/idp/api/Authentication/token`
 
-const signbaseUrl = process.env.SIGN_BASE_URL
-const verificationbaseUrl = process.env.VERIFICATION_BASE_URL 
+const signbaseUrl = `https://integration.go.ug/t/nita.go.ug/daes/1.0.0/signingservice/SignatureWebService/`
+const verificationbaseUrl = `https://api.ugpass.go.ug/signing-service/SignatureWebService` 
 
-const clientID = process.env.CLIENT_ID
-const clientSecret = process.env.CLIENT_SECRET
+const clientID = `yMieGGgLmhPvlxvElChn1OeAcb4fEPxvxAEyYLGIJlXvWimA`
+const clientSecret = `CJykRyPwcSpRVk0kiBWShS4VD2KS1fPPEgYEEensmADSuCbPbESRcWr4ayOR2gI6`
 
-const redirectUrl = process.env.REDIRECT_URL
-const logoutURL = process.env.LOGOUT_URL 
+const redirectUrl = `https://registration.erb.go.ug/redirect_auth`
+const logoutURL = `https://registration.erb.go.ug/logout_auth`
 
 const code  = `code`
 const scope = `openid urn:idp:digitalid:profile urn:idp:digitalid:sign`
