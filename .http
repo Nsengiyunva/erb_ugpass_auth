@@ -16,7 +16,7 @@ POST {{url}}/getAuthorizationCode
 Content-Type: application/json 
 
 {
-    "code": ""
+    "code": "b29xlGP7GEJQV6gyfX2rozbkMrk2c5gRaFFsI8wWgJY5ia5TUDeCKERcmcMXgVmAxGE5xYj0DcTQmwXj3RENTuTD6oba"
 }
 
 ###

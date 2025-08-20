@@ -120,35 +120,35 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
     
     let data = qs.stringify(payload);
     
-    res.status( 200 ).json( {
-        data
-    } );
-    //   let config = {
-    //     method: 'post',
-    //     maxBodyLength: Infinity,
-    //     url: `${baseUrl}/api/Authentication/token`,
-    //     headers: { 
-    //       'Content-Type': 'application/x-www-form-urlencoded'
-    //     },
+    // res.status( 200 ).json( {
     //     data
-    //   };
+    // } );
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${baseUrl}/api/Authentication/token`,
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data
+      };
       
-    //   axios.request(config)
-    //   .then((response) => {
-    //     let result = JSON.stringify( response.data );
-    //     res.send( {
-    //         status: "success",
-    //         result,
-    //         payload
-    //     } );
-    //   })
-    //   .catch((error) => {
-    //     res.send( {
-    //         status: "failed",
-    //         error,
-    //         payload
-    //     } );
-    //   });
+      axios.request(config)
+      .then((response) => {
+        let result = JSON.stringify( response.data );
+        res.send( {
+            status: "success",
+            result,
+            payload
+        } );
+      })
+      .catch((error) => {
+        res.send( {
+            status: "failed",
+            error,
+            payload
+        } );
+      });
 } );
 
 
