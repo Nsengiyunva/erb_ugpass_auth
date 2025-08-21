@@ -16,7 +16,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "oaBwecRS2PtNWzy2JTj743YklLLPnXcChFOIDGoIjIIGVneg768jIvdR5NNqSwtK2IdGX4Org008i868HFtili0NUshhvwjGZbih94XeJmjivNFgIuXnUoZKYhgZNBZSdy4nivbYXbT4yuI3",
+    "access_token":  "Kosx9TSxNksc3BIAxY0EQc7RR3veZTrp16Ja9sIcyacNMTiAQcfuNyXxJxjoSK7JvPXlSW97CdLPVhN2gr29vPKMUmNsF5YVcx5l6ZekGPeH3HFPTmIt5mDQckphrbHwjitgAVhtTCGYme3F",
     "email_address": "trevor.mukwaya@nita.go.ug"
 }
 

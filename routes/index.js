@@ -186,7 +186,7 @@ const { access_token, email_address }  = req.body
 
     const form_data = new FormData();
 
-    form_data.append("model", JSON.stringify(jsonData));
+    form_data.append("model", jsonData );
     form_data.append("file", fs.createReadStream("sample.pdf"), {
       filename: "sample.pdf",
       contentType: "application/pdf",
@@ -207,7 +207,7 @@ const { access_token, email_address }  = req.body
     );
 
     const responseData = response.data;
-
+    console.log( "response", responseData )
 //     if (responseData.success) {
 //     //   console.log("[SUCCESS] Document signed successfully.");
 //         const base64Pdf = responseData.result;
