@@ -185,14 +185,16 @@ const { access_token, email_address }  = req.body
     }
 
     const form_data = new FormData();
+
     form_data.append("model", JSON.stringify(jsonData));
     form_data.append("file", fs.createReadStream("sample.pdf"), {
       filename: "sample.pdf",
       contentType: "application/pdf",
     });
 
+
     const response = await axios.post(
-       `https://nita.ugpass.go.ug`, // like settings.SIGNING_SERVICE_URL
+       `https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign`, // like settings.SIGNING_SERVICE_URL
        form_data,
       {
         headers: {

@@ -11,12 +11,12 @@ GET {{url}}/authorization
 Content-Type: application/json
 
 
-####
+### to sign
 POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "9qgG9MCr30C0zoax1e6bX9ngj4n9n7y5hgd4iimZrjrsmTzv3D5vxvhEaj6E32TteuIypuppBCyhk7T5ZjGnPW3WNjr8Z2uLpc",
+    "access_token":  "oaBwecRS2PtNWzy2JTj743YklLLPnXcChFOIDGoIjIIGVneg768jIvdR5NNqSwtK2IdGX4Org008i868HFtili0NUshhvwjGZbih94XeJmjivNFgIuXnUoZKYhgZNBZSdy4nivbYXbT4yuI3",
     "email_address": "trevor.mukwaya@nita.go.ug"
 }
 
