@@ -227,20 +227,10 @@ const { access_token, email_address }  = req.body
 //         } ) 
 //     }
   } catch (err) {
-    // if (err.code === "ENOENT") {
-    //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-    // } else if (err.response) {
-    //   console.error(
-    //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
-    //   );
-    // } else {
-        console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
-        // }
         res.status( 200  ).json( {
             error: err
         } )
     }
-    // }
 
 }  )
 
