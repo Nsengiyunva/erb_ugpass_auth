@@ -159,79 +159,106 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
 router.post( `/sign-with-agent`,  async( req, res  ) => {
     
 const { access_token, email_address }  = req.body
-// async function signSinglePdf(accessToken, userInfo) {
-  console.log("==== Sign Single PDF ====");
-  console.log("Signing document: sample.pdf");
-  console.log("\nIMPORTANT: You will receive a notification in your UGPASS mobile app.");
-  console.log("Please enter your signing PIN and submit.\n");
+// // async function signSinglePdf(accessToken, userInfo) {
+//   console.log("==== Sign Single PDF ====");
+//   console.log("Signing document: sample.pdf");
+//   console.log("\nIMPORTANT: You will receive a notification in your UGPASS mobile app.");
+//   console.log("Please enter your signing PIN and submit.\n");
 
-  const jsonData = {
-    documentType: "PADES",
-    id: email_address,
-    placeHolderCoordinates: {
-      pageNumber: 1,
-      signatureXaxis: 400.0,
-      signatureYaxis: 450.0,
-    },
-  };
+//   const jsonData = {
+//     documentType: "PADES",
+//     id: email_address,
+//     placeHolderCoordinates: {
+//       pageNumber: 1,
+//       signatureXaxis: 400.0,
+//       signatureYaxis: 450.0,
+//     },
+//   };
 
-  console.log( "result",  jsonData );
-  console.log( "fs",  fs.existsSync("sample.pdf") )
+//   console.log( "result",  jsonData );
+//   console.log( "fs",  fs.existsSync("sample.pdf") )
 
-  try {
-    if (!fs.existsSync("sample.pdf")) {
-      console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-      return;
-    }
-
-    const form_data = new FormData();
-
-    form_data.append("model", jsonData );
-    form_data.append("file", fs.createReadStream("sample.pdf"), {
-      filename: "sample.pdf",
-      contentType: "application/pdf",
-    });
-
-
-    const response = await axios.post(
-       `https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign`, // like settings.SIGNING_SERVICE_URL
-       form_data,
-      {
-        headers: {
-          ...form_data.getHeaders(),
-          UgPassAuthorization: `Bearer ${access_token}`,
-        },
-        // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
-        httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
-      }
-    );
-
-    const responseData = response.data;
-    console.log( "response", responseData )
-//     if (responseData.success) {
-//     //   console.log("[SUCCESS] Document signed successfully.");
-//         const base64Pdf = responseData.result;
-//         const pdfBytes = Buffer.from(base64Pdf, "base64");
-//         const outputFilename = "sample_signed.pdf";
-//         fs.writeFileSync(outputFilename, pdfBytes);
-//     //   console.log(`Signed document saved as: ${outputFilename}`);
-//         res.status( 200  ).json( {
-//             result: response.data
-//         } )
-//     } else {
-//         console.error(
-//             `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
-//         );
-//         res.status( 200  ).json( {
-//             error : response.data
-//         } ) 
+//   try {
+//     if (!fs.existsSync("sample.pdf")) {
+//       console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+//       return;
 //     }
-  } catch (err) {
-        res.status( 200  ).json( {
-            error: err
-        } )
+
+//     const form_data = new FormData();
+
+//     form_data.append("model", jsonData );
+//     form_data.append("file", fs.createReadStream("sample.pdf"), {
+//       filename: "sample.pdf",
+//       contentType: "application/pdf",
+//     });
+
+
+//     const response = await axios.post(
+//        `https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign`, // like settings.SIGNING_SERVICE_URL
+//        form_data,
+//       {
+//         headers: {
+//           ...form_data.getHeaders(),
+//           UgPassAuthorization: `Bearer ${access_token}`,
+//         },
+//         // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
+//         httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
+//       }
+//     );
+
+//     const responseData = response.data;
+//     console.log( "response", responseData )
+// //     if (responseData.success) {
+// //     //   console.log("[SUCCESS] Document signed successfully.");
+// //         const base64Pdf = responseData.result;
+// //         const pdfBytes = Buffer.from(base64Pdf, "base64");
+// //         const outputFilename = "sample_signed.pdf";
+// //         fs.writeFileSync(outputFilename, pdfBytes);
+// //     //   console.log(`Signed document saved as: ${outputFilename}`);
+// //         res.status( 200  ).json( {
+// //             result: response.data
+// //         } )
+// //     } else {
+// //         console.error(
+// //             `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
+// //         );
+// //         res.status( 200  ).json( {
+// //             error : response.data
+// //         } ) 
+// //     }
+//   } catch (err) {
+//         res.status( 200  ).json( {
+//             error: err
+//         } )
+//     }
+
+    if (!fs.existsSync("sample.pdf")) {
+        console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+        return;
     }
 
+    let data = new FormData();
+    data.append('model', '{\n  "documentType": "PADES",\n"id":"trevor.mukwaya@nita.go.ug",\n"placeHolderCoordinates": {\n    "pageNumber": 1,\n    "signatureXaxis": 400.0,\n    "signatureYaxis": "450.0"\n  }\n}');
+    data.append('file', fs.createReadStream('sample.pdf'));
+
+    let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign',
+    headers: { 
+        'UgPassAuthorization': `Bearer ${access_token}`, 
+        ...data.getHeaders()
+    },
+    data : data
+    };
+
+    axios.request(config)
+    .then((response) => {
+    console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+    console.log(error);
+    });
 }  )
 
 
