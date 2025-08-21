@@ -1,6 +1,6 @@
 # @url = http://localhost:8753/api
 # @url = https://auth.cert.works.go.ug/api
-@url = http://api.erb.go.ug/api
+@url = https://api.erb.go.ug/api
 
 ###
 GET {{url}}
@@ -16,7 +16,7 @@ POST {{url}}/getAuthorizationCode
 Content-Type: application/json 
 
 {
-    "code": "b29xlGP7GEJQV6gyfX2rozbkMrk2c5gRaFFsI8wWgJY5ia5TUDeCKERcmcMXgVmAxGE5xYj0DcTQmwXj3RENTuTD6oba"
+    "code": "KX6FC8Vz0IuenKBSWl0vTNgfSWqp6mTENe9nfBbPteQclPH4sxUu3vD2d8mIuBS2jSwGn0pV5sukZu2Cg7yasNPKxCca"
 }
 
 ###

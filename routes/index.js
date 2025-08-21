@@ -1,4 +1,5 @@
 import express from 'express'
+import fs from "fs";
 import axios from "axios"
 import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './utils.js'
 import multer from "multer"
@@ -6,6 +7,10 @@ import FormData from 'form-data'
 import qs from 'qs'
 import dotenv from 'dotenv'
 dotenv.config()
+
+
+// import axios from "axios";
+// import FormData from "form-data";
 
 
 const clientAssertionType = `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`;
@@ -150,6 +155,89 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
         } );
       });
 } );
+
+router.post( `/sign-with-agent`,  async( req, res  ) => {
+    
+const { access_token, email_address }  = req.body
+// async function signSinglePdf(accessToken, userInfo) {
+  console.log("==== Sign Single PDF ====");
+  console.log("Signing document: sample.pdf");
+  console.log("\nIMPORTANT: You will receive a notification in your UGPASS mobile app.");
+  console.log("Please enter your signing PIN and submit.\n");
+
+  const jsonData = {
+    documentType: "PADES",
+    id: email_address,
+    placeHolderCoordinates: {
+      pageNumber: 1,
+      signatureXaxis: 400.0,
+      signatureYaxis: 450.0,
+    },
+  };
+
+  try {
+    if (!fs.existsSync("sample.pdf")) {
+      console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+      return;
+    }
+
+    const form = new FormData();
+    form.append("model", JSON.stringify(jsonData));
+    form.append("file", fs.createReadStream("sample.pdf"), {
+      filename: "sample.pdf",
+      contentType: "application/pdf",
+    });
+
+    const response = await axios.post(
+      process.env.SIGNING_SERVICE_URL, // like settings.SIGNING_SERVICE_URL
+      form,
+      {
+        headers: {
+          ...form.getHeaders(),
+          UgPassAuthorization: `Bearer ${access_token}`,
+        },
+        // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
+        httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
+      }
+    );
+
+    const responseData = response.data;
+
+    if (responseData.success) {
+    //   console.log("[SUCCESS] Document signed successfully.");
+        const base64Pdf = responseData.result;
+        const pdfBytes = Buffer.from(base64Pdf, "base64");
+        const outputFilename = "sample_signed.pdf";
+        fs.writeFileSync(outputFilename, pdfBytes);
+    //   console.log(`Signed document saved as: ${outputFilename}`);
+        res.status( 200  ).json( {
+            result: response.data
+        } )
+    } else {
+    //   console.error(
+    //     `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
+    //   );
+    res.status( 200  ).json( {
+        error : response.data
+    } )
+    }
+  } catch (err) {
+    // if (err.code === "ENOENT") {
+    //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+    // } else if (err.response) {
+    //   console.error(
+    //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
+    //   );
+    // } else {
+    //   console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
+    // }
+    res.status( 200  ).json( {
+        error: err
+    } )
+  }
+// }
+
+}  )
 
 
 
