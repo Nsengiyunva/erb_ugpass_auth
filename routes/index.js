@@ -176,34 +176,35 @@ const { access_token, email_address }  = req.body
   };
 
   console.log( "result",  jsonData );
+  console.log( "fs",  fs.existsSync("sample.pdf") )
 
-//   try {
-//     if (!fs.existsSync("sample.pdf")) {
-//       console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-//       return;
-//     }
+  try {
+    if (!fs.existsSync("sample.pdf")) {
+      console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+      return;
+    }
 
-//     const form_data = new FormData();
-//     form_data.append("model", JSON.stringify(jsonData));
-//     form_data.append("file", fs.createReadStream("sample.pdf"), {
-//       filename: "sample.pdf",
-//       contentType: "application/pdf",
-//     });
+    const form_data = new FormData();
+    form_data.append("model", JSON.stringify(jsonData));
+    form_data.append("file", fs.createReadStream("sample.pdf"), {
+      filename: "sample.pdf",
+      contentType: "application/pdf",
+    });
 
-//     const response = await axios.post(
-//        `http://10.255.3.133:8177`, // like settings.SIGNING_SERVICE_URL
-//        form_data,
-//       {
-//         headers: {
-//           ...form_data.getHeaders(),
-//           UgPassAuthorization: `Bearer ${access_token}`,
-//         },
-//         // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
-//         httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
-//       }
-//     );
+    const response = await axios.post(
+       `http://10.255.3.133:8177`, // like settings.SIGNING_SERVICE_URL
+       form_data,
+      {
+        headers: {
+          ...form_data.getHeaders(),
+          UgPassAuthorization: `Bearer ${access_token}`,
+        },
+        // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
+        httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
+      }
+    );
 
-//     const responseData = response.data;
+    const responseData = response.data;
 
 //     if (responseData.success) {
 //     //   console.log("[SUCCESS] Document signed successfully.");
@@ -223,21 +224,21 @@ const { access_token, email_address }  = req.body
 //             error : response.data
 //         } ) 
 //     }
-//   } catch (err) {
-//     // if (err.code === "ENOENT") {
-//     //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-//     // } else if (err.response) {
-//     //   console.error(
-//     //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
-//     //   );
-//     // } else {
-//       console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
-//     // }
-//     res.status( 200  ).json( {
-//         error: err
-//     } )
-//   }
-// }
+  } catch (err) {
+    // if (err.code === "ENOENT") {
+    //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+    // } else if (err.response) {
+    //   console.error(
+    //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
+    //   );
+    // } else {
+        console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
+        // }
+        res.status( 200  ).json( {
+            error: err
+        } )
+    }
+    // }
 
 }  )
 
