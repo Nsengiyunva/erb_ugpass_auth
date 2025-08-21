@@ -175,66 +175,68 @@ const { access_token, email_address }  = req.body
     },
   };
 
-  try {
-    if (!fs.existsSync("sample.pdf")) {
-      console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-      return;
-    }
+  console.log( "result",  jsonData );
 
-    const form_data = new FormData();
-    form_data.append("model", JSON.stringify(jsonData));
-    form_data.append("file", fs.createReadStream("sample.pdf"), {
-      filename: "sample.pdf",
-      contentType: "application/pdf",
-    });
+//   try {
+//     if (!fs.existsSync("sample.pdf")) {
+//       console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+//       return;
+//     }
 
-    const response = await axios.post(
-       `http://10.255.3.133:8177`, // like settings.SIGNING_SERVICE_URL
-       form_data,
-      {
-        headers: {
-          ...form_data.getHeaders(),
-          UgPassAuthorization: `Bearer ${access_token}`,
-        },
-        // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
-        httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
-      }
-    );
+//     const form_data = new FormData();
+//     form_data.append("model", JSON.stringify(jsonData));
+//     form_data.append("file", fs.createReadStream("sample.pdf"), {
+//       filename: "sample.pdf",
+//       contentType: "application/pdf",
+//     });
 
-    const responseData = response.data;
+//     const response = await axios.post(
+//        `http://10.255.3.133:8177`, // like settings.SIGNING_SERVICE_URL
+//        form_data,
+//       {
+//         headers: {
+//           ...form_data.getHeaders(),
+//           UgPassAuthorization: `Bearer ${access_token}`,
+//         },
+//         // Note: in axios, SSL verify=false -> rejectUnauthorized: false (use only if needed)
+//         httpsAgent: new (await import("https")).Agent({ rejectUnauthorized: false }),
+//       }
+//     );
 
-    if (responseData.success) {
-    //   console.log("[SUCCESS] Document signed successfully.");
-        const base64Pdf = responseData.result;
-        const pdfBytes = Buffer.from(base64Pdf, "base64");
-        const outputFilename = "sample_signed.pdf";
-        fs.writeFileSync(outputFilename, pdfBytes);
-    //   console.log(`Signed document saved as: ${outputFilename}`);
-        res.status( 200  ).json( {
-            result: response.data
-        } )
-    } else {
-        console.error(
-            `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
-        );
-        res.status( 200  ).json( {
-            error : response.data
-        } ) 
-    }
-  } catch (err) {
-    // if (err.code === "ENOENT") {
-    //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
-    // } else if (err.response) {
-    //   console.error(
-    //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
-    //   );
-    // } else {
-      console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
-    // }
-    res.status( 200  ).json( {
-        error: err
-    } )
-  }
+//     const responseData = response.data;
+
+//     if (responseData.success) {
+//     //   console.log("[SUCCESS] Document signed successfully.");
+//         const base64Pdf = responseData.result;
+//         const pdfBytes = Buffer.from(base64Pdf, "base64");
+//         const outputFilename = "sample_signed.pdf";
+//         fs.writeFileSync(outputFilename, pdfBytes);
+//     //   console.log(`Signed document saved as: ${outputFilename}`);
+//         res.status( 200  ).json( {
+//             result: response.data
+//         } )
+//     } else {
+//         console.error(
+//             `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
+//         );
+//         res.status( 200  ).json( {
+//             error : response.data
+//         } ) 
+//     }
+//   } catch (err) {
+//     // if (err.code === "ENOENT") {
+//     //   console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+//     // } else if (err.response) {
+//     //   console.error(
+//     //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
+//     //   );
+//     // } else {
+//       console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
+//     // }
+//     res.status( 200  ).json( {
+//         error: err
+//     } )
+//   }
 // }
 
 }  )
