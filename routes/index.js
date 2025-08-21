@@ -217,9 +217,9 @@ const { access_token, email_address }  = req.body
     //   console.error(
     //     `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
     //   );
-    res.status( 200  ).json( {
-        error : response.data
-    } )
+        res.status( 200  ).json( {
+            error : response.data
+        } ) 
     }
   } catch (err) {
     // if (err.code === "ENOENT") {
