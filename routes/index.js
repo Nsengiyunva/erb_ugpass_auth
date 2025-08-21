@@ -192,7 +192,7 @@ const { access_token, email_address }  = req.body
     });
 
     const response = await axios.post(
-       `http://10.255.3.133:8177`, // like settings.SIGNING_SERVICE_URL
+       `https://nita.ugpass.go.ug`, // like settings.SIGNING_SERVICE_URL
        form_data,
       {
         headers: {
