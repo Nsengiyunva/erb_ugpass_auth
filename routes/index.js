@@ -214,9 +214,9 @@ const { access_token, email_address }  = req.body
             result: response.data
         } )
     } else {
-    //   console.error(
-    //     `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
-    //   );
+        console.error(
+            `[FAILURE] Document signing failed: ${responseData.message || "No message"}`
+        );
         res.status( 200  ).json( {
             error : response.data
         } ) 
@@ -229,7 +229,7 @@ const { access_token, email_address }  = req.body
     //     `[ERROR] Request failed with status ${err.response.status}: ${err.response.statusText}`
     //   );
     // } else {
-    //   console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
+      console.error(`[ERROR] An unexpected error occurred: ${err.message}`);
     // }
     res.status( 200  ).json( {
         error: err
