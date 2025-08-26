@@ -9,9 +9,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 
-// import axios from "axios";
-// import FormData from "form-data";
-
 
 const clientAssertionType = `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`;
 const baseUrl = `https://api.ugpass.go.ug/idp`;
