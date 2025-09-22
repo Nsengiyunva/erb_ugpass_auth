@@ -6,6 +6,9 @@ import multer from "multer"
 import FormData from 'form-data'
 import qs from 'qs'
 import dotenv from 'dotenv'
+import { engineers } from "./fixtures.js";
+
+
 dotenv.config()
 
 
@@ -437,6 +440,25 @@ router.post( `/logout_daes`, async( req, res ) => {
         res.send( error )
     }
 }  )
+
+router.get( `/verify_license/:license_no`, async( req, res ) => {
+    try {
+        let engineer =  engineers?.filter( item => parseInt( item.reg_no  ) === parseInt( req.params.license_no ))
+        if( engineer.length  > 0 ) {
+            res.status( 200  ).json( engineer )
+        }
+        else {
+            res.status( 400  ).json( {
+                message: `Engineer with the registration number ${req.params.license_no} was  not found`
+            } )
+        }
+        
+    } catch (error) {
+        res.status( 500  ).json( {
+            message: `Engineer with the registration number ${req.params.license_no} was  not found`
+        } )
+    }
+} )
 
 export default router
 

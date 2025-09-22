@@ -1,6 +1,6 @@
-# @url = http://localhost:8753/api
+@url = http://localhost:8753/api
 # @url = https://auth.cert.works.go.ug/api
-@url = https://api.erb.go.ug/api
+# @url = https://api.erb.go.ug/api
 
 ###
 GET {{url}}
@@ -62,3 +62,7 @@ Content-Type: application/json
     "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNjOWUzYjYwLWQ2NDktNGZkZC04MWI5LWQyOWI2MmFjZmUyMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3N0Z2FwaS51Z3Bhc3MuZ28udWcvaWRwIiwic3ViIjoiODYxY2EyYWUtOWQ2MS00OGU4LWE1NmItMjRmODE3NmMwMTU0IiwiYXVkIjoiUUR6Tkc1a2d2cnRRN1BqZVdlekVOODQ1dzY2Y3IwdHk2OFRqSTF4R0Y1YWV3aGJVIiwiZXhwIjoxNjg0ODYzODc1LCJpYXQiOjE2ODQ4NjMyNzUsIm5vbmNlIjoiRFkzSXh5TWRLbkN4V2lIbWJ6eW5WcWZxVEpRSHF5UDRVWU5lY1lZR080Sjl1am5DT1FCUFcwNGthQnN5QSIsImF1dGhfdGltZSI6MTY4NDg2MzI3NSwiYXRfaGFzaCI6IldoQldqVDd5OFlCVXRhWUhUSjFqTHciLCJkYWVzX2NsYWltcyI6eyJzdWlkIjoiODYxY2EyYWUtOWQ2MS00OGU4LWE1NmItMjRmODE3NmMwMTU0IiwiYmlydGhkYXRlIjoiMTAvMi8xOTk3IDEyOjAwOjAwIEFNIiwibmFtZSI6IkpBTUVTIExVVEFMTyIsInBob25lIjoiKzI1Njc4MDgwMTQwOSIsImVtYWlsIjoiamFtZXMubHV0YWxvQG5pdGEuZ28udWciLCJnZW5kZXIiOiJNQUxFIiwiaWRfZG9jdW1lbnRfdHlwZSI6IjEiLCJpZF9kb2N1bWVudF9udW1iZXIiOiIwMTgzOTg5NTkiLCJsb2EiOiJMT0EzIiwiY291bnRyeSI6IlVHQSJ9fQ.YkQNpFkxhJAjjHMtuvO6wSBtOxjeseVJpFftcvgxKSIQRMekmtR8XqNUGIqcncZcg_GOBSpqF-al3n22E9iaZa0jhP23zVorngJZcVVVhsQNkHBQpM1MbOZwX9EuAeeLxiSaKBGnbpuC4d29EQ7UBch8ZmH0HcScErF8WSzwysU_zEb45AveFKUnsUSRs1w-dBhhZnL9d6tM8nYpmnzLnNNPCLAWMT0b83YPsfIYPTaxiXoVetb9ugG3I-LeHqCQSFGd6Ap8ydCLa3Kfe8U7Mie_BX6s7ivoEeVZ5kNFhP6z80ZjTQTJ2M6pbuFSi6BPwyt_742RciMpPbou-lnruw",
     "state": "ABCDE12345"
 }
+
+### verify
+GET {{url}}/verify_license/1958
+Content-Type: application/json
