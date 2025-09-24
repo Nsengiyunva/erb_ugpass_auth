@@ -46,6 +46,50 @@ const storage = multer.diskStorage( {
 
 const upload = multer( { storage } )
 
+const formatDateLong = (date) => {
+    const day = date.getDate();
+  
+    // Get ordinal suffix
+    const suffix =
+      day % 10 === 1 && day !== 11 ? "st" :
+      day % 10 === 2 && day !== 12 ? "nd" :
+      day % 10 === 3 && day !== 13 ? "rd" : "th";
+  
+    // Format month + year
+    const month = date.toLocaleString("en-UG", { month: "long" });
+    const year = date.getFullYear();
+  
+    return `${day}${suffix} ${month} ${year}`;
+}
+
+const calcExpiryDate  = (type, date)  =>  {
+    if( date  ){
+        let year = date.getFullYear();
+
+        switch( type?.toLowerCase()  ){
+            case "registered":
+            case "temporary":
+                let last_day = new Date(year, 11, 31);
+                return { expiry:formatDateLong(last_day), actual: last_day };
+            case "techinician":
+            case "technician":
+            case "technologist":
+                date.setFullYear( date.getFullYear() + 3 );
+                let exp_day = new Date(date.getFullYear(), 11, 31);
+                return { expiry: formatDateLong(exp_day), actual: exp_day };
+            default:
+                return 
+        }
+    }
+}
+
+const getStatus = (expiryDate)  => {
+    const now = new Date();       // current date & time
+    const exp = new Date(expiryDate);
+  
+    return exp >= now ? "Active" : "Expired";
+  }
+
 //file upload
 router.get( "/", async ( _, res ) => {
     try {
@@ -166,18 +210,18 @@ const { access_token, email_address }  = req.body
     }
 
     let data = new FormData();
-    data.append('model', '{\n  "documentType": "PADES",\n"id":"ezrawayesu@gmail.com",\n"placeHolderCoordinates": {\n    "pageNumber": 1,\n    "signatureXaxis": 400.0,\n    "signatureYaxis": "450.0"\n  }\n}');
+    data.append('model', '{\n  "documentType": "PADES",\n"id": '+email_address+',\n"placeHolderCoordinates": {\n    "pageNumber": 1,\n    "signatureXaxis": 400.0,\n    "signatureYaxis": "450.0"\n  }\n}');
     data.append('file', fs.createReadStream('sample.pdf'));
 
     let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign',
-    headers: { 
-        'UgPassAuthorization': `Bearer ${access_token}`, 
-        ...data.getHeaders()
-    },
-    data : data
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign',
+        headers: { 
+            'UgPassAuthorization': `Bearer ${access_token}`, 
+            ...data.getHeaders()
+        },
+        data : data
     };
 
     axios.request(config)
@@ -371,7 +415,23 @@ router.post( `/logout_daes`, async( req, res ) => {
 
 router.get( `/verify_license/:license_no`, async( req, res ) => {
     try {
-        let engineer =  engineers?.filter( item => parseInt( item.reg_no  ) === parseInt( req.params.license_no ))
+        let engineer =  engineers?.filter( item => {
+            if( item.type === "registered" )  {
+                return parseInt( item.reg_no ) === parseInt( req.params.license_no )
+            }
+            return item.reg_no === req.params.license_no
+        }  ).map( person => {
+            let formatted_date = new Date( person.registration_date  )
+            let expiry_date = calcExpiryDate( person?.type, formatted_date  );
+
+            return {
+                expiry_date: expiry_date?.expiry,
+                status: getStatus( expiry_date?.actual ),
+                ...person,
+
+            }
+        } )
+
         if( engineer.length  > 0 ) {
             res.status( 200  ).json( engineer )
         }
