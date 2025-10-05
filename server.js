@@ -7,7 +7,6 @@ import sequelize from './config/db.js';
 dotenv.config()
 
 // global.__basedir = __dirname;
-
 const app = express()
 
 app.use(express.json({ limit: "200mb" }));
