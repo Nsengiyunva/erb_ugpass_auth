@@ -1,13 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
-
-// import sequelize from './config/db.js';
-
 import router from './routes/index.js'
-// import authRoutes from './middleware/auth_middleware.js'
-const sequelize = require('./config/db.js');
-const authMiddleware = require('./middleware/auth_middleware'.js);
+import authRoutes from './routes/auth.js'
+import sequelize from './config/db.js';
 dotenv.config()
 
 // global.__basedir = __dirname;
