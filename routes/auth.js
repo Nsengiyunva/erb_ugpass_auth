@@ -56,4 +56,4 @@ router.get("/profile", authMiddleware, async (req, res) => {
   res.json(user);
 });
 
-module.exports = router;
+export default router;
