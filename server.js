@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 
-import sequelize from './config/db';
+import sequelize from './config/db.js';
 import router from './routes/index.js'
 import authRoutes from './middleware/auth_middleware.js'
 dotenv.config()
