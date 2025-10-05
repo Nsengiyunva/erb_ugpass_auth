@@ -4,7 +4,8 @@ import * as dotenv from 'dotenv'
 
 import sequelize from './config/db.js';
 import router from './routes/index.js'
-import authRoutes from './middleware/auth_middleware.js'
+// import authRoutes from './middleware/auth_middleware.js'
+const authMiddleware = require('./middleware/auth_middleware');
 dotenv.config()
 
 // global.__basedir = __dirname;
