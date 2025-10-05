@@ -12,4 +12,4 @@ const sequelize = new Sequelize(
         logging: true
     } );
 
-module.exports = sequelize;
+export default sequelize;
