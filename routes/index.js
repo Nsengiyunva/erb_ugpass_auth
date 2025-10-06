@@ -7,7 +7,7 @@ import FormData from 'form-data'
 import qs from 'qs'
 import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import authMiddleware from "../middleware/auth_middleware.js";
 
 
 dotenv.config()
