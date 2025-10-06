@@ -67,6 +67,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/1880
 Content-Type: application/json
+# Authorization: 'Bearer'
 
 ### register
 POST {{auth_api}}/register
@@ -74,6 +75,15 @@ Content-Type: application/json
 
 {
     "username": "admin",
+    "email": "admin@erb.go.ug",
+    "password": "admin256"
+}
+
+### Login
+POST {{auth_api}}/login
+Content-Type: application/json
+
+{
     "email": "admin@erb.go.ug",
     "password": "admin256"
 }

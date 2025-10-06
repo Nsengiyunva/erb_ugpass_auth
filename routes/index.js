@@ -7,6 +7,7 @@ import FormData from 'form-data'
 import qs from 'qs'
 import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 
 dotenv.config()
@@ -413,7 +414,7 @@ router.post( `/logout_daes`, async( req, res ) => {
     }
 }  )
 
-router.get( `/verify_license/:license_no`, async( req, res ) => {
+router.get( `/verify_license/:license_no`, authMiddleware, async( req, res ) => {
     try {
         let engineer =  engineers?.filter( item => {
             if( item.type === "registered" )  {

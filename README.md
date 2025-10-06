@@ -21,5 +21,8 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 ---------------------------------------------------------
 -  SavPlayStore - Documentation - we need to connect it to the phone device.
 -  Documentation of the system.
--   
+-------------------------------------
+- BI Design API -
+- SavAppStore - Pending Integration
+-------------------------------------
 
