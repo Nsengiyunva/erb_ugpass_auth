@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
 });
 app.use( express.json() )
 
-app.use("/auth/api", authRoutes )
+app.use("auth/api", authRoutes )
 app.use( "/api", router )
 
 

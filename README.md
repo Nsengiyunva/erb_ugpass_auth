@@ -18,4 +18,8 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 - initiate the sign off first
 
 "{"documentType":"PADES","id": "trevor.mukwaya@nita.go.ug","placeHolderCoordinates": {"pageNumber": 1,"signatureXaxis": 400.0,"signatureYaxis": 450.0,"}}"
+---------------------------------------------------------
+-  SavPlayStore - Documentation - we need to connect it to the phone device.
+-  Documentation of the system.
+-   
 
