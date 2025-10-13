@@ -4,7 +4,8 @@ import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 import sequelize from './config/db.js';
-import { sendMail } from "./mailer.js";
+// import { sendMail } from "./mailer.js";
+import { sendStyledMail } from "./mailer.js";
 dotenv.config()
 
 // global.__basedir = __dirname;
