@@ -31,7 +31,7 @@ jobs:
         run: npm test || echo "No tests found, skipping..."
 
       # 4️⃣ Deploy to remote server
-      - name: DEPLOY TO THE VM
+      - name: DEPLOY TO THE ITCO VM
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
