@@ -38,10 +38,10 @@ app.use( "/api", router )
 //send email notification
 app.get("/email/send", async (_, res) => {
   try {
-    await sendMail("kingbecks07@gmail.com", "Hello!", "This is a test email.");
+    await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
     res.json({ message: "Email sent successfully!" });
   } catch (err) {
-    console.error( "failed to send email please", err );
+    console.error( "failed to send email", err );
     res.status(500).json({ error: "Failed to send email" });
   }
 });

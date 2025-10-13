@@ -87,3 +87,8 @@ Content-Type: application/json
     "email": "admin@erb.go.ug",
     "password": "admin256"
 }
+
+
+### send  email
+GET https://api.erb.go.ug/email/send
+Content-Type: application/json
