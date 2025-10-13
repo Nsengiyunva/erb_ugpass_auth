@@ -39,7 +39,7 @@ app.use( "/api", router )
 //send email notification
 app.get("/email/send", async (_, res) => {
 
-  const htmlTemplate = `
+  const htmlContent = `
   <div style="font-family: Arial, sans-serif; background-color: #f6f9fc; padding: 20px;">
     <div style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
       <h2 style="color: #007bff;">Hello, King Isaac 👋</h2>
