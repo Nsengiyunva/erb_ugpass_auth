@@ -1,14 +1,15 @@
-FROM node:alpine
+FROM node:alpine 
 
-LABEL version="1.0"
-LABEL description="Authentication Service for UgPass"
+WORKDIR /usr/src/app 
 
-WORKDIR /usr/app 
+COPY package*.json  ./
 
-COPY package*.json ./
-
-RUN npm install && npm cache clean --force
+RUN npm ci --omit=dev
 
 COPY . .
 
+EXPOSE 8753
+
 CMD [ "node", "server.js" ]
+
+

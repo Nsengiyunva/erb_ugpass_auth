@@ -58,7 +58,6 @@ app.get("/email/send", async (_, res) => {
   </div>
 `;
 
-
   try {
     // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
     await sendStyledMail("isaacnsengiyunva@gmail.com", "Email Test", htmlContent);
@@ -66,6 +65,27 @@ app.get("/email/send", async (_, res) => {
   } catch (err) {
     console.error( "failed to send email", err );
     res.status(500).json({ error: "Failed to send email" });
+  }
+});
+
+app.post("/send-batch", async (req, res) => {
+  const { emails, subject, htmlContent } = req.body;
+
+  if (!emails || !Array.isArray(emails) || emails.length === 0) {
+    return res.status(400).json({ message: "Emails array is required" });
+  }
+
+  try {
+    await sendEmailsInChunks(emails, subject, htmlContent, {
+      chunkSize: 50,
+      retryLimit: 3,
+      rateLimitPerSec: 5, // adjust as needed
+    });
+
+    res.status(200).json({ message: "All emails sent successfully!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to send some emails", error: err.message });
   }
 });
 
