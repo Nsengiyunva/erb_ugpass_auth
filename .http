@@ -67,7 +67,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/1880
 Content-Type: application/json
-# Authorization: 'Bearer'
+Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjAwNzgwOTcsImV4cCI6MTc2MDA4MTY5N30.njIACbGSHSmZLowjCibu2lI6KA9AMHGzdcWRDaryFng'
 
 ### register
 POST {{auth_api}}/register

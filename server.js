@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 import sequelize from './config/db.js';
+import { sendMail } from "./mailer.js";
 dotenv.config()
 
 // global.__basedir = __dirname;
@@ -33,6 +34,17 @@ app.use( express.json() )
 
 app.use("/auth/api", authRoutes )
 app.use( "/api", router )
+
+//send email notification
+app.get("/email/send", async (_, res) => {
+  try {
+    await sendMail("kingbecks07@gmail.com", "Hello!", "This is a test email.");
+    res.json({ message: "Email sent successfully!" });
+  } catch (err) {
+    console.error( "failed to send email please", err );
+    res.status(500).json({ error: "Failed to send email" });
+  }
+});
 
 
 app.listen( port, () => {
