@@ -3,7 +3,7 @@
 @url = https://api.erb.go.ug/api
 @auth_api = https://api.erb.go.ug/auth/api
 
-###
+### Health Checkpoint API
 GET {{url}}
 Content-Type: application/json
 

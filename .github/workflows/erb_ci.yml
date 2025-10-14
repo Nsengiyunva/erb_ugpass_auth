@@ -1,15 +1,12 @@
-name: ERB API DEPLOYMENT
+name: ERB  API SYSTEM APPLICATION
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: self-hosted
 
     steps:
@@ -21,17 +18,23 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm ci || npm install
-
-      - name: Run tests
-        run: npm test || echo "No tests found, skipping..."
-
-      - name: Build Docker image
-        run: docker build -t erb-api:latest .
-
-      - name: Restart Docker container
+      - name: Install Dependencies
         run: |
-          docker stop erb-api || true
-          docker rm erb-api || true
-          docker run -d -p 8754:8754 --name erb-api erb-api:latest
+          npm install
+          npm test || echo "No tests found"
+
+      - name: Deploy ERB API with Docker Compose
+        run: |
+          cd $GITHUB_WORKSPACE
+
+          echo "Stopping Old containers..."
+          docker-compose down || true
+
+          echo "Building and Starting New containers..."
+          docker-compose up -d --build
+
+      - name: Show container status
+        run: docker ps
+
+      - name: Show API logs (last 50 lines)
+        run: docker logs --tail 50 erb-api || true

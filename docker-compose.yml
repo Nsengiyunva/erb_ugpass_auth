@@ -1,18 +1,35 @@
-version: "3"
+version: "3.8"
+
 services:
-  authentication_service:
-    image: nginx
-    container_name: authentication_service
-    volumes:
-      - './nginx/default.conf:/etc/nginx/nginx.conf'
-    ports:
-      - '9119:80'
-  app2:
-    container_name: app2
-    build:
-      context: .
-      dockerfile: Dockerfile 
-    ports:
-      - '8750:80'
+  db:
+    image: mysql:8
+    container_name: erb-mysql
+    restart: always
+    env_file: .env
     environment:
-      - APPID=8750
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: erb-api
+    restart: always
+    env_file: .env
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASS}
+    ports:
+      - "8753:8753"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
