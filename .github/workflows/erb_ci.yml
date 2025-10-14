@@ -1,4 +1,4 @@
-name: ERB NODEJS-EXPRESS-API DEPLOYMENT TO ITCO VM
+name: ERB API DEPLOYMENT
 
 on:
   push:
@@ -10,67 +10,28 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js for optional testing
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      # 3️⃣ Install dependencies & run tests
-    #   - name: Install dependencies
-    #     run: npm ci
+      - name: Install dependencies
+        run: npm ci || npm install
 
-    #   - name: Run tests
-    #     run: npm test || echo "No tests found, skipping..."
+      - name: Run tests
+        run: npm test || echo "No tests found, skipping..."
 
-      # 4️⃣ Deploy to remote server
-      - name: DEPLOY TO THE ITCO VM - TRIGGER
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      - name: Build Docker image
+        run: docker build -t erb-api:latest .
+
+      - name: Restart Docker container
         run: |
-          echo "🔑 Setting up SSH key..."
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-
-          echo "🚀 Syncing files to server..."
-          # Use rsync to copy only changed files
-          rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" --exclude 'node_modules' ./ $SERVER_USER@$SERVER_HOST:~/erb-api
-
-          ssh -o StrictHostKeyChecking=no -i private_key.pem $SERVER_USER@$SERVER_HOST << 'EOF'
-            cd ~/erb-api
-
-            echo "🛠 Checking for changes in Dockerfile or package.json..."
-            if [ -f .last_build_commit ]; then
-              LAST_COMMIT=$(cat .last_build_commit)
-            else
-              LAST_COMMIT=""
-            fi
-            CURRENT_COMMIT=$(git rev-parse HEAD)
-
-            if [ "$LAST_COMMIT" != "$CURRENT_COMMIT" ]; then
-              echo "🔄 Changes detected. Rebuilding Docker image..."
-              docker build -t erb-api:latest .
-              echo "$CURRENT_COMMIT" > .last_build_commit
-
-              echo "Stopping old container (if exists)..."
-              docker stop erb-api || true
-              docker rm erb-api || true
-
-              echo "Running new container..."
-              docker run -d -p 8753:8753 --name erb-api erb-api:latest
-
-              echo "✅ ERB Deployment is complete!"
-            else
-              echo "✔ No changes detected in Dockerfile or dependencies. Skipping rebuild."
-            fi
-          EOF
+          docker stop erb-api || true
+          docker rm erb-api || true
+          docker run -d -p 8754:8754 --name erb-api erb-api:latest

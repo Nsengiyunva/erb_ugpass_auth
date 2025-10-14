@@ -8,7 +8,7 @@ COPY package*.json  ./
 
 COPY . .
 
-EXPOSE 8753
+EXPOSE 8754
 
 CMD [ "node", "server.js" ]
 
