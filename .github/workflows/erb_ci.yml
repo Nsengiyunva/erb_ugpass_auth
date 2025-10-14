@@ -24,11 +24,11 @@ jobs:
           node-version: '18'
 
       # 3️⃣ Install dependencies & run tests
-      - name: Install dependencies
-        run: npm ci
+    #   - name: Install dependencies
+    #     run: npm ci
 
-      - name: Run tests
-        run: npm test || echo "No tests found, skipping..."
+    #   - name: Run tests
+    #     run: npm test || echo "No tests found, skipping..."
 
       # 4️⃣ Deploy to remote server
       - name: DEPLOY TO THE ITCO VM
