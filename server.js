@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true, limit: "200mb" }));
 
 //connect to the db
 sequelize.sync( { alter: true  })
-.then( () => console.log("Mysql database connected.") )
+.then( () => console.log("Mysql Database connected.") )
 .catch( ( err ) => console.error("Database connection error", err ) );
 
 const port = 8754
