@@ -112,8 +112,6 @@ const PORT = process.env.PORT || 8754;
 const startServer = async () => {
   await connectWithRetry(); // waits until DB is ready
 
-    app.options('*', cors());
-
     app.use(function (req, res, next) {
 
       res.header('Access-Control-Allow-Origin', "*");
