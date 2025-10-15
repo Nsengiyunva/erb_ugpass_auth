@@ -26,3 +26,5 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 - SavAppStore - Pending Integration
 -------------------------------------
 
+## Adds Github Actions
+
