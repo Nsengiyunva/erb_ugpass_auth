@@ -1,7 +1,7 @@
 {
   "name": "sign_service",
   "version": "1.0.0",
-  "description": "This is a proxy server for connecting to the ughub ugpass server",
+  "description": "This is ERB API NodeJS Express API Repository",
   "main": "server.js",
   "repository": "nita.go.ug",
   "author": "NITA Dev",
