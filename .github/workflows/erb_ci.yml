@@ -23,6 +23,12 @@ jobs:
           npm install
           npm test || echo "No tests found"
 
+      - name: Link .ENV FILE
+        run: |
+          ln -sf /home/user1/ERB/erb_api.env $GITHUB_WORKSPACE/.env
+          ls -l $GITHUB_WORKSPACE/.env
+
+
       - name: Deploy ERB API with Docker Compose
         run: |
           cd $GITHUB_WORKSPACE
