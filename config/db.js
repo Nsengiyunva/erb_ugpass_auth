@@ -12,8 +12,10 @@ const sequelize = new Sequelize(
         dialect: "mysql",
         logging: true,
         dialectOptions: {
-            ssl: false
-          },
+            ssl: {
+                rejectUnauthorized: false
+            }
+        },
     } );
 
 
