@@ -10,6 +10,9 @@ COPY . .
 
 EXPOSE 8754
 
-CMD [ "node", "server.js" ]
+# CMD [ "node", "server.js" ]
+
+CMD ["./db_wait.sh", "db", "node", "server.js"]
+
 
 
