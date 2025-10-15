@@ -11,6 +11,8 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_SSL_DISABLED: "true"
+    command: --skip-ssl --default-authentication-plugin=mysql_native_password
     ports:
       - "3307:3306"
     volumes:
