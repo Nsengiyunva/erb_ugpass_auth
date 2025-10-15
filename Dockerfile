@@ -19,4 +19,5 @@ COPY . .
 EXPOSE 8754
 
 # Run script via bash
-CMD ["bash", "./db_wait.sh", "db", "npm", "start"]
+# CMD ["bash", "./db_wait.sh", "db", "npm", "start"]
+CMD ["npm", "start"]
