@@ -20,7 +20,7 @@ sequelize.sync( { alter: true  })
 .then( () => console.log("Mysql database connected.") )
 .catch( ( err ) => console.error("Database connection error", err ) );
 
-const port = 8753
+const port = 8754
 
 app.options('*', cors());
 app.use(function (req, res, next) {
