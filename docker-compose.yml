@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: mysql:8
+    image: mysql:8.4
     container_name: erb-mysql
     restart: always
     env_file: .env
@@ -11,10 +11,7 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_SSL_DISABLED: "true"
-    command: --authentication-policy=mysql_native_password
-
-
+    command: --require_secure_transport=OFF
     ports:
       - "3307:3306"
     volumes:
