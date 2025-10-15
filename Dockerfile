@@ -12,7 +12,10 @@ EXPOSE 8754
 
 # CMD [ "node", "server.js" ]
 # CORRECT
-CMD ["bash", "./db_wait.sh", "db", "node", "server.js"]
+# CMD ["bash", "./db_wait.sh", "db", "node", "server.js"]
+ENTRYPOINT ["./db_wait.sh"]
+CMD ["db", "npm", "start"]
+
 
 
 
