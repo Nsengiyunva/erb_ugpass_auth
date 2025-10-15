@@ -1,18 +1,14 @@
-FROM node:alpine 
+FROM node:18-alpine
 
-WORKDIR /usr/src/app 
+WORKDIR /usr/src/app
 
-COPY package*.json  ./
+# Install bash and mysql-client (for mysqladmin ping)
+RUN apk add --no-cache bash mysql-client
 
-# RUN npm ci --omit=dev
+COPY package*.json ./
+RUN npm install
 
 COPY . .
-
-EXPOSE 8754
-
-# CMD [ "node", "server.js" ]
-# CORRECT
-# CMD ["bash", "./db_wait.sh", "db", "node", "server.js"]
 
 # Copy wait-for-db script
 COPY db_wait.sh ./
@@ -20,10 +16,7 @@ COPY db_wait.sh ./
 # Make it executable
 RUN chmod +x db_wait.sh
 
-ENTRYPOINT ["./db_wait.sh"]
-CMD ["db", "npm", "start"]
+EXPOSE 8754
 
-
-
-
-
+# Run script via bash
+CMD ["bash", "./db_wait.sh", "db", "npm", "start"]
