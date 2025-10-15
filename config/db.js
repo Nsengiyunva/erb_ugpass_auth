@@ -36,7 +36,7 @@ const sequelize = new Sequelize(
     dialectOptions: {
       ssl: false,
     },
-    logging: false,
+    logging: true,
   }
 );
 

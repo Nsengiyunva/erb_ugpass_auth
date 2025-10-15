@@ -12,6 +12,7 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASS}
       MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_SSL_DISABLED: "true"
     command: --require_secure_transport=OFF
     ports:
       - "3307:3306"
@@ -25,7 +26,7 @@ services:
     env_file: .env
     environment:
       DB_HOST: db
-      DB_PORT: 3306
+      DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASS}
