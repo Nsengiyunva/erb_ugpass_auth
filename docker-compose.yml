@@ -12,7 +12,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASS}
       MYSQL_SSL_DISABLED: "true"
-    command: --default-authentication-plugin=mysql_native_password
+    command: --authentication-policy=mysql_native_password
+
 
     ports:
       - "3307:3306"
