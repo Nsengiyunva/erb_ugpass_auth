@@ -11,8 +11,9 @@ COPY . .
 EXPOSE 8754
 
 # CMD [ "node", "server.js" ]
+# CORRECT
+CMD ["bash", "./db_wait.sh", "db", "node", "server.js"]
 
-CMD ["./db_wait.sh", "db", "node", "server.js"]
 
 
 
