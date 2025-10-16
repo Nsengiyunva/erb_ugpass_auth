@@ -11,7 +11,6 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASS}
-      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
       MYSQL_SSL_DISABLED: "true"
     command: --require_secure_transport=OFF
     ports:
