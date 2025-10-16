@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
     tls: {
       rejectUnauthorized: false, // disable cert verification if necessary
     },
-  });
+});
 
   // --- Helper: Delay utility ---
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
