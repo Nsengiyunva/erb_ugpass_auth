@@ -4,25 +4,25 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-    host: "relay.umcs.go.ug",
-    port: 587,
-    secure: false, // use TLS if port 465
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
     auth: {
-      user: "licenses@erb.go.ug",
-      pass: "081IZCno7sEghbh2LwbfGVtB",
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
-      rejectUnauthorized: false, // disable cert verification if necessary
+      rejectUnauthorized: false,
     },
 });
 
   // --- Helper: Delay utility ---
-const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 
   export async function sendMail(to, subject, text) {
     const info = await transporter.sendMail({
-      from: "licenses@erb.go.ug",
+      from: process.env.SMTP_USER,
       to,
       subject,
       text,
