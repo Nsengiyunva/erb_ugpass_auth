@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP Scoring Analysis - Enterprise Fintech</title>
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Arial', sans-serif; background: #f0f2f5; padding: 20px; color: #333; }
+.container { max-width: 1600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+
+/* HEADER */
+.header { text-align: center; margin-bottom: 40px; border-bottom: 4px solid #1a3a6b; padding-bottom: 20px; }
+h1 { color: #1a3a6b; font-size: 32px; margin-bottom: 8px; font-weight: 700; }
+.subtitle { color: #666; font-size: 15px; margin-bottom: 8px; }
+.use-case { color: #d9534f; font-weight: bold; font-size: 14px; margin-top: 10px; background: #ffe6e6; padding: 8px 12px; border-radius: 5px; display: inline-block; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+th { background: linear-gradient(135deg, #1a3a6b 0%, #0f2a4f 100%); color: white; padding: 16px; text-align: left; font-weight: 700; border: none; font-size: 13px; }
+td { padding: 14px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+tr:hover { background-color: #f8f9ff; transition: all 0.2s ease; }
+.kpi-label { font-weight: 700; color: #1a3a6b; width: 220px; min-width: 220px; font-size: 13px; }
+.score-cell { text-align: center; font-weight: 700; font-size: 20px; min-width: 70px; padding: 10px; border-radius: 5px; margin-bottom: 8px; }
+.comment-cell { color: #555; font-size: 12px; line-height: 1.5; }
+.score-9 { color: #27ae60; background: #d4edda; }
+.score-8 { color: #2980b9; background: #d1ecf1; }
+.score-7 { color: #f39c12; background: #fff3cd; }
+.score-6 { color: #e67e22; background: #ffe6cc; }
+.score-5 { color: #c0392b; background: #f8d7da; }
+.score-4 { color: #922b21; background: #f5c6cb; }
+.score-3 { color: #7b241c; background: #f5b7b1; }
+.score-2 { color: #6c3483; background: #e8daef; }
+.score-1 { color: #5b2c6f; background: #d7bde2; }
+
+/* SUMMARY / RECOMMENDATION / LEGEND */
+.summary-section, .recommendation, .legend { 
+    margin-top: 40px; 
+    padding: 30px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    break-inside: avoid; 
+}
+.summary-section { background: linear-gradient(135deg, #ecf0f1 0%, #f8f9fa 100%); border-left: 6px solid #1a3a6b; }
+.recommendation { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border-left: 6px solid #27ae60; }
+.legend { background: linear-gradient(135deg, #f0f0f0 0%, #fafafa 100%); border: 2px solid #1a3a6b; }
+.summary-section h2, .recommendation h3, .legend h4 { color: #1a3a6b; margin-bottom: 15px; font-weight: 700; }
+
+/* PRINT SPECIFIC */
+@media print {
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; padding: 20px; max-width: 100%; }
+    .print-button { display: none; }
+    
+    /* Avoid breaking inside important sections */
+    table, tr, td, th, .summary-section, .recommendation, .legend { page-break-inside: avoid !important; }
+    
+    thead { display: table-header-group; } /* repeat headers on page breaks */
+    tfoot { display: table-footer-group; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="print-button">
+        <button onclick="window.print()">🖨️ Print / Export as PDF</button>
+    </div>
+
+    <div class="header">
+        <h1>🏢 ERP Scoring Analysis - Enterprise Fintech</h1>
+        <p class="subtitle">Scale: 1-10 | All 12 KPIs Equally Weighted | Fintech-Focused Integration & Customization</p>
+        <span class="use-case">USE CASE: Full integrations and customizations for fintech operations</span>
+    </div>
+
+    <!-- Table content goes here -->
+    <table>
+        <thead>
+            <tr>
+                <th>KPI / ERP</th>
+                <th>Oracle</th>
+                <th>Sage</th>
+                <th>SAP</th>
+                <th>Tally</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Copy your previous rows here, unchanged -->
+        </tbody>
+    </table>
+
+    <!-- SUMMARY SECTION -->
+    <div class="summary-section">
+        <h2>📊 Summary & Rankings (Fintech-Optimized)</h2>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>ERP</th>
+                    <th>Cost</th>
+                    <th>Usability</th>
+                    <th>Scalability</th>
+                    <th>Customization</th>
+                    <th>Compliance</th>
+                    <th>Functionality</th>
+                    <th>Support</th>
+                    <th>Real-Time</th>
+                    <th>Security</th>
+                    <th>API</th>
+                    <th>Multi-Currency</th>
+                    <th>Analytics</th>
+                    <th>Avg Score</th>
+                    <th>Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Copy your summary rows here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Recommendation Section -->
+    <div class="recommendation">
+        <h3>✅ FINAL RECOMMENDATION FOR FINTECH ENTERPRISE</h3>
+        <!-- Copy recommendation content here -->
+    </div>
+</div>
+</body>
+</html>

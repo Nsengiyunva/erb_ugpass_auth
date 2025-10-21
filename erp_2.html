@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Scoring Analysis - Enterprise Fintech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 5px;
+        }
+
+        .use-case {
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .tier-selector {
+            background: #f8fafc;
+            padding: 30px 40px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .tier-selector h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .tier-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tier-btn {
+            padding: 12px 24px;
+            border: 2px solid #cbd5e1;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #475569;
+        }
+
+        .tier-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .tier-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 40px;
+            background: #f8fafc;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.winner {
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .pricing-card.winner::before {
+            content: "⭐ RECOMMENDED";
+            display: block;
+            background: #fbbf24;
+            color: #78350f;
+            font-weight: 700;
+            text-align: center;
+            margin: -30px -30px 20px -30px;
+            padding: 10px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .erp-name {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+
+        .tier-name {
+            color: #64748b;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+
+        .user-range {
+            color: #64748b;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .tco {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.9em;
+            color: #475569;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .fintech-fit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 6px;
+        }
+
+        .fit-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.9em;
+        }
+
+        .fit-score {
+            display: flex;
+            gap: 3px;
+        }
+
+        .fit-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+        }
+
+        .fit-dot.filled {
+            background: #10b981;
+        }
+
+        .fit-dot.medium {
+            background: #f59e0b;
+        }
+
+        .fit-dot.low {
+            background: #ef4444;
+        }
+
+        .notes {
+            font-size: 0.85em;
+            color: #64748b;
+            font-style: italic;
+            line-height: 1.5;
+            padding: 12px;
+            background: #f8fafc;
+            border-left: 3px solid #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .notes.winner-note {
+            background: #fef3c7;
+            border-left-color: #fbbf24;
+            color: #78350f;
+            font-weight: 600;
+        }
+
+        .comparison-table {
+            padding: 40px;
+            overflow-x: auto;
+        }
+
+        .comparison-table h2 {
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .kpi-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.05em;
+        }
+
+        .score {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+
+        .score.high {
+            color: #10b981;
+        }
+
+        .score.medium {
+            color: #f59e0b;
+        }
+
+        .score.low {
+            color: #ef4444;
+        }
+
+        .description {
+            font-size: 0.9em;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #78350f;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 40px;
+        }
+
+        .summary h2 {
+            color: #1e3a8a;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .summary-card h3 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .summary-score {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .rank {
+            color: #64748b;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .recommendation {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #fbbf24;
+        }
+
+        .recommendation h3 {
+            color: #1e3a8a;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .advantages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .advantage-item {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .advantage-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tier-buttons {
+                flex-direction: column;
+            }
+
+            .tier-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 ERP Scoring Analysis - Enterprise Fintech</h1>
+            <p>Scale: 1-10 | All 12 KPIs Equally Weighted | Fintech-Focused Integration & Customization</p>
+            <div class="use-case">USE CASE: Full integrations and customizations for fintech operations</div>
+        </div>
+
+        <div class="tier-selector">
+            <!-- <h2>📊 Select Pricing Tier to Compare</h2>
+            <div class="tier-buttons">
+                <button class="tier-btn" onclick="showTier('starter')">Starter / SMB</button>
+                <button class="tier-btn" onclick="showTier('professional')">Professional / Mid-Market</button>
+                <button class="tier-btn active" onclick="showTier('enterprise')">Enterprise / Large-Scale</button>
+            </div> -->
+        </div>
+
+        <div class="pricing-grid" id="pricing-grid">
+            <!-- Pricing cards will be inserted here by JavaScript -->
+        </div>
+
+        <div class="comparison-table">
+            <h2>📊 Detailed KPI Comparison - Enterprise Tier</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>KPI / Metric</th>
+                        <th>Oracle</th>
+                        <th>Sage</th>
+                        <th>SAP</th>
+                        <th>Tally</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="kpi-name">💰 Cost</td>
+                        <td>
+                            <div class="score medium">6</div>
+                            <div class="description">3-yr TCO: <span class="highlight">$1.12M</span> | Premium pricing justified by fintech capabilities | High initial investment offset by long-term scalability | Worth cost for mission-critical fintech systems</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">3-yr TCO: <span class="highlight">$552.5K</span> | Lower cost but insufficient customization depth for complex fintech requirements | Limited advanced features</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">3-yr TCO: <span class="highlight">~$1M+</span> | Higher costs comparable to Oracle | Complex customization adds significant expense</div>
+                        </td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description">3-yr TCO: <span class="highlight">~$100K-200K</span> | Extremely affordable but fundamentally inadequate for fintech integration</div>
+                        </td>
+                    </tr>
+                    <tr class="package-category">
+                        <td colspan="5" style="text-align: center; padding: 12px;">ORACLE PACKAGE PRICING BREAKDOWN</td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Starter Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Oracle Cloud ERP Essentials</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$175/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">10-50 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$252K - $378K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Professional Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Oracle Cloud ERP Professional</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$250/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">50-250 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$600K - $900K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Enterprise Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Oracle Fusion Cloud ERP Enterprise</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$350/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">250-1000+ users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$1.12M - $1.8M</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-category">
+                        <td colspan="5" style="text-align: center; padding: 12px;">SAGE PACKAGE PRICING BREAKDOWN</td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Starter Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Sage 50cloud</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$55/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">1-5 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$20K - $40K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Professional Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Sage Intacct</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$150/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">10-100 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$216K - $432K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Enterprise Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Sage X3 Enterprise</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$200/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">100-500 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$552.5K - $720K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-category">
+                        <td colspan="5" style="text-align: center; padding: 12px;">SAP PACKAGE PRICING BREAKDOWN</td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Starter Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">SAP Business One</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$95/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">10-100 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$137K - $342K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Professional Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">SAP Business ByDesign</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$180/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">50-500 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$432K - $1.08M</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Enterprise Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">SAP S/4HANA Cloud</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$300/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">500-10,000+ users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$1M - $1.5M</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-category">
+                        <td colspan="5" style="text-align: center; padding: 12px;">TALLY PACKAGE PRICING BREAKDOWN</td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Starter Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">TallyPrime Silver</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$18/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">1-10 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$6.5K - $22K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Professional Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">TallyPrime Gold</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$35/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">5-25 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$42K - $105K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="package-row">
+                        <td style="color: #0c4a6e; font-weight: 700;">Enterprise Package</td>
+                        <td colspan="4">
+                            <div class="package-details">
+                                <div class="package-item">
+                                    <span class="package-label">Plan:</span>
+                                    <span class="package-value">Tally Prime Enterprise</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">Monthly Cost:</span>
+                                    <span class="package-value">$50/user</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">User Range:</span>
+                                    <span class="package-value">25-100 users</span>
+                                </div>
+                                <div class="package-item">
+                                    <span class="package-label">3-Year TCO:</span>
+                                    <span class="package-value">$100K - $200K</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td class="kpi-name">🎯 Usability</td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Modern UI with fintech-specific dashboards | Comprehensive training | Steep learning curve for complex integrations</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">User-friendly design | Intuitive navigation | Quick adoption | Limited depth for advanced fintech operations</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">Highly complex interface | Steep learning curve | Better suited for manufacturing than fintech</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Simple interface | Straightforward for basic accounting | Not designed for complex fintech operations</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">📈 Scalability (Transaction Volume)</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ FINTECH ADVANTAGE:</span> Handles 1000+ concurrent users | Multi-region deployment | Supports transaction volumes essential for fintech | Global payment processing capable</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Scales to 300-500 users | Performance degradation under high-volume fintech transactions | Limited for multi-region operations</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">Handles 1000+ users | Manufacturing-optimized scaling | Not specifically tuned for fintech transaction loads</div>
+                        </td>
+                        <td>
+                            <div class="score low">2</div>
+                            <div class="description">Critical limitation: Cannot scale to fintech requirements | Breaks down under transaction volumes | Unsuitable for fintech</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🔧 Customization & Integration</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ ORACLE STRENGTH:</span> 500+ pre-built integrations | Fintech-specific APIs & payment gateways | Works with payment processors, blockchain, crypto wallets | Real-time data synchronization | Custom development framework</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">Limited customization for complex fintech workflows | 200 integrations insufficient for modern fintech stack | Lacks specialized payment gateway integrations</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Customizable but complex implementation | 300+ integrations | Not optimized for fintech-specific requirements</div>
+                        </td>
+                        <td>
+                            <div class="score low">2</div>
+                            <div class="description">Virtually no customization support | Cannot integrate with modern fintech APIs | No payment gateway support</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🔒 Risk & Compliance</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ FINTECH CRITICAL:</span> PCI-DSS Level 1 compliant | GDPR, HIPAA, SOX compliant | Advanced audit trails | Fraud detection capabilities | Real-time transaction logging | Regulatory reporting pre-built</div>
+                        </td>
+                        <td>
+                            <div class="score medium">6</div>
+                            <div class="description">Basic security standards | Limited PCI-DSS compliance tools | Inadequate for regulated fintech operations</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">Good security architecture | Compliance support available | Not fintech-specialized</div>
+                        </td>
+                        <td>
+                            <div class="score low">1</div>
+                            <div class="description">Critical risk: No financial compliance features | Cannot meet PCI-DSS requirements | Legal liability exposure</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">⚙️ Functionality (Fintech-Specific)</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ FINTECH OPTIMIZED:</span> Multi-currency real-time settlement | GL & AR/AP | Advanced BI for transaction analytics | Payment processing modules | Risk management tools | Liquidity management | Treasury operations</div>
+                        </td>
+                        <td>
+                            <div class="score medium">6</div>
+                            <div class="description">Core functionality: Finance, Inventory, Sales | Limited payment processing | No treasury or liquidity management</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Extensive modules | Manufacturing-focused strength | Financial modules available but not fintech-optimized</div>
+                        </td>
+                        <td>
+                            <div class="score low">3</div>
+                            <div class="description">Basic accounting & inventory only | No payment processing features | Completely inadequate for fintech</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🤝 Vendor Support (Fintech Expertise)</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description">24/7 global fintech support | Multiple premium support tiers | Fintech-specialized consultants | Large partner ecosystem with fintech experts | Regular fintech-specific updates</div>
+                        </td>
+                        <td>
+                            <div class="score medium">6</div>
+                            <div class="description">Good 24/5 support | Limited fintech expertise | Smaller partner network | Insufficient resources for complex customizations</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">24/7 premium support | Large partner network | Not fintech-specialized | May require external fintech consultants</div>
+                        </td>
+                        <td>
+                            <div class="score low">4</div>
+                            <div class="description">Limited support availability | No fintech expertise | Small ecosystem | Insufficient for mission-critical operations</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">⚡ Real-Time Data Processing</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ CRITICAL FOR FINTECH:</span> Sub-second transaction processing | Real-time settlement capability | Live dashboard updates | Instant fraud detection & alerts | No batch processing delays</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">Delayed transaction processing | Batch processing cycles | Not suitable for real-time trading or payments</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Good real-time capabilities | Adequate for most operations | Not optimized for high-frequency fintech transactions</div>
+                        </td>
+                        <td>
+                            <div class="score low">1</div>
+                            <div class="description">Batch processing only | Significant delays | Unsuitable for any real-time fintech operations</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🔐 Security & Data Encryption</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ ENTERPRISE GRADE:</span> 256-bit AES encryption | End-to-end encryption for transactions | Multi-factor authentication | Role-based access control | Zero-trust security model | Regular penetration testing</div>
+                        </td>
+                        <td>
+                            <div class="score medium">6</div>
+                            <div class="description">Standard encryption protocols | Basic security measures | Adequate for general business | Insufficient for financial data protection</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">Strong encryption capabilities | Good security architecture | Not fintech-specialized</div>
+                        </td>
+                        <td>
+                            <div class="score low">2</div>
+                            <div class="description">Basic encryption only | Vulnerable to financial data breaches | Does not meet fintech security standards</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🔌 API & Middleware Capabilities</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ FINTECH ESSENTIAL:</span> REST & SOAP APIs | Microservices architecture | Webhook support | Message queues | Supports blockchain & DeFi integrations | GraphQL support | Open banking APIs</div>
+                        </td>
+                        <td>
+                            <div class="score low">4</div>
+                            <div class="description">Limited API framework | Monolithic architecture | Difficult to integrate modern fintech tech stack | Legacy integration patterns</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Good API capabilities | Microservices available | Not specifically designed for fintech ecosystem</div>
+                        </td>
+                        <td>
+                            <div class="score low">1</div>
+                            <div class="description">Minimal API support | Cannot integrate with modern fintech architecture | Not viable for tech integration</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">🌍 Multi-Currency & Cross-Border</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ GLOBAL FINTECH:</span> Supports 150+ currencies | Real-time forex conversion | Cross-border settlement | International compliance in 190+ countries | Multi-language support | Distributed ledger readiness</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">Basic multi-currency support | Manual forex handling | Limited cross-border capabilities | Challenging for international expansion</div>
+                        </td>
+                        <td>
+                            <div class="score high">8</div>
+                            <div class="description">Multi-currency support | International operations capable | Not optimized for rapid global expansion</div>
+                        </td>
+                        <td>
+                            <div class="score low">2</div>
+                            <div class="description">Single currency focus | No cross-border capabilities | Cannot support international fintech operations</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="kpi-name">📊 Analytics & BI (Fintech Metrics)</td>
+                        <td>
+                            <div class="score high">9</div>
+                            <div class="description"><span class="highlight">★ CRITICAL FOR DECISION-MAKING:</span> Real-time transaction analytics | Predictive analytics for fraud | Customer behavior insights | Financial forecasting | Risk scoring engines | Custom KPI dashboards | ML models</div>
+                        </td>
+                        <td>
+                            <div class="score medium">5</div>
+                            <div class="description">Basic reporting | Limited analytics depth | No predictive analytics | Manual reporting required</div>
+                        </td>
+                        <td>
+                            <div class="score medium">7</div>
+                            <div class="description">Good BI capabilities | Advanced reporting available | Not fintech-metrics focused</div>
+                        </td>
+                        <td>
+                            <div class="score low">2</div>
+                            <div class="description">Very limited reporting | No analytics capabilities | Cannot provide fintech insights</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="summary">
+            <h2>📊 Summary & Rankings</h2>
+            <div class="summary-grid">
+                <div class="summary-card" style="border-top: 4px solid #fbbf24;">
+                    <h3>Oracle</h3>
+                    <div class="summary-score" style="color: #fbbf24;">8.58/10</div>
+                    <div class="rank">🥇 #1 WINNER</div>
+                </div>
+                <div class="summary-card" style="border-top: 4px solid #94a3b8;">
+                    <h3>SAP</h3>
+                    <div class="summary-score" style="color: #94a3b8;">6.92/10</div>
+                    <div class="rank">🥈 #2</div>
+                </div>
+                <div class="summary-card" style="border-top: 4px solid #cd7f32;">
+                    <h3>Sage</h3>
+                    <div class="summary-score" style="color: #cd7f32;">6.08/10</div>
+                    <div class="rank">🥉 #3</div>
+                </div>
+                <div class="summary-card" style="border-top: 4px solid #ef4444;">
+                    <h3>Tally</h3>
+                    <div class="summary-score" style="color: #ef4444;">3.17/10</div>
+                    <div class="rank">#4 Not Recommended</div>
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>✅ FINAL RECOMMENDATION FOR FINTECH ENTERPRISE</h3>
+                <p style="font-size: 1.2em; color: #1e3a8a; font-weight: 600; margin-bottom: 20px;">CLEAR WINNER: Oracle ERP (8.58/10) ⭐</p>
+                <p style="margin-bottom: 20px;">Oracle is the unequivocal best choice for your fintech organization requiring full integrations and customizations. Here's why:</p>
+                
+                <div class="advantages">
+                    <div class="advantage-item">
+                        <div class="advantage-title">Payment Processing Integration</div>
+                        <div>500+ APIs with direct support for payment gateways, cryptocurrency wallets, and blockchain systems</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Real-Time Transaction Processing</div>
+                        <div>Sub-second settlement with live dashboard updates - critical for modern fintech operations</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Fintech Compliance</div>
+                        <div>PCI-DSS Level 1, GDPR, SOX compliant with built-in fraud detection and regulatory reporting</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Enterprise-Grade Security</div>
+                        <div>256-bit AES encryption with zero-trust security model and multi-factor authentication</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Global Reach</div>
+                        <div>Supports 150+ currencies, 190+ country compliance, cross-border settlement capabilities</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Advanced Analytics</div>
+                        <div>Predictive fraud analytics, machine learning models, custom fintech KPI dashboards</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">Scalability for Transactions</div>
+                        <div>Handles millions of daily transactions without performance degradation</div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-title">API & Microservices</div>
+                        <div>REST, SOAP, GraphQL, webhook support for blockchain and DeFi integrations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pricingData = {
+            oracle: {
+                starter: {
+                    name: "Oracle Cloud ERP Essentials",
+                    price: "$175/user/month",
+                    users: "10-50 users",
+                    tco3yr: "$252K - $378K",
+                    features: [
+                        "Basic GL, AR/AP",
+                        "Standard reporting",
+                        "Single currency",
+                        "Email support",
+                        "Basic integrations (50+)"
+                    ],
+                    fintechFit: 4,
+                    notes: "Insufficient for fintech - lacks real-time processing, payment integrations, and compliance tools"
+                },
+                professional: {
+                    name: "Oracle Cloud ERP Professional",
+                    price: "$250/user/month",
+                    users: "50-250 users",
+                    tco3yr: "$600K - $900K",
+                    features: [
+                        "Multi-currency support",
+                        "Advanced financial modules",
+                        "API access (200+ integrations)",
+                        "24/5 support",
+                        "Basic compliance tools",
+                        "Real-time dashboards"
+                    ],
+                    fintechFit: 6,
+                    notes: "Suitable for growing fintech but lacks advanced fraud detection and blockchain integrations"
+                },
+                enterprise: {
+                    name: "Oracle Fusion Cloud ERP Enterprise",
+                    price: "$350/user/month",
+                    users: "250-1000+ users",
+                    tco3yr: "$1.12M - $1.8M",
+                    features: [
+                        "500+ pre-built integrations",
+                        "PCI-DSS Level 1 compliance",
+                        "Real-time transaction processing",
+                        "Payment gateway integrations",
+                        "Fraud detection & ML analytics",
+                        "24/7 fintech-specialized support",
+                        "Blockchain & crypto wallet support",
+                        "150+ currencies, cross-border settlement",
+                        "Advanced treasury & liquidity management"
+                    ],
+                    fintechFit: 9,
+                    notes: "★ OPTIMAL FOR FINTECH: Complete fintech stack with real-time processing, compliance, and global capabilities",
+                    winner: true
+                }
+            },
+            sage: {
+                starter: {
+                    name: "Sage 50cloud",
+                    price: "$55/user/month",
+                    users: "1-5 users",
+                    tco3yr: "$20K - $40K",
+                    features: [
+                        "Basic accounting",
+                        "Invoice management",
+                        "Inventory tracking",
+                        "Cash flow insights",
+                        "Desktop-based"
+                    ],
+                    fintechFit: 2,
+                    notes: "Not viable for fintech - desktop software with no API access or payment processing capabilities"
+                },
+                professional: {
+                    name: "Sage Intacct",
+                    price: "$150/user/month",
+                    users: "10-100 users",
+                    tco3yr: "$216K - $432K",
+                    features: [
+                        "Cloud-based architecture",
+                        "Multi-entity management",
+                        "Basic multi-currency",
+                        "200 integrations",
+                        "General ledger automation",
+                        "Standard security"
+                    ],
+                    fintechFit: 5,
+                    notes: "Limited fintech capability - lacks specialized payment processing and real-time transaction handling"
+                },
+                enterprise: {
+                    name: "Sage X3 Enterprise",
+                    price: "$200/user/month",
+                    users: "100-500 users",
+                    tco3yr: "$552.5K - $720K",
+                    features: [
+                        "Manufacturing & distribution focus",
+                        "Multi-company, multi-currency",
+                        "Warehouse management",
+                        "Supply chain optimization",
+                        "Basic API framework",
+                        "International deployment"
+                    ],
+                    fintechFit: 6,
+                    notes: "Manufacturing-optimized rather than fintech - insufficient payment gateway integrations and compliance depth"
+                }
+            },
+            sap: {
+                starter: {
+                    name: "SAP Business One",
+                    price: "$95/user/month",
+                    users: "10-100 users",
+                    tco3yr: "$137K - $342K",
+                    features: [
+                        "SMB-focused ERP",
+                        "Financials & CRM",
+                        "Inventory & purchasing",
+                        "Basic analytics",
+                        "Limited customization"
+                    ],
+                    fintechFit: 3,
+                    notes: "Small business focus - lacks enterprise fintech capabilities and real-time transaction processing"
+                },
+                professional: {
+                    name: "SAP Business ByDesign",
+                    price: "$180/user/month",
+                    users: "50-500 users",
+                    tco3yr: "$432K - $1.08M",
+                    features: [
+                        "Cloud ERP suite",
+                        "Financial management",
+                        "Supply chain modules",
+                        "Project management",
+                        "Basic compliance tools",
+                        "Multi-currency support"
+                    ],
+                    fintechFit: 5,
+                    notes: "Mid-market solution with limited fintech-specific features and integration capabilities"
+                },
+                enterprise: {
+                    name: "SAP S/4HANA Cloud",
+                    price: "$300/user/month",
+                    users: "500-10,000+ users",
+                    tco3yr: "$1M - $1.5M",
+                    features: [
+                        "In-memory computing (HANA)",
+                        "Real-time analytics",
+                        "300+ integrations",
+                        "Multi-currency & multi-country",
+                        "Advanced security architecture",
+                        "Manufacturing & supply chain excellence",
+                        "Good compliance framework",
+                        "24/7 premium support"
+                    ],
+                    fintechFit: 7,
+                    notes: "Strong enterprise platform but manufacturing-focused rather than fintech-optimized - lacks specialized payment gateway integrations"
+                }
+            },
+            tally: {
+                starter: {
+                    name: "TallyPrime Silver",
+                    price: "$18/user/month",
+                    users: "1-10 users",
+                    tco3yr: "$6.5K - $22K",
+                    features: [
+                        "Basic accounting",
+                        "GST & tax compliance (India-focused)",
+                        "Inventory management",
+                        "Basic invoicing",
+                        "Desktop application"
+                    ],
+                    fintechFit: 1,
+                    notes: "Entry-level accounting only - no APIs, no integrations, not suitable for any fintech operations"
+                },
+                professional: {
+                    name: "TallyPrime Gold",
+                    price: "$35/user/month",
+                    users: "5-25 users",
+                    tco3yr: "$42K - $105K",
+                    features: [
+                        "Multi-user access",
+                        "Remote access capability",
+                        "Branch management",
+                        "Basic reporting",
+                        "Data synchronization"
+                    ],
+                    fintechFit: 2,
+                    notes: "Still fundamentally basic accounting software - no payment processing, no real-time capabilities, no fintech features"
+                },
+                enterprise: {
+                    name: "TallyPrime Enterprise",
+                    price: "$50/user/month",
+                    users: "25-100 users",
+                    tco3yr: "$100K - $200K",
+                    features: [
+                        "Multi-location support",
+                        "Advanced inventory",
+                        "Payroll management",
+                        "Basic security features",
+                        "Data backup & restore"
+                    ],
+                    fintechFit: 2,
+                    notes: "Critical limitation: Cannot scale to fintech requirements - no APIs, no payment integrations, no compliance features, unsuitable for fintech"
+                }
+            }
+        };
+
+        function showTier(tier) {
+            // Update button states
+            document.querySelectorAll('.tier-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Generate pricing cards
+            const grid = document.getElementById('pricing-grid');
+            grid.innerHTML = '';
+
+            ['oracle', 'sage', 'sap', 'tally'].forEach(erp => {
+                const data = pricingData[erp][tier];
+                const card = document.createElement('div');
+                card.className = 'pricing-card' + (data.winner ? ' winner' : '');
+                
+                let fitDots = '';
+                for (let i = 1; i <= 10; i++) {
+                    let dotClass = 'fit-dot';
+                    if (i <= data.fintechFit) {
+                        if (data.fintechFit >= 8) dotClass += ' filled';
+                        else if (data.fintechFit >= 5) dotClass += ' medium';
+                        else dotClass += ' low';
+                    }
+                    fitDots += <div class="${dotClass}"></div>;
+                }
+
+                const featuresList = data.features.map(f => <li>${f}</li>).join('');
+                const notesClass = data.winner ? 'notes winner-note' : 'notes';
+
+                card.innerHTML = `
+                    <div class="erp-name">${erp.toUpperCase()}</div>
+                    <div class="tier-name">${data.name}</div>
+                    <div class="price">${data.price}</div>
+                    <div class="user-range">${data.users}</div>
+                    <div class="tco">3-Year TCO: ${data.tco3yr}</div>
+                    <div class="fintech-fit">
+                        <span class="fit-label">Fintech Fit:</span>
+                        <div class="fit-score">${fitDots}</div>
+                    </div>
+                    <ul class="features-list">${featuresList}</ul>
+                    <div class="${notesClass}">${data.notes}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize with enterprise tier
+        showTier('enterprise');
+    </script>
+</body>
+</html>

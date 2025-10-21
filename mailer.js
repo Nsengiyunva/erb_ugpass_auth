@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 
   export async function sendMail(to, subject, text) {
     const info = await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: `"Use" <${process.env.SMTP_USER}>`,
       to,
       subject,
       text,
