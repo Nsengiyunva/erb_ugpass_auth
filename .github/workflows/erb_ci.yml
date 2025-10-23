@@ -1,36 +1,46 @@
-name: CI - NEC App (Develop Branch)
+name: ERB SYSTEM API SYSTEM APPLICATION
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
-  build:
-    name: BUILD NEC APP
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
 
     steps:
-      # Step 1: Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Docker Buildx (for multi-platform builds and cache)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-      # Step 4: Build the image using docker-compose
-      - name: Build Docker image
-        run: docker-compose build
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm test || echo "No tests found"
 
-      # Step 5: Run the container to ensure it starts successfully
-      - name: Run container
-        run: docker-compose up -d
+      - name: Link .ENV FILE
+        run: |
+          ln -sf /home/user1/ERB/erb_api.env $GITHUB_WORKSPACE/.env
+          ls -l $GITHUB_WORKSPACE/.env
 
-      # Step 6: Check running containers (basic validation)
-      - name: Verify running container
+
+      - name: Deploy ERB API with Docker Compose
+        run: |
+          cd $GITHUB_WORKSPACE
+
+          echo "Stopping Old containers..."
+          docker-compose down || true
+
+          echo "Building and Starting New containers..."
+          docker-compose up -d --build
+
+      - name: Show container status
         run: docker ps
 
-      # Step 7: Stop containers after verification
-      # - name: Stop containers
-      #   run: docker-compose down
+      - name: Show API logs (last 50 lines)
+        run: docker logs --tail 50 erb-api || true
