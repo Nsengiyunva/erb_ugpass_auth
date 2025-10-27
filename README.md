@@ -28,3 +28,44 @@ https://registration.erb.go.ug/redirect_auth?code=dYKGOS30qzQmzPtzPGhDKzL6OztYky
 
 ## Adds Github Actions
 
+- Online Virtual Accounts: Wallet to Bank,  International Remittances, Aggreggators - Wallet to Wallet - Onnet.
+- Define diff OVAS
+- OVAs can be different, funded by - xxx
+
+Withdrawal:
+OVA - Sacco to Destination.
+World Bank to other people.
+
+1.4.3. Mechant/Biller Payments
+
+Bulk salary payments - B2C
+-----------------------------------
+we can send QR Code to the Stanbic.
+-----------------------------------
+items
+----------------
+Local SavCard into  SavM
+Other fintechs: MTN, PesaPel,
+FlexiPay Integration: FlexiPay to SavMoney, SavMoney to FlexiPay Merchants.
+Merchant AutoLiquidation: Merchant who owns a Stanbic
+
+Stanbic Merchant - no POS  -  to FlexiPay Merchant.
+
+
+1. Premium Top Up
+2. Premium Auto-Debit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
