@@ -166,6 +166,8 @@ const httpRequestCounter = new client.Counter({
   labelNames: ['method', 'route', 'status_code'],
 });
 
+const app  = express();
+
 app.use((req, res, next) => {
   res.on('finish', () => {
     httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
