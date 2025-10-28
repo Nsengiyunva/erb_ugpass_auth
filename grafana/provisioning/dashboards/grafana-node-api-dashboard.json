@@ -1,6 +1,6 @@
 {
     "id": null,
-    "title": "Node.js API Metrics",
+    "title": "ERB API Metrics",
     "tags": ["node", "api", "prometheus"],
     "timezone": "browser",
     "schemaVersion": 36,
