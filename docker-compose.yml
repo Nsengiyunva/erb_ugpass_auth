@@ -38,11 +38,43 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASS}
+      PORT: 8754
     ports:
       - "8754:8754"
     depends_on:
       - db
+      - redis
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: erb-prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: erb-grafana
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
 
 volumes:
   db_data:
   redis_data:
+  prometheus_data:
+  grafana_data:
