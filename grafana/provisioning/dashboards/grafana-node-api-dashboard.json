@@ -10,7 +10,7 @@
       {
         "type": "stat",
         "title": "Total HTTP Requests",
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "targets": [
           {
             "expr": "sum(http_requests_total)",
@@ -22,7 +22,7 @@
       {
         "type": "graph",
         "title": "Requests per Route",
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "targets": [
           {
             "expr": "sum by (route) (rate(http_requests_total[1m]))",
@@ -34,7 +34,7 @@
       {
         "type": "graph",
         "title": "CPU Usage",
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "targets": [
           {
             "expr": "rate(process_cpu_seconds_total[1m])",
@@ -46,7 +46,7 @@
       {
         "type": "graph",
         "title": "Memory Usage",
-        "datasource": "Prometheus",
+        "datasource": "prometheus",
         "targets": [
           {
             "expr": "process_resident_memory_bytes",
