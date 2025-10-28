@@ -50,7 +50,7 @@ services:
     container_name: erb-prometheus
     restart: always
     ports:
-      - "9090:9090"
+      - "9095:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
