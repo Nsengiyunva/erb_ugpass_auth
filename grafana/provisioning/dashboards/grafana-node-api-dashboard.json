@@ -1,0 +1,60 @@
+{
+    "id": null,
+    "title": "Node.js API Metrics",
+    "tags": ["node", "api", "prometheus"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "type": "stat",
+        "title": "Total HTTP Requests",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum(http_requests_total)",
+            "legendFormat": "Total Requests"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 }
+      },
+      {
+        "type": "graph",
+        "title": "Requests per Route",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum by (route) (rate(http_requests_total[1m]))",
+            "legendFormat": "{{route}}"
+          }
+        ],
+        "gridPos": { "x": 6, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "CPU Usage",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(process_cpu_seconds_total[1m])",
+            "legendFormat": "CPU Usage"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 8, "w": 9, "h": 8 }
+      },
+      {
+        "type": "graph",
+        "title": "Memory Usage",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "process_resident_memory_bytes",
+            "legendFormat": "Memory"
+          }
+        ],
+        "gridPos": { "x": 9, "y": 8, "w": 9, "h": 8 }
+      }
+    ]
+  }
+  
