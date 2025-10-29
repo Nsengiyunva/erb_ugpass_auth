@@ -54,6 +54,9 @@ Stanbic Merchant - no POS  -  to FlexiPay Merchant.
 
 1. Premium Top Up
 2. Premium Auto-Debit
+------------------------------------------
+- we need a process for onboarding OVA's - 7,8.
+- 
 
 
 

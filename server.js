@@ -169,6 +169,7 @@ const httpRequestCounter = new client.Counter({
 const app  = express();
 
 app.use((req, res, next) => {
+  if (req.path === '/api/metrics') return next();
   res.on('finish', () => {
     httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
   });
@@ -183,5 +184,7 @@ app.get('/api/metrics', async (req, res) => {
   res.set('Content-Type', client.register.contentType);
   res.end(await client.register.metrics());
 });
+
+
 
 app.listen(process.env.PORT, () => console.log(`The API running on port ${process.env.PORT}`));
