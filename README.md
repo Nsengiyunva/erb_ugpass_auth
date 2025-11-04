@@ -42,21 +42,23 @@ Bulk salary payments - B2C
 -----------------------------------
 we can send QR Code to the Stanbic.
 -----------------------------------
-items
-----------------
+ITE˜MS
+---------------------------------------------------
 Local SavCard into  SavM
 Other fintechs: MTN, PesaPel,
 FlexiPay Integration: FlexiPay to SavMoney, SavMoney to FlexiPay Merchants.
 Merchant AutoLiquidation: Merchant who owns a Stanbic
 
 Stanbic Merchant - no POS  -  to FlexiPay Merchant.
-
-
+---------------------------------------------------
 1. Premium Top Up
 2. Premium Auto-Debit
-------------------------------------------
-- we need a process for onboarding OVA's - 7,8.
-- 
+--------------------------------------------------------
+- we need update the server setup plan  - next
+--------------------------------------------------------
+- we need a process for onboarding OVA-s - 7,8.
+- we need to  work on the flow charts for the use cases.
+--------------------------------------------------------
 
 
 
