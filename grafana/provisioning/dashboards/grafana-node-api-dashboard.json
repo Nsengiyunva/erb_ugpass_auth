@@ -13,7 +13,7 @@
         "datasource": "prometheus",
         "targets": [
           {
-            "expr": "sum(http_requests_total)",
+            "expr": "sum by (route) (rate(http_requests_total[5m]))",
             "legendFormat": "Total Requests"
           }
         ],
