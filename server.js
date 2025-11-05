@@ -29,14 +29,6 @@ const httpRequestCounter = new client.Counter({
   labelNames: ['method', 'route', 'status_code'],
 });
 
-app.use((req, res, next) => {
-  if (req.path === '/api/metrics') return next();
-  res.on('finish', () => {
-    httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
-  });
-  next();
-});
-
 const redisConnection  =  new IORedis( {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT
@@ -58,6 +50,19 @@ const startServer = async () => {
       next();
     });
     app.use( express.json() )
+
+    // app.use((req, res, next) => {
+    //   if (req.path === '/api/metrics') return next();
+    //   res.on('finish', () => {
+    //     httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
+    //   });
+    //   next();
+    // });
+
+    app.get('/api/metrics', async (req, res) => {
+      res.set('Content-Type', client.register.contentType);
+      res.end(await client.register.metrics());
+    });
 
     app.use("/auth/api", authRoutes )
     app.use( "/api", router )
