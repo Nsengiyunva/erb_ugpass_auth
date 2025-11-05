@@ -4,7 +4,9 @@ import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 import { sendStyledMail } from "./mailer.js";
 
-import { connectWithRetry } from "./config/db.js";
+import { sequelize, connectWithRetry } from "./config/db.js";
+// import User from "./models/User.js"; // make sure this path matches your folder structure
+
 import IORedis from 'ioredis'
 import bodyParser from "body-parser";
 import { Queue } from "bullmq";
@@ -25,7 +27,9 @@ const redisConnection  =  new IORedis( {
 const PORT = process.env.PORT || 8754;
 
 const startServer = async () => {
-  await connectWithRetry(); // waits until DB is ready
+  await connectWithRetry(); 
+
+  await sequelize.sync({ alter: true }); 
 
     app.use(function (_, res, next) {
 
@@ -122,7 +126,7 @@ const startServer = async () => {
     });
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port=${PORT}`);
+      console.log(`The Server is running on port=${PORT}`);
     });
 };
 

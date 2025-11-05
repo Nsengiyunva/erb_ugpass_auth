@@ -67,7 +67,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/1880
 Content-Type: application/json
-Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjIyNjI3MDIsImV4cCI6MTc2MjI2NjMwMn0.g3NADmt4Wkd2EjNMFEFKg9tE9c5y3WEzTlrCLRFdnso'
+Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjIzNTEyMzcsImV4cCI6MTc2MjM1NDgzN30.IsnnsV_1_9PI0jgjlpzQxpUf3KZQhPWD05HlwJNGGpI'
 
 ### register
 POST {{auth_api}}/register

@@ -429,7 +429,6 @@ router.get( `/verify_license/:license_no`, authMiddleware, async( req, res ) => 
                 expiry_date: expiry_date?.expiry,
                 status: getStatus( expiry_date?.actual ),
                 ...person,
-
             }
         } )
 
