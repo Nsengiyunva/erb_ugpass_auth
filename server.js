@@ -10,6 +10,7 @@ import { sequelize, connectWithRetry } from "./config/db.js";
 import IORedis from 'ioredis'
 import bodyParser from "body-parser";
 import { Queue } from "bullmq";
+import client from 'prom-client'
 
 
 dotenv.config()
@@ -18,6 +19,23 @@ const app = express();
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ extended: true, limit: "200mb" }));
 app.use(bodyParser.json())
+
+
+client.collectDefaultMetrics();
+
+const httpRequestCounter = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code'],
+});
+
+app.use((req, res, next) => {
+  if (req.path === '/api/metrics') return next();
+  res.on('finish', () => {
+    httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
+  });
+  next();
+});
 
 const redisConnection  =  new IORedis( {
   host: process.env.REDIS_HOST,
