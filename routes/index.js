@@ -203,7 +203,7 @@ router.post( `/sign-with-agent`,  async( req, res  ) => {
 const { access_token, email_address }  = req.body
 
     if (!fs.existsSync("sign_license.pdf")) {
-        console.error("[ERROR] 'sample.pdf' not found in the current directory.");
+        console.error("[ERROR] 'sign_license.pdf' not found in the current directory.");
         return;
     }
 
