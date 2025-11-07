@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "yntNuXF2hyRJ7jfeSwCGxk7KHSd9fVFZhfaq7EdTOJmhYN2ezQsMKlsQMWPZMgawTfCKSd94Yx67NX0Reo8sLdUKNVn0v149c7vK2t5AFuDVBgaVwLhlvWRghcNVfnITeWlOWSnzVVlcLohr",
+    "access_token":  "MCcbGsMXjrFKk4LgAjcz4Nxp6U3gbug5o6854gC5ZbvgsotGv97gq8HpIOK8nfFenVSk5mPjQwJKu1VvL1kgRvLkzrLZgQInSePH1vdcSrHQUXLuPaQKh8NIagoDT1tiwmdEDGhyyAFZ7lvK",
     "email_address": "ezrawayesu@gmail.com"
 }
 
@@ -80,13 +80,23 @@ Content-Type: application/json
 }
 
 ### Login
-POST {{auth_api}}/login
+POST https://forest.works.go.ug/api/auth/erb_loginUser
 Content-Type: application/json
 
 {
-    "email": "admin@erb.go.ug",
-    "password": "admin256"
+    "email": "ezrawayesu@gmail.com",
+    "password": "erb123"
 }
+
+# {
+#     "email": "isaacnsengiyunva@gmail.com",
+#     "password": "admin@#2025"
+# }
+
+# {
+#     "email": "admin@erb.go.ug",
+#     "password": "admin256"
+# }
 
 
 ### send  email
