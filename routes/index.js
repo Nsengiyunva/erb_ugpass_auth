@@ -170,9 +170,6 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
     
     let data = qs.stringify(payload);
     
-    // res.status( 200 ).json( {
-    //     data
-    // } );
       let config = {
         method: 'post',
         maxBodyLength: Infinity,

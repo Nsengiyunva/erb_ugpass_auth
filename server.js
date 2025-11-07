@@ -43,10 +43,10 @@ const startServer = async () => {
 
     app.use(function (_, res, next) {
 
-      res.header('Access-Control-Allow-Origin', "*");
-      res.header('Access-Control-Allow-Headers', true);
-      res.header('Access-Control-Allow-Credentials', true);
-      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.header("Access-Control-Allow-Origin", "*"); // or "*" if you must
+      res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+      res.header("Access-Control-Allow-Credentials", "true");
       next();
     });
     app.use( express.json() )

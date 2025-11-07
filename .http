@@ -26,7 +26,7 @@ POST {{url}}/getAuthorizationCode
 Content-Type: application/json 
 
 {
-    "code": "KX6FC8Vz0IuenKBSWl0vTNgfSWqp6mTENe9nfBbPteQclPH4sxUu3vD2d8mIuBS2jSwGn0pV5sukZu2Cg7yasNPKxCca"
+    "code": "KSqI2MspttUA0oCYoIooCG36Uk6LwuoO0UFG5LbZ3wkRmVN1VmLPHVeCTv9EUmFEQVKhCQTP4zkhi643LNuvmgLKEhFP"
 }
 
 ###
@@ -67,7 +67,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/1880
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjIzNTM2ODYsImV4cCI6MTc2MjM1NzI4Nn0.i8j8e810YtQz6NhyqOpL2NKOETQ60sawv1MYnS-osoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjIzNTgwNzgsImV4cCI6MTc2MjM2MTY3OH0.ZqBljBaOAAcpEJkRFVLe485ygFwXjv5Gc6ZCXF8rFuQ
 
 ### register
 POST {{auth_api}}/register
