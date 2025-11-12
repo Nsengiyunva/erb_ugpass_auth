@@ -209,7 +209,7 @@ const { access_token, email_address }  = req.body
 
     let data = new FormData();
     data.append('model', '{\n  "documentType": "PADES",\n"id": '+email_address+',\n"placeHolderCoordinates": {\n    "pageNumber": 1,\n    "signatureXaxis": 400.0,\n    "signatureYaxis": "450.0"\n  }\n}');
-    data.append('file', fs.createReadStream('sign_license.pdf'));
+    data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
 
     let config = {
         method: 'post',
