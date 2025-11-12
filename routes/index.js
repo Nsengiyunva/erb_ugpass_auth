@@ -208,7 +208,7 @@ const { access_token, email_address }  = req.body
     }
 
     let data = new FormData();
-    data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n    "pageNumber": "1",\n    "signatureXaxis": "400.0",\n    "signatureYaxis": "550.0"\n  }\n}');
+    data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n    "pageNumber": "1",\n    "signatureXaxis": "400.0",\n    "signatureYaxis": "570.0"\n  }\n}');
     data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
 
     let config = {
@@ -224,10 +224,19 @@ const { access_token, email_address }  = req.body
 
     axios.request(config)
     .then((response) => {
-    console.log("we are here-please",JSON.stringify(response.data));
+        let result = JSON.stringify(response.data);
+    console.log("we are here-please", result);
+        res.status(200).json({
+            success: true,
+            result
+        })
     })
     .catch((error) => {
     console.log(error);
+    res.status(500).json({
+        success: false,
+        error
+    })
     });
 }  )
 
