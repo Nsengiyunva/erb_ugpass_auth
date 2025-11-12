@@ -214,7 +214,7 @@ const { access_token, email_address }  = req.body
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://nita.ugpass.go.ug/Agent/api/digital/signature/post/sign',
+        url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/post/sign',
         headers: { 
             'UgPassAuthorization': `Bearer ${access_token}`, 
             ...data.getHeaders()
