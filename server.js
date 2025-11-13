@@ -161,14 +161,13 @@
 
 // startServer();
 
-
-import express from 'express'
+// server.js
+import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import jobQueue from './queue.js';
 import { QueueEvents } from 'bullmq';
-import { Redis } from 'ioredis';
-
+import redconnection from './redis_connection.js'; // ✅ use the shared connection
 
 const app = express();
 const server = http.createServer(app);
@@ -180,34 +179,35 @@ const io = new Server(server, {
 
 app.use(express.json());
 
-app.get( '/', async( _, res ) => {
+// ✅ Health check endpoint
+app.get('/', async (_, res) => {
   try {
-    res.status( 200 ).send( {
-        message: "This is the ERB Server Health Check Point..."
-    } )
-  } catch ( error ) {
-      res.status( 500 ).send( {
-          error
-      } )
+    res.status(200).send({
+      message: "This is the ERB Server Health Check Point...",
+    });
+  } catch (error) {
+    res.status(500).send({ error });
   }
-}  )
+});
 
-// Add new job
+// ✅ Add new background job
 app.post('/api/start-job', async (req, res) => {
   const job = await jobQueue.add('processData', { user: req.body.userId });
   res.json({ jobId: job.id });
 });
 
-// Real-time notification setup
-const queueEvents = new QueueEvents('background-jobs', { connection: new Redis() });
+// ✅ Queue event listeners using the shared Redis connection
+const queueEvents = new QueueEvents('background-jobs', { redconnection });
 
 queueEvents.on('completed', ({ jobId }) => {
-  console.log(`Job ${jobId} completed — notifying clients`);
+  console.log(`✅ Job ${jobId} completed — notifying clients`);
   io.emit('job-completed', { jobId, message: `Job ${jobId} completed successfully` });
 });
 
 queueEvents.on('failed', ({ jobId, failedReason }) => {
+  console.error(`❌ Job ${jobId} failed: ${failedReason}`);
   io.emit('job-failed', { jobId, message: failedReason });
 });
 
-server.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+const PORT = process.env.PORT;
+server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

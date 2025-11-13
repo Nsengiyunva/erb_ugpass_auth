@@ -1,13 +1,9 @@
 import { Queue } from "bullmq";
 import IORedis from "ioredis";
-
-const connection  =  new IORedis( {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
-} )
+import redconnection from './redis_connection.js';
 
 const jobQueue =  new Queue( "background-jobs", {
-    connection
+    redconnection
 } )
 
 export default jobQueue

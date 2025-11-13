@@ -75,11 +75,7 @@
 // );
 import { Worker } from "bullmq";
 import IORedis from "ioredis";
-
-const connection  =  new IORedis( {
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT
-} )
+import redconnection from './redis_connection.js';
 
 const worker = new Worker( "background-jobs", async( job ) => {
   console.log("Processing job:", job )
@@ -87,7 +83,7 @@ const worker = new Worker( "background-jobs", async( job ) => {
   await new Promise(( resolve  ) =>  setTimeout( resolve, 5000 ) );
 
   return { message: `Job ${job.id} completed successfully.` }
-}, { connection  } );
+}, { redconnection  } );
 
 worker.on( "completed", ( job ) => console.log(`Job ${job.id} completed`)  )
 worker.on( "failed", ( job, error ) => console.log(`Job ${error}`)  )
