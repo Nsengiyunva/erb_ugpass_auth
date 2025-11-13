@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "TarMEtlBcCyNgp19w3yFwc34yyyhNSXnkKDnZ8VotCBOH8wevHafjDRKxX4RQg2sm0oncRIhUCpP9tnSQXJ3v6rRGN5ybaiI00qFNTwdarhG51S6KyICx9C1DKtvlhtG2RQVOZvHCixDdgcF",
+    "access_token":  "5dcjwWbfCTWa5N9F7hGcKxajrDd5AFlaicZCbJSBt8nDYtOTVUjHL01lAu7eeC2fgADgBPkgXkUhtXodmLWnwwBcTWqHGSASqhgkkzutS8e0a5KKQAeGz5FmStgolTrSUReeYHQG9iuL6MUS",
     "email_address": "ezrawayesu@gmail.com"
 }
 

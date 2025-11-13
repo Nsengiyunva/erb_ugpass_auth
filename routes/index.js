@@ -225,18 +225,18 @@ const { access_token, email_address }  = req.body
     axios.request(config)
     .then((response) => {
         let result = JSON.stringify(response.data);
-    console.log("we are here-please", result);
+        console.log("we are here-please", result);
         res.status(200).json({
             success: true,
             result
         })
     })
     .catch((error) => {
-    console.log(error);
-    res.status(500).json({
-        success: false,
-        error
-    })
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            error
+        })
     });
 }  )
 
