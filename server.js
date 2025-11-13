@@ -180,6 +180,18 @@ const io = new Server(server, {
 
 app.use(express.json());
 
+app.get( '/', async( _, res ) => {
+  try {
+    res.status( 200 ).send( {
+        message: "This is the ERB Server Health Check Point..."
+    } )
+  } catch ( error ) {
+      res.status( 500 ).send( {
+          error
+      } )
+  }
+}  )
+
 // Add new job
 app.post('/api/start-job', async (req, res) => {
   const job = await jobQueue.add('processData', { user: req.body.userId });
