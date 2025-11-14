@@ -200,14 +200,19 @@ app.post('/api/start-job', async (req, res) => {
 // Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://api.erb.go.ug",
+      "https://www.api.erb.go.ug"
+    ],
   },
 });
 
-// Queue event listeners
-const queueEvents = new QueueEvents('background-jobs', {
-  connection: redconnection,
+
+const queueEvents = new QueueEvents("background-jobs", {
+  connection: redconnection
 });
+
 
 queueEvents.on('completed', ({ jobId }) => {
   io.emit('job-completed', { jobId, message: `Job ${jobId} completed successfully` });
