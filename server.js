@@ -173,14 +173,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // change this to your React app domain
+    origin: "http://localhost:3000", 
   },
 });
 
 app.use(express.json());
 
 // ✅ Health check endpoint
-app.get('/', async (_, res) => {
+app.get('/api', async (_, res) => {
   try {
     res.status(200).send({
       message: "This is the ERB Server Health Check Point...",
