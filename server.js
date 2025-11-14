@@ -164,50 +164,59 @@
 // server.js
 import express from 'express';
 import http from 'http';
+import cors from 'cors';
 import { Server } from 'socket.io';
 import jobQueue from './queue.js';
 import { QueueEvents } from 'bullmq';
-import redconnection from './redis_connection.js'; // ✅ use the shared connection
+import redconnection from './redis_connection.js';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000", 
-  },
-});
 
+// ----- CORS FIX -----
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+}));
+app.options("*", cors());
+
+// ---------------------
 app.use(express.json());
 
-// ✅ Health check endpoint
-app.get('/api', async (_, res) => {
-  try {
-    res.status(200).send({
-      message: "This is the ERB Server Health Check Point...",
-    });
-  } catch (error) {
-    res.status(500).send({ error });
-  }
+// Health check
+app.get('/api', (_, res) => {
+  res.status(200).send({
+    message: "This is the ERB Server Health Check Point...",
+  });
 });
 
-// ✅ Add new background job
+// Add background job
 app.post('/api/start-job', async (req, res) => {
   const job = await jobQueue.add('processData', { user: req.body.userId });
   res.json({ jobId: job.id });
 });
 
-// ✅ Queue event listeners using the shared Redis connection
-const queueEvents = new QueueEvents('background-jobs', { redconnection });
+// Socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+// Queue event listeners
+const queueEvents = new QueueEvents('background-jobs', {
+  connection: redconnection,
+});
 
 queueEvents.on('completed', ({ jobId }) => {
-  console.log(`✅ Job ${jobId} completed — notifying clients`);
   io.emit('job-completed', { jobId, message: `Job ${jobId} completed successfully` });
 });
 
 queueEvents.on('failed', ({ jobId, failedReason }) => {
-  console.error(`❌ Job ${jobId} failed: ${failedReason}`);
   io.emit('job-failed', { jobId, message: failedReason });
 });
 
-const PORT = process.env.PORT;
-server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+server.listen(process.env.PORT, () =>
+  console.log(`🚀 Server running on port ${process.env.PORT}`)
+);
