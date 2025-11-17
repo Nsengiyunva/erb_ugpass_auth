@@ -74,7 +74,6 @@
 //   { connection: redisConnection }
 // );
 import { Worker } from "bullmq";
-import IORedis from "ioredis";
 import redconnection from './redis_connection.js';
 
 const worker = new Worker( "background-jobs", async( job ) => {
