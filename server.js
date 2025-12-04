@@ -1,4 +1,4 @@
-// import express from "express";
+import express from "express";
 import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
