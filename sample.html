@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isaac King Nsengiyunva - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            min-height: 1400px;
+        }
+        
+        .left-column {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+        }
+        
+        .right-column {
+            padding: 40px 40px;
+            background: white;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .header .contact-info {
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 15px;
+            opacity: 0.95;
+        }
+        
+        .header .contact-info div {
+            margin-bottom: 8px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .left-column .section-title {
+            border-bottom-color: #3498db;
+            color: #3498db;
+        }
+        
+        .right-column .section-title {
+            border-bottom-color: #2c3e50;
+            color: #2c3e50;
+        }
+        
+        .stack-item, .cert-item, .link-item {
+            font-size: 12px;
+            line-height: 1.8;
+            margin-bottom: 6px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .stack-item:before, .cert-item:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+        
+        .link-item {
+            word-break: break-all;
+        }
+        
+        .experience-item {
+            margin-bottom: 28px;
+        }
+        
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .job-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+        
+        .company {
+            font-size: 13px;
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .date {
+            font-size: 11px;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .job-description {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .job-description li {
+            margin-bottom: 6px;
+            margin-left: 18px;
+        }
+        
+        .education-item {
+            margin-bottom: 15px;
+        }
+        
+        .degree {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 3px;
+        }
+        
+        .university {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+        }
+        
+        .edu-date {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+        
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <div class="header">
+                <h1>Isaac King<br>Nsengiyunva</h1>
+                <div class="contact-info">
+                    <div>📍 Nakawa, Kyanja<br>Kampala, Uganda</div>
+                    <div>📞 +256 773 917 523</div>
+                    <div>✉️ isaacnsengiyunva@gmail.com</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Links</div>
+                <div class="link-item">🔗 github.com/Nsengiyuva</div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Tech Stack</div>
+                <div class="stack-item">Java Spring</div>
+                <div class="stack-item">ReactJS</div>
+                <div class="stack-item">React Native</div>
+                <div class="stack-item">Flutter (GetX)</div>
+                <div class="stack-item">Python / Django</div>
+                <div class="stack-item">PHP / Laravel</div>
+                <div class="stack-item">JavaScript / NodeJS</div>
+                <div class="stack-item">Docker / Kubernetes</div>
+                <div class="stack-item">CI/CD (Jenkins)</div>
+                <div class="stack-item">AWS Cloud</div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Certifications</div>
+                <div class="cert-item">AWS DevOps Certification</div>
+                <div class="cert-item">Oracle Associate Certification</div>
+                <div class="cert-item">WSO2 API Manager Certification</div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Education</div>
+                <div class="education-item">
+                    <div class="degree">BSc. Computer Science</div>
+                    <div class="university">Makerere University</div>
+                    <div class="edu-date">2010 - 2014</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column -->
+        <div class="right-column">
+            <div class="section">
+                <div class="section-title">Professional Summary</div>
+                <p style="font-size: 12px; line-height: 1.7; color: #555;">
+                    Full-stack software engineer with 9+ years of experience specializing in systems integration, microservices architecture, and modern web and mobile applications. Proven track record of building scalable enterprise solutions using ReactJS, Flutter, Java Spring, and cloud technologies. Expert in implementing DevOps practices and containerized deployments.
+                </p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Experience</div>
+                
+                <div class="experience-item">
+                    <div class="company">National Information Technology Authority, Kampala</div>
+                    <div class="job-title">Systems Integration Specialist</div>
+                    <div class="date">March 2020 - </div>
+                    <ul class="job-description">
+                        <li>Implemented workflow-as-a-service system abstracting approval processes across government applications, reducing approval time by 40%</li>
+                        <li>Architected microservices infrastructure using Kubernetes and Docker, maintaining 15+ government services with 99.9% uptime</li>
+                        <li>Built multiple ReactJS applications: Government Service Portal (50,000+ monthly users), Internal Workflow Dashboard, API Gateway Console, and Document Management System</li>
+                        <li>Developed Uganda Red Cross mobile app using Flutter and GetX for emergency reporting and disaster response coordination</li>
+                        <li>Created Government Services mobile app using React Native for citizen access to services</li>
+                        <li>Integrated legacy systems with modern APIs, enabling interoperability between 20+ government agencies</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="company">MTN Uganda, Kampala</div>
+                    <div class="job-title">Systems Engineer (Contractor)</div>
+                    <div class="date">2019</div>
+                    <ul class="job-description">
+                        <li>Implemented monitoring and automation for VAS applications serving 10+ million subscribers</li>
+                        <li>Built CI/CD pipelines using Jenkins and GitHub, reducing deployment time from hours to minutes</li>
+                        <li>Configured Prometheus and Grafana for real-time monitoring, improving uptime to 99.9%</li>
+                        <li>Decreased production incidents by 35% through automated testing and deployment</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="company">Awamo GmbH (Berlin-based FinTech)</div>
+                    <div class="job-title">Software Developer (Frontend Engineer)</div>
+                    <div class="date">2018 - 2019</div>
+                    <ul class="job-description">
+                        <li>Led ReactJS development for enterprise financial system serving microfinance institutions across Africa</li>
+                        <li>Refactored codebase from 12,000 to 5,000 lines, improving performance by 60%</li>
+                        <li>Implemented React, Redux architecture with modern ES6+ features</li>
+                        <li>Increased test coverage from 20% to 85% using Jest and React Testing Library</li>
+                        <li>Reduced user-reported issues by 45% through UI/UX improvements</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="company">Metajua Ltd</div>
+                    <div class="job-title">Applications Developer</div>
+                    <div class="date">2015 - 2018</div>
+                    <ul class="job-description">
+                        <li>Developed enhanced mobile data collection application using Android (Java) as improved alternative to ODK Collect</li>
+                        <li>Built Android library for XML data synchronization between devices and remote servers</li>
+                        <li>Implemented robust synchronization mechanisms for intermittent connectivity in rural areas</li>
+                        <li>Created hybrid mobile solutions using React Native for cross-platform data collection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="buttons" style="max-width: 1000px; margin: 20px auto;">
+        <button class="btn" onclick="window.print()">📄 Download as PDF</button>
+        <button class="btn" onclick="copyToClipboard()">📋 Copy Resume Text</button>
+    </div>
+    
+    <script>
+        function copyToClipboard() {
+            const text = document.body.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Resume copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
