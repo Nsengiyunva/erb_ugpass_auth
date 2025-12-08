@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "2kRkMfVbwZQs3gJjvl8G9iWAggLQWrm0P5vTYFdNG9mL0kpnvLepuKolAHIdgBRbfwOAprDpOMDana2B8zMAhwalJ1n3sZOmTZ8uH8HP4DnDmiXZWXCL9ahte7Jp6TlRjrZmtACkeirsVOSd",
+    "access_token":  "gwRbrztHBGNHkPomRIdcTLzqw1RUpUnqrbJyKaUEHribuLu9b1P80srIhOf7z9sQSnUT0bmImrSUQxEXns0LKq8Dqpm5CXAQzZyoLdxu7yae0y0qAohkgiyTVGGu4NmIhIYSrInvckBgpJpM",
     "email_address": "halinaitwe@gmail.com"
 }
 
