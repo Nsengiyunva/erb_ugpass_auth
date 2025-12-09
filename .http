@@ -17,9 +17,9 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "nLUpZ0s3cAPRsH9QseRcMae1vyuThb6GJNo0sLHHzxIcwfQOJm78dZd1bub7nFQhI5PGTnt1hvA2Wdc39fdPZMdrTj98n9ZkOTUoMXlCqqHkgjCgaI9RNTY1G1YtqYfxF6V6yfyay96S5tbK",
-    "email_address": "james.lutalo@nita.go.ug",
-    "role": "CHAIRMAN"
+    "access_token":  "",
+    "email_address": "sharif.tumwebaze@nita.go.ug",
+    "role": "REGISTRAR"
 }
 
 ### Access Token
