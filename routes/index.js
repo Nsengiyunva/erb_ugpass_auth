@@ -199,7 +199,7 @@ router.post( `/getAuthorizationCode`, async ( req, res ) => {
 
 router.post( `/sign-with-agent`,  async( req, res  ) => {
     
-const { access_token, email_address }  = req.body
+const { access_token, email_address,  role }  = req.body
 
     if (!fs.existsSync("sign_license.pdf")) {
         console.error("[ERROR] 'sign_license.pdf' not found in the current directory.");
@@ -209,23 +209,40 @@ const { access_token, email_address }  = req.body
     let data = new FormData();
     //400 - x axis for rregistrar, 625 -  yaxis
     // data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "50.0",\n    "signatureYaxis": "625.0"\n  }\n}');
-    data.append(
-        "model",
-        JSON.stringify({
-          documentType: "PADES",
-          id: email_address,
-          placeHolderCoordinates: {
-            pageNumber: "1",
-            signatureXaxis: "50.0",
-            signatureYaxis: "625.0",
-          },
-          esealPlaceHolderCoordinates: {
-            pageNumber: "1",
-            signatureXaxis: "235.0",
-            signatureYaxis: "700.0"
-         }
-        })
-    );
+    if( role  === "CHAIRMAN" ) {
+        data.append(
+            "model",
+            JSON.stringify({
+              documentType: "PADES",
+              id: email_address,
+              placeHolderCoordinates: {
+                pageNumber: "1",
+                signatureXaxis: "50.0",
+                signatureYaxis: "625.0",
+              },
+              esealPlaceHolderCoordinates: {
+                pageNumber: "1",
+                signatureXaxis: "235.0",
+                signatureYaxis: "700.0"
+             }
+            })
+        );
+    }
+    else {
+        data.append(
+            "model",
+            JSON.stringify({
+              documentType: "PADES",
+              id: email_address,
+              placeHolderCoordinates: {
+                pageNumber: "1",
+                signatureXaxis: "400.0",
+                signatureYaxis: "625.0",
+              },
+            })
+        );
+    }
+    
     data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
 
     let config = {
