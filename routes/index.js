@@ -208,7 +208,7 @@ const { access_token, email_address }  = req.body
 
     let data = new FormData();
     //400 - x axis for rregistrar, 570 -  yaxis
-    data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "90.0",\n    "signatureYaxis": "570.0"\n  }\n}');
+    data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "50.0",\n    "signatureYaxis": "570.0"\n  }\n}');
     data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
 
     let config = {
