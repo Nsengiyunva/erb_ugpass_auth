@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "cpnLCR4wjrOysjxQ0RiKNB4JbDLjkZ9cagwwLN0SIega3ewOjZy3B8KtywpwZkj8cveYis6iTnxajHJ9gZUUIGviKxn8uGg1hkAbn4SvICwOCN9e7zCNLUnDqxdTbEHittIxXYeHbISDDzd6",
+    "access_token":  "VbGoVPAbvThFpPq45qYpCZsCe3rQjWaelIWTj1cO4hkTnNzt0FeAmIClc1hVUT0LGnuhsLRJTEh15r8VgZk307uobWYrzqqrtE7vvFeATcMN8ae4kOHywbKaxhnUd8yLQQW5V2Px6O0Pnvd5",
     "email_address": "james.lutalo@nita.go.ug"
 }
 
