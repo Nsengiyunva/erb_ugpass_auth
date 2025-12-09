@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "INJ3L69deXLOekSHcDiiiK9maCneEmEZQoFcOjhPphfKTusSt2JyYmppajvcanH2R2TSsfNlwkzlZE5di88fIXUCEm0mnPQSK32uEsR2bbmFvEkuIO3U9RCfGqvRlZfn8bOqcPZDrF7sUFMl",
+    "access_token":  "",
     "email_address": "james.lutalo@nita.go.ug"
 }
 
