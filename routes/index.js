@@ -207,9 +207,25 @@ const { access_token, email_address }  = req.body
     }
 
     let data = new FormData();
-    //400 - x axis for rregistrar, 570 -  yaxis
-    //prev- 570-y-axis --
-    data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "50.0",\n    "signatureYaxis": "625.0"\n  }\n}');
+    //400 - x axis for rregistrar, 625 -  yaxis
+    // data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "50.0",\n    "signatureYaxis": "625.0"\n  }\n}');
+    data.append(
+        "model",
+        JSON.stringify({
+          documentType: "PADES",
+          id: email_address,
+          placeHolderCoordinates: {
+            pageNumber: "1",
+            signatureXaxis: "50.0",
+            signatureYaxis: "625.0",
+          },
+          esealPlaceHolderCoordinates: {
+            pageNumber: "1",
+            signatureXaxis: "185.0",
+            signatureYaxis: "650.0"
+         }
+        })
+    );
     data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
 
     let config = {
