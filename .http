@@ -17,8 +17,8 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "gwRbrztHBGNHkPomRIdcTLzqw1RUpUnqrbJyKaUEHribuLu9b1P80srIhOf7z9sQSnUT0bmImrSUQxEXns0LKq8Dqpm5CXAQzZyoLdxu7yae0y0qAohkgiyTVGGu4NmIhIYSrInvckBgpJpM",
-    "email_address": "halinaitwe@gmail.com"
+    "access_token":  "sh1gYxNz0IpwNcRje3LwiBFVNZLCu8O62Puso8dam2ysMOvSmD6K0I1mvOaUGxAH8ODA9NJE9U3IbcZ4sUTOc3yGDaP0XRb3CJ54k9bW43EfczxxY3ck3tkTcH6LjyZamN4tJ3HI79CiWa8C",
+    "email_address": "james.lutalo@nita.go.ug"
 }
 
 ### Access Token
