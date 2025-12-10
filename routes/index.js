@@ -222,7 +222,7 @@ const { access_token, email_address,  role }  = req.body
               },
               esealPlaceHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "228.0",
+                signatureXaxis: "215.0",
                 signatureYaxis: "700.0"
              }
             })
@@ -275,6 +275,78 @@ const { access_token, email_address,  role }  = req.body
 }  )
 
 
+//embed a qr-code
+router.post( `/add_qr_code`,  async( req, res  ) => {
+    
+    const { access_token }  = req.body
+    
+        if (!fs.existsSync("sign_license.pdf")) {
+            console.error("[ERROR] 'sign_license.pdf' not found in the current directory.");
+            return;
+        }
+    
+        let data = new FormData();
+
+        data.append(
+        "model",
+        JSON.stringify({
+            qrPlaceHolderCoordinates: {
+            pageNumber: "1",
+            signatureXaxis: "400.0",
+            signatureYaxis: "250.0",
+            imageWidth: "100.0",
+            imageHeight: "100.0"
+            },
+            qrData: {
+            publicData: JSON.stringify({
+                name: "John Doe",
+                licenseNo: "ENG-2025-0041",
+                issued: "2025-10-01",
+                expires: "2027-10-01"
+            }),
+            privateData: JSON.stringify({
+                dob: "1998-04-21",
+                nationalId: "1234567890123456",
+                email: "john.doe@example.com",
+                phone: "+256700000000",
+                internalRecordId: "REC-990123"
+            })
+            }
+        })
+        );
+
+        // }
+        
+        data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
+    
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/post/embed/qr',
+            headers: { 
+                'UgPassAuthorization': `Bearer ${access_token}`, 
+                ...data.getHeaders()
+            },
+            data : data
+        };
+    
+        axios.request(config)
+        .then((response) => {
+            let result = JSON.stringify(response.data);
+            console.log("qr-code-please", result);
+            res.status(200).json({
+                success: true,
+                result
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                error
+            })
+        });
+}  )
 
 //get user info
 router.get( `/getUserInfo`, async ( _, res ) => {
