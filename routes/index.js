@@ -314,8 +314,78 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
             }
         })
         );
+        
+        // data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
+    
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/post/embed/qr',
+            headers: { 
+                'UgPassAuthorization': `Bearer ${access_token}`, 
+                ...data.getHeaders()
+            },
+            data : data
+        };
+    
+        axios.request(config)
+        .then((response) => {
+            let result = JSON.stringify(response.data);
+            console.log("qr-code-please", result);
+            res.status(200).json({
+                success: true,
+                result
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                error
+            })
+        });
+}  )
 
-        // }
+
+//bulk signing
+router.post( `/bulk_sign`,  async( req, res  ) => {
+    
+    const { access_token, email, role }  = req.body
+    
+        if (!fs.existsSync("sign_license.pdf")) {
+            console.error("[ERROR] 'sign_license.pdf' not found in the current directory.");
+            return;
+        }
+    
+        let data = new FormData();
+
+        data.append(
+        "model",
+        JSON.stringify({
+            qrPlaceHolderCoordinates: {
+            pageNumber: "1",
+            signatureXaxis: "400.0",
+            signatureYaxis: "250.0",
+            imageWidth: "100.0",
+            imageHeight: "100.0"
+            },
+            qrData: {
+            publicData: JSON.stringify({
+                name: "John Doe",
+                licenseNo: "ENG-2025-0041",
+                issued: "2025-10-01",
+                expires: "2027-10-01"
+            }),
+            privateData: JSON.stringify({
+                dob: "1998-04-21",
+                nationalId: "1234567890123456",
+                email: "john.doe@example.com",
+                phone: "+256700000000",
+                internalRecordId: "REC-990123"
+            })
+            }
+        })
+        );
         
         data.append('multipartFile', fs.createReadStream('sign_license.pdf'));
     
@@ -347,155 +417,6 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
             })
         });
 }  )
-
-//get user info
-router.get( `/getUserInfo`, async ( _, res ) => {
-    let ughubtoken = generateToken()
-    const UgPassAccessToken = getUgPassAccessToken()
-
-    try {
-        const response = await axios.get( `${ughubaseUrl}/api/UserInfo/userinfo`, {
-            headers: {
-                UgPassAuthorization: `Bearer ${UgPassAccessToken}`,
-                Authorization: `Bearer ${ughubtoken}`,
-                "Content-Type": "application/x-www-form-urlencoded",
-                Accept: "application/jwt"
-            }
-        } )
-        if( response.data ) {
-            res.status( 200 ).json( {
-                data: response.data
-            } )
-        }
-    } catch (error) {
-        res.status( 500 ).json( {
-            error
-        } )
-    }
-} )
-
-//logout ugpass
-router.get( `/logout`, async ( _, res ) => {
-    let IDToken = ""
-    try {
-        const response = await axios.get( `${baseUrl}/OIDCLogout?id_token=${IDToken}&post_logout_redirect_uri=${logoutURL}&state=${state}` )
-        if( response.data ) {
-            res.status( 200 ).json( {
-                data: response.data
-            } )
-        }
-    } catch (error) {
-        
-    }
-} ) 
-
-//JWKS Url
-router.get( `/jwks`, async ( _, res ) => {
-    try {
-        const response = await axios.get( `${baseurl}/api/Jwks/jwksuri` )
-        if( response.data ) {
-            // res.status( 500 ).json()
-        }
-    } catch (error) {
-        // res.status( 500 ).json( {} )
-    }
-}  )
-
-//signing base url
-router.get( `/signing`, async ( req, res ) => {
-    let ughubtoken = generateToken()
-    let ugpasstoken = getUgPassAccessToken()
-
-    try {
-        const response = await axios.post( `${signbaseUrl}/api/digital/signature/post/sign`, {
-            documentType: "PADES",
-            subscriberUniqueId: "",
-            placeHolderCoordinates: "",
-            pageNumber: 1,
-            signatureXaxis: "",
-            signatureYaxis: ""
-        }, {
-            headers: {
-                Authorization: `Bearer ${ughubtoken}`,
-                UgPassAuthorization: `Bearer ${ugpasstoken}`,
-                "Content-Type": "multipart/form-data"
-            }
-        } )
-
-        if( response.data ) {
-
-        }
-
-    } catch (error) {
-        
-    }
-} ) 
-
-//verification base url
-router.get( `/verification`, async ( _, res ) => {
-    try {
-        const response = await axios.post( `${verificationbaseUrl}/api/digital/signature/post/verify`, {
-            documentType: "PADES",
-            docData: "",
-            signature: "",
-            subscriberUid: ""
-        } )
-        if( response.data ) {
-
-        }
-    } catch (error) {
-        
-    }
-} )
-
-
-router.post( `/ugpass_access_token`, async ( req, res ) => {
-    try {
-        const response = await axios.post( `${proxyUrl}/t/nita.go.ug/daes/1.0.0/idp/api/Authentication/token`, 
-            req.body.params, {
-            headers: {
-                Authorization: `Bearer ${req.body.token}`,
-                "accept": "/",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        } )
-
-        if( response.data ) {
-            res.status( 200 ).send( response?.data )
-        }
-    } catch ( error ) {
-        res.status( 500 ).send( error )
-    }
-} )
-
-
-router.post( `/sign_document`, upload.single( "file" ), async ( req, res ) => {
-    const data = new FormData();
-    data.append( "file", req.file )
-    data.append( "model", req.body.model )
-
-    //config
-    let config = {
-        method: 'POST',
-        maxBodyLength: Infinity,
-        url: 'https://intra.works.go.ug/daes/1.0.0/signing-service/SignatureWebService/api/digital/signature/post/sign',
-        headers: { 
-          'Content-Type': 'multipart/form-data', 
-          'Authorization': `Bearer ${req.body.token}`, 
-          'UgPassAuthorization': `Bearer ${req.body.accessToken}`, 
-          ...data.getHeaders()
-        },
-        data
-    };
-
-    //updates the server
-    axios.request( config ).then( ( response ) => {
-        res.status( 201 ).send( response.data )
-    } )
-    .catch( ( error ) => {
-        res.send( error )
-    } );
-} ) 
 
 
 router.post( `/verify_document`, async( req, res ) => {
