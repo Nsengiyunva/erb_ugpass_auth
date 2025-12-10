@@ -1,13 +1,14 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
-// Controller to handle bulk signing
 export const bulkSignDocuments = async (req, res) => {
     const {
       email_address,
-      correlationId,
       role,
       access_token
     } = req.body;
+
+    let correlationId = uuidv4();
 
     let data
 
@@ -17,10 +18,10 @@ export const bulkSignDocuments = async (req, res) => {
 
     if( role  === "CHAIRMAN" ) {
         data =  {
-            sourcePath: "",
-            destinationPath: "",
+            sourcePath: "/app/unsigned_docs",
+            destinationPath: "/app/signed_docs",
             id: email_address,
-            correlationId: "",
+            correlationId: correlationId,
             placeHolderCoordinates: {
               pageNumber: "1",
               signatureXaxis: "50.0",
@@ -35,10 +36,10 @@ export const bulkSignDocuments = async (req, res) => {
     }
     else {
         data = {
-            sourcePath: "",
-            destinationPath: "",
+            sourcePath: "/app/unsigned_docs",
+            destinationPath: "/app/signed_docs",
             id: email_address,
-            correlationId: "",
+            correlationId: correlationId,
               placeHolderCoordinates: {
                 pageNumber: "1",
                 signatureXaxis: "400.0",
@@ -62,7 +63,7 @@ export const bulkSignDocuments = async (req, res) => {
     axios.request(config)
     .then((response) => {
         let result = JSON.stringify(response.data);
-        console.log("bulk-please", result);
+        console.log("bulk-signing", result);
         res.status(200).json({
             success: true,
             result

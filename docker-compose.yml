@@ -44,6 +44,9 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      - /home/user1/ERB/unsigned_docs:/app/unsigned_docs
+      - /home/user1/ERB/signed_docs:/app/signed_docs
 
   prometheus:
     image: prom/prometheus:latest
