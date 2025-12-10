@@ -9,6 +9,8 @@ import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
 import authMiddleware from "../middleware/auth_middleware.js";
 
+import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
+
 
 dotenv.config()
 
@@ -274,7 +276,6 @@ const { access_token, email_address,  role }  = req.body
     });
 }  )
 
-
 //embed a qr-code
 router.post( `/add_qr_code`,  async( req, res  ) => {
     
@@ -345,6 +346,8 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
             })
         });
 }  )
+
+router.post('/bulk-sign', bulkSignDocuments);
 
 
 //bulk signing
