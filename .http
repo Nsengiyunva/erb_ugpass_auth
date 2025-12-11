@@ -12,7 +12,7 @@ GET {{url}}/authorization
 Content-Type: application/json
 
 
-### to sign a single file using erb sign agent
+### single sign
 POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
