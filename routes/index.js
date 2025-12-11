@@ -397,7 +397,9 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                 'Content-Type': "application/json",
                 ...data.getHeaders()
             },
-            data : JSON.stringify( data )
+            data : {
+                "model": JSON.stringify( data )
+            }
         };
 
         axios.request(config)
