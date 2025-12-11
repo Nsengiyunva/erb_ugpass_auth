@@ -388,24 +388,41 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
             }
         }
 
-        // let config = {
-        //     method: 'post',
-        //     maxBodyLength: Infinity,
-        //     url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
-        //     headers: { 
-        //         'UgPassAuthorization': `Bearer ${access_token}`, 
-        //         'Content-Type': "application/json",
-        //         ...data.getHeaders()
-        //     },
-        //     data : data
-        // };
+        let config = {
+            method: 'POST',
+            maxBodyLength: Infinity,
+            url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
+            headers: { 
+                'UgPassAuthorization': `Bearer ${access_token}`, 
+                'Content-Type': "application/json",
+                ...data.getHeaders()
+            },
+            data : JSON.stringify( data )
+        };
+
+        axios.request(config)
+            .then((response) => {
+                let result = JSON.stringify(response.data);
+                res.status(200).json({
+                    success: true,
+                    result
+                })
+            })
+            .catch((error) => {
+                console.log("error x1",error);
+                res.status(500).json({
+                    success: false,
+                    error
+                })
+            });
 
 
-        res.status( 200 ).json( {
-            result: data
-        } );
+        // res.status( 200 ).json( {
+        //     result: data
+        // } );
     } catch (error) {
         res.status( 500 ).json( {
+            success: "failed",
             error
         }  )
     }
