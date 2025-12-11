@@ -13,7 +13,8 @@ export const bulkSignDocuments = async (req, res) => {
     let data
 
     res.status( 200 ).json( {
-      data
+      data: req.body,
+      accessToken: accessToken
     } );
 
     // if (!accessToken) {
