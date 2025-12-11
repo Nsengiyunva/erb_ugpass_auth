@@ -224,7 +224,7 @@ const { access_token, email_address,  role }  = req.body
               },
               esealPlaceHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "230.0",
+                signatureXaxis: "220.0",
                 signatureYaxis: "700.0"
              }
             })
@@ -261,14 +261,13 @@ const { access_token, email_address,  role }  = req.body
     axios.request(config)
     .then((response) => {
         let result = JSON.stringify(response.data);
-        console.log("we are here-please", result);
         res.status(200).json({
             success: true,
             result
         })
     })
     .catch((error) => {
-        console.log(error);
+        console.log("error",error);
         res.status(500).json({
             success: false,
             error
