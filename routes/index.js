@@ -348,8 +348,60 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
 
 router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
+        let { access_token, email_address, role  }  = req.body
+        let correlationId = "13292BAC";
+
+        if (!access_token) {
+            return res.status(401).json({ error: 'Missing UGPass Access Token' });
+        }
+
+        if( role  === "CHAIRMAN" ) {
+            data =  {
+                sourcePath: "/app/unsigned_docs",
+                destinationPath: "/app/signed_docs",
+                id: email_address,
+                correlationId: correlationId,
+                placeHolderCoordinates: {
+                pageNumber: "1",
+                signatureXaxis: "50.0",
+                signatureYaxis: "625.0",
+                },
+                esealPlaceHolderCoordinates: {
+                pageNumber: "1",
+                signatureXaxis: "215.0",
+                signatureYaxis: "700.0"
+            }
+            }
+        }
+        else {
+            data = {
+                sourcePath: "/app/unsigned_docs",
+                destinationPath: "/app/signed_docs",
+                id: email_address,
+                correlationId: correlationId,
+                placeHolderCoordinates: {
+                    pageNumber: "1",
+                    signatureXaxis: "400.0",
+                    signatureYaxis: "625.0",
+                },
+            }
+        }
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
+            headers: { 
+                'UgPassAuthorization': `Bearer ${access_token}`, 
+                'Content-Type': "application/json",
+                ...data.getHeaders()
+            },
+            data : data
+        };
+
+
         res.status( 200 ).json( {
-            result: req.body
+            result: data
         } );
     } catch (error) {
         res.status( 500 ).json( {
