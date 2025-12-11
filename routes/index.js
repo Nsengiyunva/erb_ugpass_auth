@@ -346,7 +346,17 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
         });
 }  )
 
-router.post('/bulk-sign', bulkSignDocuments);
+router.post( `/bulk-sign`, async(req,  res ) =>  {
+    try {
+        res.status( 200 ).json( {
+            result: req.body
+        } );
+    } catch (error) {
+        res.status( 500 ).json( {
+            error
+        }  )
+    }
+} );
 
 
 
