@@ -220,11 +220,11 @@ const { access_token, email_address,  role }  = req.body
               placeHolderCoordinates: {
                 pageNumber: "1",
                 signatureXaxis: "50.0",
-                signatureYaxis: "625.0",
+                signatureYaxis: "650.0",
               },
               esealPlaceHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "215.0",
+                signatureXaxis: "240.0",
                 signatureYaxis: "700.0"
              }
             })

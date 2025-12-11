@@ -17,9 +17,9 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "0rQ3Nq5ooKJVpGlkUW4iCOwBCh0Lq6Hg1ju57N6OywAmHGUlh3xPC8hG18TNB6GBm8HanNtnLFqGYMg4m1pdYDdaXIhYqgd8pfTfpcpFIRmedQLZdOrzUEKUImlgH2lIxesJc2hUbfOokE0o",
-    "email_address": "rnamugera@gmail.com",
-    "role": "REGISTRAR"
+    "access_token":  "T97JYbivU1zGncY0QHDJAdn30SRm3S5d5tgonvVCjIczyFZ0Te6GhJpE1QX3iBBBGta7KTvNKys9h7tLhHGOkUZY4dKyBUEKsyuRWMnbV98hNm2JXHXojWPizQn4eXRYDeto1oHbmx5xYQzO",
+    "email_address": "halinaitwe@gmail.com",
+    "role": "CHAIRMAN"
 }
 
 
