@@ -17,7 +17,7 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "",
+    "access_token":  "CkTjaEqqXzIisYXv9NGDHVOsBHjDfy3ACInXQGWWjsIyTbrzHZG8tcFrDx5QIsC1tHgVSEqTEhZKm59c2zLhwdePZRbIHGIBi1zM6xbI5lBCVcTgSPF8dn5cKdNGBdrDqTRfAyZx62ZgYEBJ",
     "email_address": "rnamugera@gmail.com",
     "role": "REGISTRAR"
 }

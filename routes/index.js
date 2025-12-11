@@ -239,7 +239,7 @@ const { access_token, email_address,  role }  = req.body
               placeHolderCoordinates: {
                 pageNumber: "1",
                 signatureXaxis: "400.0",
-                signatureYaxis: "625.0",
+                signatureYaxis: "650.0",
               },
             })
         );
