@@ -350,6 +350,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
         let { access_token, email_address, role  }  = req.body
         let correlationId = "13292BAC";
+        let data = {}
 
         if (!access_token) {
             return res.status(401).json({ error: 'Missing UGPass Access Token' });
@@ -387,17 +388,17 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
             }
         }
 
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
-            headers: { 
-                'UgPassAuthorization': `Bearer ${access_token}`, 
-                'Content-Type': "application/json",
-                ...data.getHeaders()
-            },
-            data : data
-        };
+        // let config = {
+        //     method: 'post',
+        //     maxBodyLength: Infinity,
+        //     url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
+        //     headers: { 
+        //         'UgPassAuthorization': `Bearer ${access_token}`, 
+        //         'Content-Type': "application/json",
+        //         ...data.getHeaders()
+        //     },
+        //     data : data
+        // };
 
 
         res.status( 200 ).json( {
