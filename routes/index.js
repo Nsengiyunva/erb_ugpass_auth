@@ -20,7 +20,6 @@ const uploadDir = path.join(process.cwd(), "uploads");
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-  console.log("Created UPLOADS directory:", uploadDir);
 }
 
 
@@ -45,23 +44,14 @@ const nonce = generateStr()
 
 const router = express.Router()
 
-//files
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, uploadDir); // upload directory
-//     },
-//     filename: function (req, file, cb) {
-//       const timestamp = Date.now();
-//       const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
-//       cb(null, `${timestamp}-${sanitized}`);
-//     },
-// } );
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.join(process.cwd(), "uploads")); // /app/uploads
+      cb(null, uploadDir); // writes to /app/uploads → mapped to host
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + "-" + file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_"));
+      // Replace unsafe characters in filename
+      const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
+      cb(null, `${Date.now()}-${sanitized}`);
     },
   });
   
