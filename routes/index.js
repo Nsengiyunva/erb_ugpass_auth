@@ -44,7 +44,7 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, uploadDir); // writes to /app/uploads → mapped to host
+      cb(null, "/app/uploads"); // writes to /app/uploads → mapped to host
     },
     filename: (req, file, cb) => {
       // Replace unsafe characters in filename
