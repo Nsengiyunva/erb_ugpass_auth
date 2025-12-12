@@ -47,7 +47,7 @@ services:
     volumes:
       - /home/user1/ERB/unsigned_docs:/app/unsigned_docs
       - /home/user1/ERB/signed_docs:/app/signed_docs
-      - /home/user1/ERB/uploads:/app/uploads
+      - /home/user1/ERB/uploads:/app/uploads # volume mounted
 
   prometheus:
     image: prom/prometheus:latest

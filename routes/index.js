@@ -12,8 +12,6 @@ import authMiddleware from "../middleware/auth_middleware.js";
 
 // import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
 
-
-
 dotenv.config();
 
 const uploadDir = path.join(process.cwd(), "uploads");
