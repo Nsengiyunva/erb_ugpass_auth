@@ -46,16 +46,25 @@ const nonce = generateStr()
 const router = express.Router()
 
 //files
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, uploadDir); // upload directory
+//     },
+//     filename: function (req, file, cb) {
+//       const timestamp = Date.now();
+//       const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
+//       cb(null, `${timestamp}-${sanitized}`);
+//     },
+// } );
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, uploadDir); // upload directory
+    destination: (req, file, cb) => {
+      cb(null, path.join(process.cwd(), "uploads")); // /app/uploads
     },
-    filename: function (req, file, cb) {
-      const timestamp = Date.now();
-      const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
-      cb(null, `${timestamp}-${sanitized}`);
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + "-" + file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_"));
     },
-} );
+  });
+  
 
 
 const fileFilter = (req, file, cb) => {
