@@ -209,7 +209,6 @@ const { access_token, email_address,  role }  = req.body
     }
 
     let data = new FormData();
-    //400 - x axis for rregistrar, 625 -  yaxis
     // data.append('model', '{\n  "documentType": "PADES",\n"id": "'+email_address+'",\n"placeHolderCoordinates": {\n   "pageNumber": "1",\n    "signatureXaxis": "50.0",\n    "signatureYaxis": "625.0"\n  }\n}');
     if( role  === "CHAIRMAN" ) {
         data.append(
