@@ -219,13 +219,13 @@ const { access_token, email_address,  role }  = req.body
               id: email_address,
               placeHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "50.0",
+                signatureXaxis: "55.0",  //50
                 signatureYaxis: "650.0",
               },
               esealPlaceHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "220.0",
-                signatureYaxis: "700.0"
+                signatureXaxis: "215.0", //220
+                signatureYaxis: "600.0" //700
              }
             })
         );
@@ -238,7 +238,7 @@ const { access_token, email_address,  role }  = req.body
               id: email_address,
               placeHolderCoordinates: {
                 pageNumber: "1",
-                signatureXaxis: "400.0",
+                signatureXaxis: "350.0", //400
                 signatureYaxis: "650.0",
               },
             })
