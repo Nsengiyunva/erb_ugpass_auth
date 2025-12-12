@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 import { sendStyledMail } from "./mailer.js";
+import path from "path";
 
 import { sequelize, connectWithRetry } from "./config/db.js";
 
@@ -12,7 +13,11 @@ import { Queue } from "bullmq";
 import client from 'prom-client'
 
 
-dotenv.config()
+
+dotenv.config();
+
+const uploadDir = path.join(process.cwd(), "uploads");
+
 const app = express();
 
 app.use(express.json({ limit: "200mb" }));
@@ -73,7 +78,7 @@ const startServer = async () => {
     app.use("/auth/api", authRoutes )
     app.use( "/api", router )
 
-    // app.use("/uploads", express.static(uploadDir));
+    app.use("/uploads", express.static(uploadDir));
 
     const emailQueue = new Queue( "email_queue", {
       connection: redisConnection

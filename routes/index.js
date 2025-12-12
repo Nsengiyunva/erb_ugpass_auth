@@ -1,5 +1,6 @@
 import express from 'express'
 import fs from "fs";
+import path from "path";
 import axios from "axios"
 import { generateStr, formatJWT, generateToken, getUgPassAccessToken } from './utils.js'
 import multer from "multer"
@@ -10,7 +11,7 @@ import { engineers } from "./fixtures.js";
 import authMiddleware from "../middleware/auth_middleware.js";
 
 // import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
-import path from "path";
+
 
 
 dotenv.config();
@@ -476,7 +477,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
         url: `/uploads/${req.file.filename}`,
       },
     });
-  });
+});
 
 
 router.post( `/verify_document`, async( req, res ) => {
