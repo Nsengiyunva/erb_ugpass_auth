@@ -73,6 +73,8 @@ const startServer = async () => {
     app.use("/auth/api", authRoutes )
     app.use( "/api", router )
 
+    // app.use("/uploads", express.static(uploadDir));
+
     const emailQueue = new Queue( "email_queue", {
       connection: redisConnection
     } )

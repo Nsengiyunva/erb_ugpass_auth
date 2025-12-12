@@ -9,10 +9,19 @@ import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
 import authMiddleware from "../middleware/auth_middleware.js";
 
-import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
+// import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
+import path from "path";
 
 
-dotenv.config()
+dotenv.config();
+
+const uploadDir = path.join(process.cwd(), "uploads");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log("Created UPLOADS directory:", uploadDir);
+}
+
 
 const clientAssertionType = `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`;
 const baseUrl = `https://api.ugpass.go.ug/idp`;
@@ -36,16 +45,36 @@ const nonce = generateStr()
 const router = express.Router()
 
 //files
-const storage = multer.diskStorage( {
-    destination: function( _,  cb ) {
-        cb( null, "/" )
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, uploadDir); // upload directory
     },
-    filename: function( _, file, cb ) {
-        cb( null, `${file.originalname}`)
+    filename: function (req, file, cb) {
+      const timestamp = Date.now();
+      const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
+      cb(null, `${timestamp}-${sanitized}`);
     },
-} )
+} );
 
-const upload = multer( { storage } )
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(new Error("Only PDF files are allowed!"), false);
+    }
+}
+
+const upload = multer({
+    storage,
+    fileFilter,
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB
+    },
+}  );
+
+
+
 
 const formatDateLong = (date) => {
     const day = date.getDate();
@@ -429,6 +458,25 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
     }
 } );
 
+
+router.post("/upload", upload.single("file"), async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "No file uploaded",
+      });
+    }
+  
+    return res.json({
+      message: "File uploaded successfully",
+      file: {
+        filename: req.file.filename,
+        path: req.file.path,
+        size: req.file.size,
+        mimetype: req.file.mimetype,
+        url: `/uploads/${req.file.filename}`,
+      },
+    });
+  });
 
 
 router.post( `/verify_document`, async( req, res ) => {
