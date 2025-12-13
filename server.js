@@ -138,14 +138,16 @@ const startServer = async () => {
         return res.status(400).json({ message: "Emails array is required" });
       }
 
+      let subject = "RE: ERB TEST MAIL:";
+
       try {
-        // await sendEmailsInChunks(emails, subject, htmlContent, {
-        //   chunkSize: 50,
-        //   retryLimit: 3,
-        //   rateLimitPerSec: 5, // adjust as needed
-        // });
-        let subject = "RE: ERB TEST MAILS";
-        await emailQueue.add( "batch_email", { emails, subject, htmlContent } )
+        await sendEmailsInChunks(emails, subject, htmlContent, {
+          chunkSize: 50,
+          retryLimit: 3,
+          rateLimitPerSec: 5, // adjust as needed
+        });
+        // let subject = "RE: ERB TEST MAILS";
+        // await emailQueue.add( "batch_email", { emails, subject, htmlContent } )
 
         res.status( 202 ).json( {
           message: "Emails queued successfully",
