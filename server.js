@@ -2,7 +2,7 @@ import express from "express";
 import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
-import { sendStyledMail } from "./mailer.js";
+import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 import path from "path";
 
 import { sequelize, connectWithRetry } from "./config/db.js";
@@ -165,49 +165,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-
-
-
-
-// import fs from 'fs'
-// import puppeteer from 'puppeteer'
-// import  path from  'path'
-
-// async function convertHtmlFileToPdf(htmlFilePath, outputPdfPath) {
-//   const browser = await puppeteer.launch({
-//     args: ['--no-sandbox', '--disable-setuid-sandbox']
-//   });
-
-//   const page = await browser.newPage();
-
-//   // Convert file path to valid URL (needed for CSS/images)
-//   const fileUrl = 'file://' + path.resolve(htmlFilePath);
-
-//   // Load the file
-//   await page.goto(fileUrl, { waitUntil: 'networkidle0' });
-
-//   // Export to PDF
-//   await page.pdf({
-//     path: outputPdfPath,
-//     format: 'A4',
-//     printBackground: true,
-//     margin: {
-//       top: '20mm',
-//       bottom: '20mm',
-//       left: '15mm',
-//       right: '15mm'
-//     }
-//   });
-
-//   await browser.close();
-//   console.log('PDF created:', outputPdfPath);
-// }
-
-
-// // ===== Run the function =====
-// const inputFile = 'sample.html';      // your full HTML file
-// const outputFile = 'resume.pdf';     // output pdf
-
-// convertHtmlFileToPdf(inputFile, outputFile);
-
