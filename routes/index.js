@@ -44,10 +44,9 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "/app/uploads"); // writes to /app/uploads → mapped to host
+      cb(null, "/app/uploads");
     },
     filename: (req, file, cb) => {
-      // Replace unsafe characters in filename
       const sanitized = file.originalname.replace(/[^a-zA-Z0-9.-]/g, "_");
       cb(null, `${Date.now()}-${sanitized}`);
     },
@@ -56,7 +55,7 @@ const storage = multer.diskStorage({
 
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === "application/pdf") {
+    if ( file.mimetype === "application/pdf" ) {
       cb(null, true);
     } else {
       cb(new Error("Only PDF files are allowed!"), false);
@@ -70,8 +69,6 @@ const upload = multer({
       fileSize: 10 * 1024 * 1024, // 10MB
     },
 }  );
-
-
 
 
 const formatDateLong = (date) => {
@@ -116,9 +113,8 @@ const getStatus = (expiryDate)  => {
     const exp = new Date(expiryDate);
   
     return exp >= now ? "Active" : "Expired";
-  }
-
-
+}
+ 
 
 router.get( "/", async ( _, res ) => {
     try {

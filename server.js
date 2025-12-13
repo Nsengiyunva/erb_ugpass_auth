@@ -13,7 +13,6 @@ import { Queue } from "bullmq";
 import client from 'prom-client'
 
 
-
 dotenv.config();
 
 const uploadDir = path.join(process.cwd(), "uploads");
@@ -60,13 +59,11 @@ const startServer = async () => {
       if (req.path === '/api/metrics') return next();
 
       res.on('finish', () => {
-        // Use req.route.path if available, otherwise fallback to req.path
         let routeLabel = req.route?.path || req.path;
         httpRequestCounter.labels(req.method, routeLabel, res.statusCode).inc();
       });
-
       next();
-    });
+    } );
 
 
     app.get('/api/metrics', async (req, res) => {
@@ -160,7 +157,7 @@ const startServer = async () => {
     });
 
     app.listen(PORT, () => {
-      console.log(`The Server is running on port=${PORT}`);
+      console.log(`The Server is running on port: ${PORT}`);
     });
 };
 
