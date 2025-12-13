@@ -107,7 +107,7 @@ const startServer = async () => {
         await sendStyledMail("isaacnsengiyunva@gmail.com", "Email Test", htmlContent);
         res.json({ message: "Email sent successfully!" });
       } catch (err) {
-        console.error( "failed to send email", err );
+        // console.error( "failed to send email", err );
         res.status(500).json({ error: "Failed to send email" });
       }
     });
@@ -144,6 +144,7 @@ const startServer = async () => {
         //   retryLimit: 3,
         //   rateLimitPerSec: 5, // adjust as needed
         // });
+        let subject = "RE: ERB TEST MAILS";
         await emailQueue.add( "batch_email", { emails, subject, htmlContent } )
 
         res.status( 202 ).json( {

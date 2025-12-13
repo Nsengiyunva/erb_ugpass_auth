@@ -122,20 +122,19 @@ Content-Type: application/json
 # }
 
 
-### send  email
+### single send  email
 GET https://api.erb.go.ug/email/send
 Content-Type: application/json
 
 
-### send batch  emails
-{
-  "emails": [
-    "user1@example.com",
-    "user2@example.com",
-    "user3@example.com",
-    "... up to thousands ..."
-  ],
-  "subject": "Weekly Newsletter",
-  "htmlContent": "<h1>Hello!</h1><p>This is our broadcast email.</p>"
-}
+### send batch
+POST https://api.erb.go.ug/send-batch
+Content-Type: application/json
 
+{
+    "emails": [
+        "isaac.nsengiyunva@nita.go.ug",
+        "kingbecks07@gmail.com",
+        "williambamulanzeki@gmail.com"
+    ]
+}
