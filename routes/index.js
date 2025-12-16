@@ -391,7 +391,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     placeHolderCoordinates: {
                     pageNumber: "1",
                     signatureXaxis: "50.0",
-                    signatureYaxis: "625.0",
+                    signatureYaxis: "650.0", //625
                     },
                     esealPlaceHolderCoordinates: {
                         pageNumber: "1",
@@ -412,7 +412,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     placeHolderCoordinates: {
                         pageNumber: "1",
                         signatureXaxis: "400.0",
-                        signatureYaxis: "625.0",
+                        signatureYaxis: "650.0", //625
                     },
                 })
             );
