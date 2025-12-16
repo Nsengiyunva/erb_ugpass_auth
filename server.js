@@ -179,7 +179,7 @@ import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 // import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 // import path from "path";
-import { sequelize, connectDB } from "./config/database";
+import { sequelize, connectDB } from "./config/db.js";
 // import cors from "cors";
 
 dotenv.config();
