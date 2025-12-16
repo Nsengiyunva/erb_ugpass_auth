@@ -372,42 +372,48 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
         let { access_token, email_address, role  }  = req.body
         let correlationId = "13292BAC";
-        let data = {}
+        let data = new FormData();
 
         if (!access_token) {
             return res.status(401).json({ error: 'Missing UGPass Access Token' });
         }
 
         if( role  === "CHAIRMAN" ) {
-            data =  {
-                sourcePath: "/app/unsigned_docs",
-                destinationPath: "/app/signed_docs",
-                id: email_address,
-                correlationId: correlationId,
-                placeHolderCoordinates: {
-                pageNumber: "1",
-                signatureXaxis: "50.0",
-                signatureYaxis: "625.0",
-                },
-                esealPlaceHolderCoordinates: {
-                pageNumber: "1",
-                signatureXaxis: "215.0",
-                signatureYaxis: "700.0"
-            }
-            }
+            data.append(
+                "model",
+                JSON.stringify({
+                    sourcePath: "/app/uploads",
+                    destinationPath: "/app/downloads",
+                    id: email_address,
+                    correlationId: correlationId,
+                    placeHolderCoordinates: {
+                    pageNumber: "1",
+                    signatureXaxis: "50.0",
+                    signatureYaxis: "625.0",
+                    },
+                    esealPlaceHolderCoordinates: {
+                        pageNumber: "1",
+                        signatureXaxis: "215.0",
+                        signatureYaxis: "700.0"
+                    }
+                })
+            );
         }
         else {
-            data = {
-                sourcePath: "/app/unsigned_docs",
-                destinationPath: "/app/signed_docs",
-                id: email_address,
-                correlationId: correlationId,
-                placeHolderCoordinates: {
-                    pageNumber: "1",
-                    signatureXaxis: "400.0",
-                    signatureYaxis: "625.0",
-                },
-            }
+            data.append(
+                "model",
+                JSON.stringify({
+                    sourcePath: "/app/uploads",
+                    destinationPath: "/app/downloads",
+                    id: email_address,
+                    correlationId: correlationId,
+                    placeHolderCoordinates: {
+                        pageNumber: "1",
+                        signatureXaxis: "400.0",
+                        signatureYaxis: "625.0",
+                    },
+                })
+            );
         }
 
         let config = {
@@ -415,25 +421,23 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
             maxBodyLength: Infinity,
             url: 'https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign',
             headers: { 
-                'UgPassAuthorization': `Bearer ${access_token}`, 
-                'Content-Type': "application/json",
+                'UgPassAuthorization': `Bearer ${access_token}`,
                 ...data.getHeaders()
             },
-            data : {
-                "model": JSON.stringify( data )
-            }
+            data: data
         };
 
         axios.request(config)
             .then((response) => {
                 let result = JSON.stringify(response.data);
+                console.log( "bulk sign",  result  );
                 res.status(200).json({
                     success: true,
                     result
                 })
             })
             .catch((error) => {
-                console.log("error x1",error);
+                console.log("error bulk sign: ",error);
                 res.status(500).json({
                     success: false,
                     error

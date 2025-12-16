@@ -46,7 +46,7 @@ const transporter = nodemailer.createTransport({
   export async function sendEmailsInChunks(emails, subject, htmlContent, {
     chunkSize = 50,
     retryLimit = 3,
-    rateLimitPerSec = 5, // 5 emails per second
+    rateLimitPerSec = 5,
   } = {}) {
     const delayBetweenEmails = 1000 / rateLimitPerSec;
   
@@ -56,11 +56,11 @@ const transporter = nodemailer.createTransport({
   
       for (const email of chunk) {
         await sendWithRetry(email, subject, htmlContent, retryLimit);
-        await sleep(delayBetweenEmails); // rate limit per email
+        await sleep(delayBetweenEmails); 
       }
   
       console.log(`✅ Finished chunk ${i / chunkSize + 1}`);
-      await sleep(3000); // wait 3s between chunks
+      await sleep(3000); 
     }
   }
 
@@ -82,3 +82,5 @@ const transporter = nodemailer.createTransport({
       }
     }
   }
+
+  
