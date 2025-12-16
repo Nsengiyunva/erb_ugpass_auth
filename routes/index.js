@@ -384,8 +384,8 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
             data.append(
                 "model",
                 JSON.stringify({
-                    sourcePath: "/app/uploads",
-                    destinationPath: "/app/downloads",
+                    sourcePath: "/var/ugpass/source",
+                    destinationPath: "/var/ugpass/destination",
                     id: email_address,
                     correlationId: correlationId,
                     placeHolderCoordinates: {
@@ -405,8 +405,8 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
             data.append(
                 "model",
                 JSON.stringify({
-                    sourcePath: "/app/uploads",
-                    destinationPath: "/app/downloads",
+                    sourcePath: "/var/ugpass/source",
+                    destinationPath: "/var/ugpass/destination",
                     id: email_address,
                     correlationId: correlationId,
                     placeHolderCoordinates: {

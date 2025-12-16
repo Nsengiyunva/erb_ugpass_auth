@@ -29,7 +29,7 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "xxJSpiXCtaAalet3xgBAgyuqe8uVQR3gOPwZtLldbbcUdk3NshQZgXklQPMDFLEbDf7vOdYHLPil4QmonOEznNMFPIwBUpX0EEzx6tszTSbFBJstUJ3lGYLwmj04rebDUB9cVMZ3Hc2HUPxJ",
+    "access_token":  "qupmwDZ2bsk2dYb2ucLYutKccEeHzbEkNkhrvlgA8Dp8FfY1QglEXKHpkEY42aA9gw4sbVzSdcCAcPXPKIhD4hHkEJMLbJ8HqrxTMcjGwwzoCN8qBAoHPNF0FzQk1acKJQDRVm5Kb1F5qD2W",
     "email_address": "james.lutalo@nita.go.ug",
     "role": "REGISTRAR"
 }
