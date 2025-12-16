@@ -369,7 +369,7 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
 }  )
 
 
-//bulk sign
+//bulk sign impl.
 router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
         let { access_token, email_address, role  }  = req.body
