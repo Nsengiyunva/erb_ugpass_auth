@@ -114,6 +114,10 @@ const getStatus = (expiryDate)  => {
   
     return exp >= now ? "Active" : "Expired";
 }
+
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
  
 
 router.get( "/", async ( _, res ) => {
@@ -412,7 +416,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     placeHolderCoordinates: {
                         pageNumber: "1",
                         signatureXaxis: "400.0",
-                        signatureYaxis: "600.0", //625
+                        signatureYaxis: "625.0", //625
                     },
                 })
             );

@@ -29,8 +29,8 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "7zIC5BhPFNZVp1GqWyKthgcaMdhpPmRnRD56XtvgUW6eACft6vBhmEbfxUlVyBD4xvLOWIXjOeMA57xYFfdbGtCqjjQUP2cf4SIHpIeOfhepMvB6KELg8ZN8CwoGnqPvQzwTUA0P008sKHXf",
-    "email_address": "james.lutalo@nita.go.ug",
+    "access_token":  "Tv7HKdA6MjvwmU6qrhdS7wZyp8chdxEVFimfsf1lOduhZzkRrpjQFMmttvbK41AO2rJvVzj4JvQjsDBeWM7sDqPbF7YDUt5rHscFNk9MhExVA09lZg28zRMvQ9wNHSKBsiSj3dKPemp4tpoU",
+    "email_address": "halinaitwe@gmail.com",
     "role": "CHAIRMAN"
 }
 
