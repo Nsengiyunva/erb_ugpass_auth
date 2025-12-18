@@ -416,7 +416,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     placeHolderCoordinates: {
                         pageNumber: "1",
                         signatureXaxis: "400.0",
-                        signatureYaxis: "625.0", //625
+                        signatureYaxis: "640.0", //625
                     },
                 })
             );

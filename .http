@@ -17,9 +17,9 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "WjgBRuDl8Yl1RBr6cRFSXuUquyozhxmB2Z1zKZc1vhkXzSJ7wLftbGlg5BLVOrnC5bz1pttsPI5kgq10AYiM7PxI2RxW9npxpBbhE0aZufcj1up3VfgtmvoQFSrjRSawLbSFtD5NYvI6IIvO",
-    "email_address": "james.lutalo@nita.go.ug",
-    "role": "CHAIRMAN"
+    "access_token":  "VS79HVVncpLCJdgoSgskIGSHhgE85XG4oHe1cg3Q5l9PfJG68j8rV3zs80GbxAMJMslCGCpn5x0pZBoa0B1yVR2jlLbOsvohWZ25GNWoH7mDzTSGnkg4fIG9Xnn5tsNAs0EdrMYpRJTD05CI",
+    "email_address": "rnamugera@gmail.com",
+    "role": "REGISTRAR"
 }
 
 
@@ -29,9 +29,9 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "Tv7HKdA6MjvwmU6qrhdS7wZyp8chdxEVFimfsf1lOduhZzkRrpjQFMmttvbK41AO2rJvVzj4JvQjsDBeWM7sDqPbF7YDUt5rHscFNk9MhExVA09lZg28zRMvQ9wNHSKBsiSj3dKPemp4tpoU",
-    "email_address": "halinaitwe@gmail.com",
-    "role": "CHAIRMAN"
+    "access_token":  "H6TCarArWafqDCu3JjmvLCYqDAHs9khxkYDLn1h8dbEYTogb4870FNyT2aidnF0xCJ3Gn9T63DiI1pKKEcGImCT50nkKOptvQHAdBZweFbyixuP6TgjqZ4s6sC9msePDU8IkVXmYfLkd3Ld9",
+    "email_address": "rnamugera@gmail.com",
+    "role": "REGISTRAR"
 }
 
 
