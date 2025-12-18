@@ -29,9 +29,9 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "JEhefkAhwYallixBHAtWA4Yf0X4QcGErHcL8ZdWdiMku0RkCNlSHP7sg8pLWMMDsbl9gX3PwBA19a8gUFCDPbcGLuSgvvazv22X65yWwAgeThpVgZdczbbdxZx87Cke2foGOHSV7z33MlyWJ",
+    "access_token":  "CRPg821etiBNBzbb6pCcvkT0MTSany5hwt8HUFlQMR7NzX1LJOCW83bnGEoDwXu2m2Fr24gXACantyf7MRX8v08Y0OMt0E0mAohwHmbjxIJIx4cEgtZvf4YCUzRan2ExgFP4xJXl2YSg0XcJ",
     "email_address": "rnamugera@gmail.com",
-    "role": "REGISTRAR"
+    "role": "CHAIRMAN"
 }
 
 
