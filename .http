@@ -29,7 +29,7 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "YxN9BT36DkSdvRdmejwmJTHERw6IoP0r2etbptm6fhsFUQYo8tFUkgjAQRQSXdosMVyVSLEPxM4W41kCy7dh5MMe2vHpJYf8nM4eKni62QfUHXlAiUpGzSO1uDYqbsQk1BcAGKsrkRrkTbYi",
+    "access_token":  "JEhefkAhwYallixBHAtWA4Yf0X4QcGErHcL8ZdWdiMku0RkCNlSHP7sg8pLWMMDsbl9gX3PwBA19a8gUFCDPbcGLuSgvvazv22X65yWwAgeThpVgZdczbbdxZx87Cke2foGOHSV7z33MlyWJ",
     "email_address": "rnamugera@gmail.com",
     "role": "REGISTRAR"
 }
