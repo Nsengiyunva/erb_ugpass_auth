@@ -395,12 +395,12 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     placeHolderCoordinates: {
                     pageNumber: "1",
                     signatureXaxis: "50.0",
-                    signatureYaxis: "600.0", //625  -reduce
+                    signatureYaxis: "650.0", //625  -reduce
                     },
                     esealPlaceHolderCoordinates: {
                         pageNumber: "1",
-                        signatureXaxis: "218.0", //from 215
-                        signatureYaxis: "600.0"
+                        signatureXaxis: "220.0", //from 218s
+                        signatureYaxis: "650.0"
                     }
                 })
             );
@@ -415,8 +415,8 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     correlationId: correlationId,
                     placeHolderCoordinates: {
                         pageNumber: "1",
-                        signatureXaxis: "400.0",
-                        signatureYaxis: "640.0", //625
+                        signatureXaxis: "385.0",
+                        signatureYaxis: "650.0", //625
                     },
                 })
             );
