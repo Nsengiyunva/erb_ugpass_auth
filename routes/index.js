@@ -117,7 +117,7 @@ const getStatus = (expiryDate)  => {
 
 function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
  
 
 router.get( "/", async ( _, res ) => {
@@ -377,7 +377,7 @@ router.post( `/add_qr_code`,  async( req, res  ) => {
 router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
         let { access_token, email_address, role  }  = req.body
-        let correlationId = "1435845";
+        let correlationId = randomInt(100, 100000);
         let data = new FormData();
 
         if (!access_token) {
@@ -449,11 +449,6 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
                     error
                 })
             });
-
-
-        // res.status( 200 ).json( {
-        //     result: data
-        // } );
     } catch (error) {
         res.status( 500 ).json( {
             success: "failed",
@@ -461,6 +456,49 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
         }  )
     }
 } );
+
+//check bulk  status
+router.post( `bulk-status`, async ( req, res )  =>  {
+    try {
+        let { access_token, correlationId  }  = req.body
+
+        if (!access_token) {
+            return res.status(401).json({ error: 'Missing UGPass Access Token' });
+        }
+
+        let config = {
+            method: 'GET',
+            maxBodyLength: Infinity,
+            url: `https://nita.ugpass.go.ug/ERB-Agent/api/digital/signature/bulk/sign/status/${correlationId}`,
+            headers: { 
+                'UgPassAuthorization': `Bearer ${access_token}`,
+                ...data.getHeaders()
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                // let result = JSON.stringify(response.data);
+                console.log( "bulk sign status",  result  );
+                res.status(200).json({
+                    success: true,
+                    result
+                })
+            })
+            .catch((error) => {
+                console.log("error bulk sign: ",error);
+                res.status(500).json({
+                    success: false,
+                    error
+                })
+            });
+    } catch (error) {
+        res.status( 500 ).json( {
+            success: "failed",
+            error
+        }  )
+    }
+} )
 
 
 router.post("/upload", upload.single("file"), async (req, res) => {

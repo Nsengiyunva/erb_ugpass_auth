@@ -29,9 +29,18 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "CRPg821etiBNBzbb6pCcvkT0MTSany5hwt8HUFlQMR7NzX1LJOCW83bnGEoDwXu2m2Fr24gXACantyf7MRX8v08Y0OMt0E0mAohwHmbjxIJIx4cEgtZvf4YCUzRan2ExgFP4xJXl2YSg0XcJ",
-    "email_address": "rnamugera@gmail.com",
+    "access_token":  "6dySmtRE15l7ZtpB2HFAcOm52YycmOIyDns9zo7Ke66a9TglgQgzA1S9e3x4zuQVu8dgx2xFOANlvWgy5ldfGcJd9iUf920pVLKiC24JdlnBs0PL8XbsLF69QK9ZAhDSO0cSwv7yxnfdsnMU",
+    "email_address": "halinaitwe@gmail.com",
     "role": "CHAIRMAN"
+}
+
+### check for the status
+POST  {{url}}/bulk-status
+Content-Type: application/json
+
+{
+    "access_token":  "6dySmtRE15l7ZtpB2HFAcOm52YycmOIyDns9zo7Ke66a9TglgQgzA1S9e3x4zuQVu8dgx2xFOANlvWgy5ldfGcJd9iUf920pVLKiC24JdlnBs0PL8XbsLF69QK9ZAhDSO0cSwv7yxnfdsnMU",
+    "correlationId": "1435845"
 }
 
 

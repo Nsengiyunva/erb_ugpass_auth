@@ -61,6 +61,12 @@ Stanbic Merchant - no POS  -  to FlexiPay Merchant.
 --------------------------------------------------------
 
 
+still waiting for his consent.
+--------------
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"1435845\"}"
+}
 
 
 
