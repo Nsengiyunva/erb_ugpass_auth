@@ -460,7 +460,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
 
 //check bulk  status
 router.post( `/bulk-status`, async ( req, res )  =>  {
-    try {
+    // try {
         let { access_token, correlationId  }  = req.body
 
         if (!access_token) {
@@ -493,12 +493,12 @@ router.post( `/bulk-status`, async ( req, res )  =>  {
                     error
                 })
             });
-    } catch (error) {
-        res.status( 500 ).json( {
-            success: "failed",
-            error
-        }  )
-    }
+    // } catch (error) {
+    //     res.status( 500 ).json( {
+    //         success: "failed",
+    //         error
+    //     }  )
+    // }
 } )
 
 

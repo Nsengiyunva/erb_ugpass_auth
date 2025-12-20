@@ -29,9 +29,9 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "6dySmtRE15l7ZtpB2HFAcOm52YycmOIyDns9zo7Ke66a9TglgQgzA1S9e3x4zuQVu8dgx2xFOANlvWgy5ldfGcJd9iUf920pVLKiC24JdlnBs0PL8XbsLF69QK9ZAhDSO0cSwv7yxnfdsnMU",
-    "email_address": "halinaitwe@gmail.com",
-    "role": "CHAIRMAN"
+    "access_token":  "JtPuqcb4YtZ6X5UOmAujBKQmri23KY8j6lGcA4c5F3ICarqKdB7sYSa7HhZDW1hz5PBSZ5U5AgBhsLGCPeYU9khGJrZrDW8n3de92PF9BfiYcOTNMcmdMXwTntoN2RXAWO96GSRJKYfOYbge",
+    "email_address": "rnamugera@gmail.com",
+    "role": "REGISTRAR"
 }
 
 ### check for the status
@@ -39,8 +39,8 @@ POST  {{url}}/bulk-status
 Content-Type: application/json
 
 {
-    "access_token":  "6dySmtRE15l7ZtpB2HFAcOm52YycmOIyDns9zo7Ke66a9TglgQgzA1S9e3x4zuQVu8dgx2xFOANlvWgy5ldfGcJd9iUf920pVLKiC24JdlnBs0PL8XbsLF69QK9ZAhDSO0cSwv7yxnfdsnMU",
-    "correlationId": "1435845"
+    "access_token":  "i001HF8aWySBlx45XwCAQ6wd7cDg2tJmQTHSm8WYde6yVvaNZJt8Vhj9qIandv8D2EoQyc4kay29ZSi70Y1eUMRLm6xrVBFAu3sKhvpMwQiDOB0FjjuaBeSiIYvL7bNnd3dnxE7jdWpBzfjh",
+    "correlationId": "738495"
 }
 
 
