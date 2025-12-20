@@ -458,7 +458,7 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
 } );
 
 //check bulk  status
-router.post( `bulk-status`, async ( req, res )  =>  {
+router.post( `/bulk-status`, async ( req, res )  =>  {
     let correlationId = randomInt(100, 100000);
     return res.json( {
         correlationId
