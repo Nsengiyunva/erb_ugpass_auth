@@ -22,6 +22,9 @@ Content-Type: application/json
     "role": "REGISTRAR"
 }
 
+#  rnamugera@gmail.com
+#  halinaitwe@gmail.com
+#  trevor.mukwaya@nita.go.ug
 
 
 ### bulk
@@ -29,8 +32,8 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "JtPuqcb4YtZ6X5UOmAujBKQmri23KY8j6lGcA4c5F3ICarqKdB7sYSa7HhZDW1hz5PBSZ5U5AgBhsLGCPeYU9khGJrZrDW8n3de92PF9BfiYcOTNMcmdMXwTntoN2RXAWO96GSRJKYfOYbge",
-    "email_address": "rnamugera@gmail.com",
+    "access_token":  "",
+    "email_address": "trevor.mukwaya@nita.go.ug",
     "role": "REGISTRAR"
 }
 
@@ -39,7 +42,7 @@ POST  {{url}}/bulk-status
 Content-Type: application/json
 
 {
-    "access_token":  "i001HF8aWySBlx45XwCAQ6wd7cDg2tJmQTHSm8WYde6yVvaNZJt8Vhj9qIandv8D2EoQyc4kay29ZSi70Y1eUMRLm6xrVBFAu3sKhvpMwQiDOB0FjjuaBeSiIYvL7bNnd3dnxE7jdWpBzfjh",
+    "access_token":  "",
     "correlationId": "738495"
 }
 
