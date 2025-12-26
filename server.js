@@ -197,11 +197,11 @@ app.use(function (_, res, next) {
   next();
 });
 
-const redis = new IORedis({
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: process.env.REDIS_PORT || 6379,
-  password: process.env.REDIS_PASSWORD || undefined,
-});
+// const redis = new IORedis({
+//   host: process.env.REDIS_HOST || "127.0.0.1",
+//   port: process.env.REDIS_PORT || 6379,
+//   password: process.env.REDIS_PASSWORD || undefined,
+// });
 
   app.use( express.json() )
 
