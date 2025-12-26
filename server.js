@@ -282,7 +282,7 @@ app.use(function (_, res, next) {
 
   </div>
 </div>
-  `;
+   `;
 
     try {
       // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
@@ -292,6 +292,7 @@ app.use(function (_, res, next) {
       res.status(500).json({ error: "Failed to send email" });
     }
   });
+
 
   app.post("/send-batch", async (req, res) => {
     const { emails } = req.body;
@@ -425,6 +426,99 @@ app.use(function (_, res, next) {
 
     } catch (err) {
       res.status(500).json({ message: "Failed to send some emails", error: err.message });
+    }
+  });
+
+
+  app.post("/password-resetlink/send", async (req, res) => {
+    const { email } = req.body
+
+    const resetUrl = `https://registration.erb.go.ug/reset-password?token=${resetToken}`
+
+        // 5. HTML email content
+        const htmlContent = `
+<div style="font-family: Arial, Helvetica, sans-serif; background-color: #f8f2f2; padding: 30px;">
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+
+    <!-- Header -->
+    <div style="background-color: #b30000; padding: 20px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 22px;">
+        Engineers Registration Board (ERB)
+      </h1>
+    </div>
+
+    <!-- Body -->
+    <div style="padding: 25px; color: #333333;">
+      <h2 style="color: #b30000; font-size: 20px;">
+        Password Reset Request 🔐
+      </h2>
+
+      <p style="font-size: 15px; line-height: 1.6;">
+        We received a request to reset your password for your
+        <strong>Engineers Registration Board (ERB)</strong> account.
+      </p>
+
+      <p style="font-size: 15px; line-height: 1.6;">
+        Click the button below to reset your password. This link will expire in <strong>1 hour</strong>.
+      </p>
+
+      <!-- CTA Button -->
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${resetUrl}"
+          style="
+            background-color: #b30000;
+            color: #ffffff;
+            padding: 12px 28px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+          ">
+          Reset Your Password
+        </a>
+      </div>
+
+      <!-- Alternative Link -->
+      <p style="font-size: 13px; color: #666666; word-break: break-all;">
+        If the button doesn't work, copy and paste this link into your browser:<br />
+        <a href="${resetUrl}" style="color: #b30000;">${resetUrl}</a>
+      </p>
+
+      <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 20px 0;">
+        <p style="font-size: 14px; color: #856404; margin: 0;">
+          ⚠️ <strong>Security Notice:</strong> If you did not request a password reset, 
+          please ignore this email or contact ERB support immediately. Your password will remain unchanged.
+        </p>
+      </div>
+
+      <p style="font-size: 14px; color: #555555;">
+        For security reasons, never share your password or reset link with anyone.
+      </p>
+
+      <p style="margin-top: 25px; font-size: 15px;">
+        Kind regards,<br />
+        <strong>ERB Support Team</strong>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 12px; color: #777777;">
+      © 2025 Engineers Registration Board (ERB) Uganda<br />
+      <a href="https://www.erb.go.ug" style="color: #b30000; text-decoration: none;">
+        www.erb.go.ug
+      </a>
+    </div>
+
+  </div>
+</div>
+        `;
+
+    try {
+      // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
+      await sendStyledMail( email, "RE: PASSWORD RESET REQUEST - ERB PLATFORM", htmlContent);
+      res.json({ message: "ResetLink Email sent successfully!" });
+    } catch (err) {
+      res.status(500).json({ error: "Failed to send email" });
     }
   });
 
