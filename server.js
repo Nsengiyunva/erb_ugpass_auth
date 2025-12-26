@@ -211,58 +211,90 @@ const redisConnection  =  new IORedis( {
     connection: redisConnection
   } )
     
-  app.get("/email/send", async (_, res) => {
+  app.post("/email/send", async (req, res) => {
+    const { name, email } = req.body
 
     const htmlContent = `
-    <div style="font-family: Arial, sans-serif; background-color: #f6f9fc; padding: 20px;">
-      <div style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <h2 style="color: #007bff;">Hello, King Isaac 👋</h2>
-        <p style="font-size: 16px; color: #333;">
-          This is a <strong>styled email</strong> sent from your Node.js API.
-        </p>
-        <p style="font-size: 15px; color: #666;">
-          It supports full HTML and inline CSS — so you can design beautiful email templates.
-        </p>
-        <a href="https://www.erb.go.ug" 
-          style="display:inline-block; margin-top:20px; background-color:#007bff; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">
-          Visit ERB Website
-        </a>
-        <p style="margin-top:30px; font-size:13px; color:#999;">© 2025 ERB Uganda</p>
-      </div>
+<div style="font-family: Arial, Helvetica, sans-serif; background-color: #f8f2f2; padding: 30px;">
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+
+    <!-- Header -->
+    <div style="background-color: #b30000; padding: 20px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 22px;">
+        Engineers Registration Board (ERB)
+      </h1>
     </div>
+
+    <!-- Body -->
+    <div style="padding: 25px; color: #333333;">
+      <h2 style="color: #b30000; font-size: 20px;">
+        Welcome, ${name} 👋
+      </h2>
+
+      <p style="font-size: 15px; line-height: 1.6;">
+        Your account has been <strong>successfully registered</strong> with the
+        <strong>Engineers Registration Board (ERB)</strong>.
+      </p>
+
+      <p style="font-size: 15px; line-height: 1.6;">
+        You can now log in to the ERB portal using your registered email address
+        and the password you provided during registration.
+      </p>
+
+      <!-- CTA Button -->
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="https://registration.erb.go.ug"
+          style="
+            background-color: #b30000;
+            color: #ffffff;
+            padding: 12px 28px;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+          ">
+          Login to ERB Portal
+        </a>
+      </div>
+
+      <p style="font-size: 14px; color: #555555;">
+        If you did not initiate this registration, please contact ERB support immediately.
+      </p>
+
+      <p style="font-size: 14px; color: #555555;">
+        For security reasons, do not share your password with anyone.
+      </p>
+
+      <p style="margin-top: 25px; font-size: 15px;">
+        Kind regards,<br />
+        <strong>ERB Support Team</strong>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 12px; color: #777777;">
+      © 2025 Engineers Registration Board (ERB) Uganda<br />
+      <a href="https://www.erb.go.ug" style="color: #b30000; text-decoration: none;">
+        www.erb.go.ug
+      </a>
+    </div>
+
+  </div>
+</div>
   `;
 
     try {
       // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
-      await sendStyledMail("isaacnsengiyunva@gmail.com", "Email Test", htmlContent);
+      await sendStyledMail( email, "RE:ENGINEERS REGISTRATION BOARD PLATFORM ACCOUNT REGISTRATION", htmlContent);
       res.json({ message: "Email sent successfully!" });
     } catch (err) {
-      // console.error( "failed to send email", err );
       res.status(500).json({ error: "Failed to send email" });
     }
   });
 
   app.post("/send-batch", async (req, res) => {
     const { emails } = req.body;
-
-  //   const htmlContent = `
-  //   <div style="font-family: Arial, sans-serif; background-color: #f6f9fc; padding: 20px;">
-  //     <div style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-  //       <h2 style="color: #007bff;">Hello, King Isaac 👋</h2>
-  //       <p style="font-size: 16px; color: #333;">
-  //         This is a <strong>styled email</strong> sent from your Node.js API.
-  //       </p>
-  //       <p style="font-size: 15px; color: #666;">
-  //         It supports full HTML and inline CSS — so you can design beautiful email templates.
-  //       </p>
-  //       <a href="https://www.erb.go.ug" 
-  //         style="display:inline-block; margin-top:20px; background-color:#007bff; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">
-  //         Visit ERB Website
-  //       </a>
-  //       <p style="margin-top:30px; font-size:13px; color:#999;">© 2025 ERB Uganda</p>
-  //     </div>
-  //   </div>
-  // `;
+    
   const htmlContent = `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; padding: 40px 20px;">
     <div style="max-width: 650px; background: white; border-radius: 12px; margin: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
