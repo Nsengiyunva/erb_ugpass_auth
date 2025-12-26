@@ -137,8 +137,13 @@ Content-Type: application/json
 
 
 ### single send  email
-GET https://api.erb.go.ug/email/send
+POST https://api.erb.go.ug/email/send
 Content-Type: application/json
+
+{
+    "email": "isaacnsengiyunva@gmail.com",
+    "name": "John Doe"
+}
 
 
 ### send batch

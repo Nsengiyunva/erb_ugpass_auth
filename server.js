@@ -180,7 +180,7 @@ import authRoutes from './routes/auth.js'
 // import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 // import path from "path";
 import { sequelize, connectDB } from "./config/db.js";
-// import cors from "cors";
+import IORedis from "ioredis";
 
 dotenv.config();
 
@@ -197,10 +197,11 @@ app.use(function (_, res, next) {
   next();
 });
 
-const redisConnection  =  new IORedis( {
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT
-} )
+const redis = new IORedis({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: process.env.REDIS_PORT || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
+});
 
   app.use( express.json() )
 
@@ -294,7 +295,7 @@ const redisConnection  =  new IORedis( {
 
   app.post("/send-batch", async (req, res) => {
     const { emails } = req.body;
-    
+
   const htmlContent = `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; padding: 40px 20px;">
     <div style="max-width: 650px; background: white; border-radius: 12px; margin: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
