@@ -177,10 +177,10 @@ import express from "express";
 import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
-// import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
+import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 // import path from "path";
 import { sequelize, connectDB } from "./config/db.js";
-import IORedis from "ioredis";
+// import IORedis from "ioredis";
 
 dotenv.config();
 
