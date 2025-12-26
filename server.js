@@ -208,9 +208,9 @@ app.use(function (_, res, next) {
   app.use("/auth/api", authRoutes )
   app.use( "/api", router )
 
-  const emailQueue = new Queue( "email_queue", {
-    connection: redisConnection
-  } )
+  // const emailQueue = new Queue( "email_queue", {
+  //   connection: redisConnection
+  // } )
     
   app.post("/email/send", async (req, res) => {
     const { name, email } = req.body
