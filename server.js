@@ -431,9 +431,9 @@ app.use(function (_, res, next) {
 
 
   app.post("/password-resetlink/send", async (req, res) => {
-    const { email } = req.body
+    const { email , token} = req.body
 
-    const resetUrl = `https://registration.erb.go.ug/reset-password?token=${resetToken}`
+    const resetUrl = `https://registration.erb.go.ug/reset-password?token=${token}`
 
         // 5. HTML email content
         const htmlContent = `
