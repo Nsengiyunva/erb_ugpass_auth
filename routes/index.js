@@ -378,7 +378,6 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
     try {
         let { access_token, email_address, role  }  = req.body
         let correlationId = randomInt(100, 10000000);
-        // let correlationId = "738495";
         let data = new FormData();
 
         if (!access_token) {

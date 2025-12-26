@@ -69,6 +69,14 @@ still waiting for his consent.
 }
 
 
+nohup rsync -ah --progress /source/folder/ /destination/folder/ > copy.log 2>&1 &
+
+
+nohup rsync -ah --progress /home/user1/ERB/ronald_signed_docs/* /var/ugpass/source/ > copy.log 2>&1 &
+
+
+nohup rsync -ah --progress user1@10.255.8.34:/home/user1/ERB/ronald_signed_docs/* /Users/user/Documents/ron_destination/ > download.log 2>&1 &
+
 
 
 

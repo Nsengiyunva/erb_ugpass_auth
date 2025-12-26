@@ -25,25 +25,27 @@ Content-Type: application/json
 #  rnamugera@gmail.com
 #  halinaitwe@gmail.com
 #  trevor.mukwaya@nita.go.ug
-
+# 5461997
+# 8985091
 
 ### bulk
 POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "",
-    "email_address": "trevor.mukwaya@nita.go.ug",
-    "role": "REGISTRAR"
+    "access_token":  "6WOUkpPq2ljrmYCEqLLqsmIiUnMaEAlvVkFviMLlwZyIJ03XlIMekoCCGHYT7Di0VXDSKzchpnM7DiEUocgMulr8zs9roWlxilMwrulPgf2NYtKLsssoDSwEaREdqr0SMjlsLDG8Y285ebO6",
+    "email_address": "halinaitwe@gmail.com",
+    "role": "CHAIRMAN"
 }
 
 ### check for the status
+// 6439343
 POST  {{url}}/bulk-status
 Content-Type: application/json
 
 {
     "access_token":  "",
-    "correlationId": "738495"
+    "correlationId": "9106416"
 }
 
 
@@ -145,7 +147,7 @@ Content-Type: application/json
 
 {
     "emails": [
-        "isaac.nsengiyunva@nita.go.ug",
-        "kingbecks07@gmail.com"
+        "sysadmin@erb.go.ug",
+        "isaacnsengiyunva@gmail.com"
     ]
 }
