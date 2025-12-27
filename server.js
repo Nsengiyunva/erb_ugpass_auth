@@ -774,7 +774,7 @@ app.use(function (_, res, next) {
         `;
   
         // 🔁 SEND EMAIL WITH RETRY
-        await sendMailWithRetry(() =>
+        await sendAttachmentWithRetry(() =>
           sendStyledMail(
             email,
             "RE: YOUR ERB PROFESSIONAL LICENSE",
