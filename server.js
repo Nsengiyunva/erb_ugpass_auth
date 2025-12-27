@@ -404,16 +404,13 @@ app.use(function (_, res, next) {
           Thank you and welcome onboard the ERB E-System
         </p>
         <p style="color: #8b0000; font-size: 18px; font-weight: 700; margin: 10px 0 0 0;">
-          🎄 Merry Christmas & Happy New Year 2026 🎊
+          Happy New Year 2026 🎊
         </p>
       </div>
 
       <div style="border-top: 2px solid #f0f0f0; margin-top: 40px; padding-top: 25px;">
         <p style="font-size: 15px; color: #333; margin: 0 0 5px 0; font-weight: 600;">
           REGISTRAR
-        </p>
-        <p style="font-size: 14px; color: #777; margin: 0;">
-          24.12.2025
         </p>
       </div>
     </div>
