@@ -184,15 +184,16 @@ import { sequelize, connectDB } from "./config/db.js";
 
 import multer from "multer";
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype !== "application/pdf") {
-      cb(new Error("Only PDFs allowed"));
-    }
-    cb(null, true);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "attachments/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
+
+const upload = multer({ storage });
 
 dotenv.config();
 
