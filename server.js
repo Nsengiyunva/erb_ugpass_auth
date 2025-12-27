@@ -650,7 +650,7 @@ app.use(function (_, res, next) {
   
       await sendStyledMail(
         email,
-        "ERB Registration Confirmation",
+        "RE: YOUR ERB PROFESSIONAL LICENSE",
         htmlContent,
         [
           {
