@@ -310,118 +310,133 @@ app.use(function (_, res, next) {
   app.post("/send-batch", async (req, res) => {
     const { emails } = req.body;
 
-  const htmlContent = `
-  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; padding: 40px 20px;">
-    <div style="max-width: 650px; background: white; border-radius: 12px; margin: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
-      
-      <!-- Header with red accent -->
-      <div style="background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); padding: 40px 30px; text-align: center;">
-        <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">Engineers Registration Board</h1>
-        <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Uganda</p>
-      </div>
-
-      <!-- Main content -->
-      <div style="padding: 40px 30px;">
-        <h2 style="color: #dc143c; font-size: 24px; margin: 0 0 20px 0; border-bottom: 3px solid #dc143c; padding-bottom: 10px; display: inline-block;">
-          Welcome to Our Digital Platform
-        </h2>
-        
-        <p style="font-size: 16px; color: #333; line-height: 1.8; margin: 20px 0;">
-          The Engineers Registration Board has upgraded to <strong>Digital application, registration and licensing system</strong> starting 2026. ERB has developed a bespoke E-Registration & Licencing and Information Management System to enhance effectiveness in its mandate to register, regulate and control engineering professional practice across the country.
-        </p>
-
-        <div style="background-color: #fff5f5; border-left: 4px solid #dc143c; padding: 20px; margin: 25px 0; border-radius: 4px;">
-          <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0;">
-            The system shall provide a convenient and efficient online service that reduces the application and processing time for obtaining the relevant licences in one single platform.
-          </p>
-        </div>
-
-        <h3 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">What You Can Do:</h3>
-        <ul style="color: #555; font-size: 15px; line-height: 1.9; padding-left: 20px;">
-          <li>Make payments online</li>
-          <li>Download your licence instantly</li>
-          <li>Update your registration profile</li>
-          <li>Sponsor new applicants for registration</li>
-        </ul>
-
-        <div style="background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center;">
-          <p style="color: white; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">
-            🎉 Your 2026 Licence is Ready!
-          </p>
-          <p style="color: rgba(255,255,255,0.95); font-size: 15px; margin: 0;">
-            Access and download your licence online now
-          </p>
-        </div>
-
-        <h3 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">Getting Started:</h3>
-        
-        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 6px; margin: 15px 0;">
-          <p style="font-size: 15px; color: #333; margin: 0 0 10px 0; font-weight: 600;">
-            ✓ Already have an account?
-          </p>
-          <p style="font-size: 15px; color: #555; margin: 0; line-height: 1.6;">
-            Reset your password and log in using the link below.
-          </p>
-        </div>
-
-        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 6px; margin: 15px 0;">
-          <p style="font-size: 15px; color: #333; margin: 0 0 10px 0; font-weight: 600;">
-            ✓ New to the system?
-          </p>
-          <p style="font-size: 15px; color: #555; margin: 0; line-height: 1.6;">
-            Create your account to get started with the E-Registration system.
-          </p>
-        </div>
-
-        <div style="text-align: center; margin: 35px 0;">
-          <a href="https://registration.erb.go.ug" 
-            style="display: inline-block; background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3); transition: all 0.3s;">
-            Access ERB E-System
-          </a>
-        </div>
-
-        <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 25px 0;">
-          For any inquiries, reach out to the ERB office for assistance.
-        </p>
-
-        <div style="background-color: #fff5f5; padding: 20px; border-radius: 6px; margin: 30px 0; text-align: center;">
-          <p style="color: #dc143c; font-size: 17px; font-weight: 600; margin: 0 0 5px 0;">
-            Thank you and welcome onboard the ERB E-System
-          </p>
-          <p style="color: #8b0000; font-size: 18px; font-weight: 700; margin: 10px 0 0 0;">
-            🎊 Happy New Year 2026 🎊
-          </p>
-        </div>
-
-        <div style="border-top: 2px solid #f0f0f0; margin-top: 40px; padding-top: 25px;">
-          <p style="font-size: 15px; color: #333; margin: 0 0 5px 0; font-weight: 600;">
-            REGISTRAR
-          </p>
-          <p style="font-size: 14px; color: #777; margin: 0;">
-            26.12.2025
-          </p>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div style="background-color: #1a1a1a; padding: 25px 30px; text-align: center;">
-        <p style="color: #999; font-size: 13px; margin: 0 0 8px 0;">
-          © 2025 Engineers Registration Board, Uganda
-        </p>
-        <p style="color: #666; font-size: 12px; margin: 0;">
-          This email was sent regarding your ERB registration and licensing
-        </p>
-      </div>
-
+    const htmlContent = `
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; padding: 40px 20px;">
+  <div style="max-width: 650px; background: white; border-radius: 12px; margin: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden;">
+    
+    <!-- Header with red accent -->
+    <div style="background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); padding: 40px 30px; text-align: center;">
+      <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">Engineers Registration Board</h1>
+      <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Uganda</p>
     </div>
+
+    <!-- Main content -->
+    <div style="padding: 40px 30px;">
+      <h2 style="color: #dc143c; font-size: 24px; margin: 0 0 20px 0; border-bottom: 3px solid #dc143c; padding-bottom: 10px; display: inline-block;">
+        Welcome to Our Digital Platform
+      </h2>
+      
+      <p style="font-size: 16px; color: #333; line-height: 1.8; margin: 20px 0;">
+        The Engineers Registration Board has upgraded to <strong>Digital application, registration and licensing system</strong> starting 2026. ERB has developed a bespoke <strong>E-Registration & Licencing and Information Management System</strong> to enhance effectiveness in its mandate to register, regulate and control engineering professional practice across the country.
+      </p>
+
+      <div style="background-color: #fff5f5; border-left: 4px solid #dc143c; padding: 20px; margin: 25px 0; border-radius: 4px;">
+        <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 0;">
+          The system shall provide a convenient and efficient online service that reduces the application and processing time for obtaining the relevant licences in one single platform.
+        </p>
+      </div>
+
+      <p style="font-size: 16px; color: #333; line-height: 1.8; margin: 20px 0;">
+        This system will enable you to:
+      </p>
+
+      <ul style="color: #555; font-size: 15px; line-height: 1.9; padding-left: 20px; margin: 15px 0;">
+        <li>Make payments online</li>
+        <li>Get your licence online</li>
+        <li>Make individual updates to your registration profile</li>
+        <li>Sponsor new applicants for registration</li>
+      </ul>
+
+      <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 20px 0;">
+        All at your own convenience and location.
+      </p>
+
+      <div style="background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); padding: 25px; border-radius: 8px; margin: 30px 0; text-align: center;">
+        <p style="color: white; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">
+          🎉 Your 2026 Licence is Ready!
+        </p>
+        <p style="color: rgba(255,255,255,0.95); font-size: 15px; margin: 0;">
+          We are excited to inform you that you can now access and download your 2026 licence online.
+        </p>
+      </div>
+
+      <h3 style="color: #333; font-size: 20px; margin: 30px 0 15px 0;">Getting Started:</h3>
+      
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p style="font-size: 15px; color: #333; margin: 0 0 10px 0; font-weight: 600;">
+          ✓ Already have an ERB Account/Profile?
+        </p>
+        <p style="font-size: 15px; color: #555; margin: 0 0 10px 0; line-height: 1.6;">
+          Please follow the link below to reset the password to your account and log in:
+        </p>
+        <a href="https://registration.erb.go.ug/forgot-password" 
+          style="color: #dc143c; text-decoration: none; font-weight: 600; font-size: 15px;">
+          Reset Password →
+        </a>
+      </div>
+
+      <div style="background-color: #f9f9f9; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p style="font-size: 15px; color: #333; margin: 0 0 10px 0; font-weight: 600;">
+          ✓ Don't have an account yet?
+        </p>
+        <p style="font-size: 15px; color: #555; margin: 0 0 10px 0; line-height: 1.6;">
+          Follow the link below to sign up and create your ERB account:
+        </p>
+        <a href="https://registration.erb.go.ug" 
+          style="color: #dc143c; text-decoration: none; font-weight: 600; font-size: 15px;">
+          Sign Up Now →
+        </a>
+      </div>
+
+      <div style="text-align: center; margin: 35px 0;">
+        <a href="https://registration.erb.go.ug" 
+          style="display: inline-block; background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%); color: white; padding: 16px 40px; text-decoration: none; border-radius: 50px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);">
+          Access ERB E-System
+        </a>
+      </div>
+
+      <p style="font-size: 15px; color: #555; line-height: 1.7; margin: 25px 0; text-align: center;">
+        For any inquiries, reach out to the ERB office for assistance.
+      </p>
+
+      <div style="background-color: #fff5f5; padding: 20px; border-radius: 6px; margin: 30px 0; text-align: center;">
+        <p style="color: #dc143c; font-size: 17px; font-weight: 600; margin: 0 0 5px 0;">
+          Thank you and welcome onboard the ERB E-System
+        </p>
+        <p style="color: #8b0000; font-size: 18px; font-weight: 700; margin: 10px 0 0 0;">
+          🎄 Merry Christmas & Happy New Year 2026 🎊
+        </p>
+      </div>
+
+      <div style="border-top: 2px solid #f0f0f0; margin-top: 40px; padding-top: 25px;">
+        <p style="font-size: 15px; color: #333; margin: 0 0 5px 0; font-weight: 600;">
+          REGISTRAR
+        </p>
+        <p style="font-size: 14px; color: #777; margin: 0;">
+          24.12.2025
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #1a1a1a; padding: 25px 30px; text-align: center;">
+      <p style="color: #999; font-size: 13px; margin: 0 0 8px 0;">
+        © 2025 Engineers Registration Board, Uganda
+      </p>
+      <p style="color: #666; font-size: 12px; margin: 0;">
+        This email was sent regarding your ERB registration and licensing
+      </p>
+    </div>
+
   </div>
+</div>
 `;
 
     if (!emails || !Array.isArray(emails) || emails.length === 0) {
       return res.status(400).json({ message: "Emails array is required" });
     }
 
-    let subject = "RE: ERB TEST MAIL:";
+    let subject = "RE: ROLL-OUT OF THE ERB E-SYSTEM";
 
     try {
       await sendEmailsInChunks(emails, subject, htmlContent, {
