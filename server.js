@@ -544,8 +544,108 @@ app.use(function (_, res, next) {
       }
   
       const htmlContent = `
-        <h2>Welcome ${name}</h2>
-        <p>Please find your registration document attached.</p>
+      <div style="font-family: Arial, Helvetica, sans-serif; background-color: #f8f2f2; padding: 30px;">
+        <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      
+          <!-- Header -->
+          <div style="background-color: #b30000; padding: 20px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 22px;">
+              Engineers Registration Board (ERB)
+            </h1>
+          </div>
+      
+          <!-- Body -->
+          <div style="padding: 25px; color: #333333;">
+            <h2 style="color: #b30000; font-size: 20px;">
+              Hello, Eng. ${name} 📄
+            </h2>
+      
+            <p style="font-size: 15px; line-height: 1.6;">
+              We are pleased to inform you that your registration document has been successfully processed and is now ready for your review.
+            </p>
+      
+            <p style="font-size: 15px; line-height: 1.6;">
+              Please find your <strong>official registration document attached</strong> to this email. This document contains important information regarding your registration with the Engineers Registration Board.
+            </p>
+      
+            <!-- Document Info Box -->
+            <div style="background-color: #fff8f8; border-left: 4px solid #b30000; padding: 15px; margin: 25px 0; border-radius: 4px;">
+              <p style="margin: 0; font-size: 14px; color: #555555;">
+                📎 <strong style="color: #b30000;">Attached Document:</strong> Your registration certificate and related documents
+              </p>
+            </div>
+      
+            <!-- Important Instructions -->
+            <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #b30000; font-size: 16px; margin-top: 0; margin-bottom: 10px;">
+                📋 Next Steps:
+              </h3>
+              <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li style="font-size: 14px; color: #555555;">Download and save the attached document for your records</li>
+                <li style="font-size: 14px; color: #555555;">Review the document carefully and verify all information</li>
+                <li style="font-size: 14px; color: #555555;">Keep this document in a safe place as proof of your registration</li>
+                <li style="font-size: 14px; color: #555555;">Contact us if you notice any discrepancies</li>
+              </ul>
+            </div>
+      
+            <!-- CTA Button -->
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="https://registration.erb.go.ug"
+                style="
+                  background-color: #b30000;
+                  color: #ffffff;
+                  padding: 12px 28px;
+                  font-size: 15px;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  display: inline-block;
+                ">
+                Access ERB Portal
+              </a>
+            </div>
+      
+            <!-- Security Notice -->
+            <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 20px 0; border-radius: 4px;">
+              <p style="font-size: 13px; color: #856404; margin: 0;">
+                ⚠️ <strong>Important:</strong> This document is confidential and intended solely for your use. Please do not share it with unauthorized parties.
+              </p>
+            </div>
+      
+            <p style="font-size: 14px; color: #555555; line-height: 1.6;">
+              If you have any questions or require assistance, please don't hesitate to contact our support team at 
+              <a href="mailto:support@erb.go.ug" style="color: #b30000; text-decoration: none;">support@erb.go.ug</a> 
+              or call us during business hours.
+            </p>
+      
+            <p style="margin-top: 25px; font-size: 15px;">
+              Kind regards,<br />
+              <strong>ERB Support Team</strong><br />
+              <span style="font-size: 13px; color: #777777;">Engineers Registration Board of Uganda</span>
+            </p>
+          </div>
+      
+          <!-- Footer -->
+          <div style="background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 12px; color: #777777;">
+            <p style="margin: 0 0 8px 0;">
+              © 2025 Engineers Registration Board (ERB) Uganda
+            </p>
+            <p style="margin: 0;">
+              <a href="https://www.erb.go.ug" style="color: #b30000; text-decoration: none; margin: 0 8px;">
+                www.erb.go.ug
+              </a>
+              |
+              <a href="mailto:info@erb.go.ug" style="color: #b30000; text-decoration: none; margin: 0 8px;">
+                info@erb.go.ug
+              </a>
+              |
+              <a href="tel:+256123456789" style="color: #b30000; text-decoration: none; margin: 0 8px;">
+                +256 123 456 789
+              </a>
+            </p>
+          </div>
+      
+        </div>
+      </div>
       `;
   
       await sendStyledMail(
