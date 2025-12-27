@@ -182,6 +182,18 @@ import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 import { sequelize, connectDB } from "./config/db.js";
 // import IORedis from "ioredis";
 
+import multer from "multer";
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== "application/pdf") {
+      cb(new Error("Only PDFs allowed"));
+    }
+    cb(null, true);
+  },
+});
+
 dotenv.config();
 
 const app = express();
@@ -521,6 +533,41 @@ app.use(function (_, res, next) {
       res.status(500).json({ error: "Failed to send email" });
     }
   });
+
+  //send email with attachment
+  app.post("/email/send-attachment", upload.single("file"), async (req, res) => {
+    try {
+      const { name, email } = req.body;
+  
+      if (!req.file) {
+        return res.status(400).json({ error: "PDF file is required" });
+      }
+  
+      const htmlContent = `
+        <h2>Welcome ${name}</h2>
+        <p>Please find your registration document attached.</p>
+      `;
+  
+      await sendStyledMail(
+        email,
+        "ERB Registration Confirmation",
+        htmlContent,
+        [
+          {
+            filename: req.file.originalname,
+            content: req.file.buffer,
+            contentType: "application/pdf",
+          },
+        ]
+      );
+  
+      res.json({ message: "Email sent successfully with attachment" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to send email" });
+    }
+  });
+  
 
 
 connectDB();

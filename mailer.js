@@ -32,12 +32,13 @@ const transporter = nodemailer.createTransport({
   }
 
 
-  export async function sendStyledMail(to, subject, htmlContent) {
+  export async function sendStyledMail(to, subject, htmlContent,  attachments = []) {
     const info = await transporter.sendMail({
       from: `"ERB Notifications" <${process.env.SMTP_USER}>`,
       to,
       subject,
       html: htmlContent,
+      attachments
     });
   
     console.log("Mail sent:", info.messageId);
