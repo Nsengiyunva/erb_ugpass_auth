@@ -621,7 +621,7 @@ app.use(function (_, res, next) {
             <p style="margin-top: 25px; font-size: 15px;">
               Kind regards,<br />
               <strong>ERB Support Team</strong><br />
-              <span style="font-size: 13px; color: #777777;">Engineers Registration Board of Uganda</span>
+              <span style="font-size: 13px; color: #777777;">Uganda Engineers Registration Board of Uganda</span>
             </p>
           </div>
       
