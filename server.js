@@ -692,6 +692,48 @@ app.use(function (_, res, next) {
   //     res.status(500).json({ error: "Failed to send email" });
   //   }
   // });
+  const sendAttachmentWithRetry = async (
+    sendFn,
+    retries = 3,
+    delayMs = 2000
+  ) => {
+    let lastError;
+  
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        console.log(`📧 Email attempt ${attempt}/${retries}`);
+        return await sendFn();
+      } catch (err) {
+        lastError = err;
+  
+        // Retry only on SMTP/network errors
+        if (
+          err.code === "ETIMEDOUT" ||
+          err.code === "ECONNRESET" ||
+          err.code === "EHOSTUNREACH" ||
+          err.command === "CONN"
+        ) {
+          console.warn(
+            `⚠️ SMTP attempt ${attempt} failed: ${err.message}`
+          );
+  
+          if (attempt < retries) {
+            await new Promise((res) =>
+              setTimeout(res, delayMs * attempt) // exponential backoff
+            );
+            continue;
+          }
+        }
+  
+        // Non-retriable error → fail immediately
+        throw err;
+      }
+    }
+  
+    throw lastError;
+  };
+
+  
   app.post(
     "/email/send-attachment",
     upload.single("file"),
@@ -704,8 +746,7 @@ app.use(function (_, res, next) {
           return res.status(400).json({ error: "PDF file is required" });
         }
   
-        // Optional debug (remove in production)
-        console.log({
+        console.log("📎 Uploaded file:", {
           filename: req.file.originalname,
           size: req.file.size,
           mimetype: req.file.mimetype,
@@ -721,10 +762,7 @@ app.use(function (_, res, next) {
             <div style="padding: 25px;">
               <h2>Hello, Eng. ${name} 📄</h2>
               <p>Your registration document is attached to this email.</p>
-  
-              <p>
-                Please download and keep it safely. Contact us if you notice any issues.
-              </p>
+              <p>Please download and keep it safely.</p>
   
               <p>
                 Regards,<br/>
@@ -735,30 +773,38 @@ app.use(function (_, res, next) {
         </div>
         `;
   
-        await sendStyledMail(
-          email,
-          "RE: YOUR ERB PROFESSIONAL LICENSE",
-          htmlContent,
-          [
-            {
-              filename: req.file.originalname,
-              content: req.file.buffer,               // ✅ BUFFER (WORKS)
-              contentType: req.file.mimetype,         // application/pdf
-            },
-          ]
+        // 🔁 SEND EMAIL WITH RETRY
+        await sendMailWithRetry(() =>
+          sendStyledMail(
+            email,
+            "RE: YOUR ERB PROFESSIONAL LICENSE",
+            htmlContent,
+            [
+              {
+                filename: req.file.originalname,
+                content: req.file.buffer,
+                contentType: req.file.mimetype,
+              },
+            ]
+          ),
+          3,      // retries
+          3000    // base delay (ms)
         );
   
         res.json({
           message: "Email sent successfully with PDF attachment",
         });
       } catch (err) {
-        console.error("Email send error:", err);
+        console.error("❌ Email send error:", err);
+  
         res.status(500).json({
-          error: "Failed to send email with attachment",
+          error:
+            "Failed to send email after multiple attempts. Please try again later.",
         });
       }
     }
   );
+  
   
   
 

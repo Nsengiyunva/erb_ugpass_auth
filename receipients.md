@@ -1,14 +1,14 @@
-"lubangb@gmail.com",
-"ogwaljimmy@gmail.com",
+"lubangb@gmail.com", -done
+"ogwaljimmy@gmail.com", -done
 "jnayiga@gmail.com",
-"ctwongirwe@gmail.com",
-"gamubakac@gmail.com",
-"chrisrukundo@gmail.com",
-"ftuliraba@gmail.com",
-"ftuliraba@caa.co.ug",
-"tugume27@yahoo.com",
-"deobukenya17@gmail.com",
-"tmatsiko@gmail.com",
+"ctwongirwe@gmail.com", -done
+"gamubakac@gmail.com", -done
+"chrisrukundo@gmail.com", -done
+"ftuliraba@gmail.com", -done - 860
+"tugume27@yahoo.com", -done
+"deobukenya17@gmail.com", -done
+"tmatsiko@gmail.com", -done
+
 "enob82@gmail.com",
 "tugumenawe@gmail.com",
 "vnamuswa@gmail.com",
@@ -19,6 +19,7 @@
 "justus_akankwasa@yahoo.com",
 "kiijarace@gmail.com",
 "kiraboisaac29@gmail.com",
+
 "kitayimbwam@gmail.com",
 "mugabi.rahman@gmail.com",
 "cnmugimba2010@gmail.com",
@@ -29,6 +30,7 @@
 "tmuhumuza24@yahoo.com",
 "kmmanasseh@gmail.com",
 "munyanbanzac@gmail.com",
+
 "mbusinge@yahoo.com", 
 "werikhegodfrey@yahoo.com",
 "eliabmugambe@yahoo.com",
@@ -39,6 +41,7 @@
 "kishaija.pk@gmail.com",
 "kadaaliandy@gmail.com",
 "bsamug@gmail.com",
+
 "kwikirizadg@gmail.com",
 "kyohairwe.jen@gmail.com",
 "pierre.lenouvel@vinci-construction.com",
