@@ -583,5 +583,5 @@ router.get( `/verify_license/:license_no`, authMiddleware, async( req, res ) => 
     }
 } )
 
-export default router
 
+export default router;

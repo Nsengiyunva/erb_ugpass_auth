@@ -78,6 +78,104 @@ nohup rsync -ah --progress /home/user1/ERB/ronald_signed_docs/* /var/ugpass/sour
 nohup rsync -ah --progress user1@10.255.8.34:/home/user1/ERB/ronald_signed_docs/* /Users/user/Documents/ron_destination/ > download.log 2>&1 &
 
 
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Sat, 10 Jan 2026 13:31:19 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 100
+Connection: close
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+Access-Control-Allow-Credentials: true
+ETag: W/"64-eeUMuicTbrx+q6l7Mk8FaLzADj4"
+
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"5254788\"}"
+}
+
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Sat, 10 Jan 2026 13:45:03 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 99
+Connection: close
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+Access-Control-Allow-Credentials: true
+ETag: W/"63-xZ/rtbvGHM/sbuVL2DIAn2xVCBg"
+
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"881901\"}"
+}
+
+
+//registrar
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 12 Jan 2026 08:23:32 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 100
+Connection: close
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+Access-Control-Allow-Credentials: true
+ETag: W/"64-p9A5/zlxrJrSJ7UGCdkONrQ4md8"
+
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"8858713\"}"
+}
+
+
+//last batch
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 12 Jan 2026 08:30:08 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 100
+Connection: close
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+Access-Control-Allow-Credentials: true
+ETag: W/"64-nqzEImJIx5v0aUh+aXdQDW5yOOM"
+
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"3805496\"}"
+}
+
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Mon, 12 Jan 2026 08:32:46 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 100
+Connection: close
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+Access-Control-Allow-Credentials: true
+ETag: W/"64-5oT9qWjnTsjToWb4ushGYk2Bhv4"
+
+{
+  "success": true,
+  "result": "{\"success\":\"true\",\"message\":\"Successful\",\"result\":\"1689082\"}"
+}
+
+
+
 
 
 
