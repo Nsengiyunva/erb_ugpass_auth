@@ -1,0 +1,97 @@
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/db.js";
+
+const ERBPaid = sequelize.define(
+  "ERBPaid",
+  {
+    id: {
+        type: DataTypes.BIGINT.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+  
+      record_no: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+      },
+  
+      reg_no: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+  
+      specialization: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      license_no: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+  
+      email_address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      base_field: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+  
+      issue_date: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      period: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      license_status: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+  
+      category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      amount_paid: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      year_paid: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      email_status: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  
+      purpose: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+  },
+  {
+    sequelize,
+    tableName: "erb_paid_list",
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at"
+  }
+);
+
+export default ERBPaid;
