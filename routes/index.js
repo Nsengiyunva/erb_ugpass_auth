@@ -599,10 +599,7 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         created_at: engineer.created_at,
         updated_at: engineer.updated_at,
         expiry_date: expiryData?.expiry,
-        status: getStatus(expiryData?.actual),
-  
-        // Add paid info
-        paid_info: engineer.paid || null, 
+        licence_info: engineer.paid || null, 
       };
   
       return res.status(200).json(response);
