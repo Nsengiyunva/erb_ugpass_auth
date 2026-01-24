@@ -101,10 +101,20 @@ Content-Type: application/json
     "state": "ABCDE12345"
 }
 
-### verify
-GET {{url}}/verify_license/1880
+
+###
+POST  {{auth_api}}/login
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjIzNTgwNzgsImV4cCI6MTc2MjM2MTY3OH0.ZqBljBaOAAcpEJkRFVLe485ygFwXjv5Gc6ZCXF8rFuQ
+
+{
+    "email": "sysadmin@erb.go.ug",
+    "password": "sysadmin@256"
+}
+
+### verify
+GET {{url}}/verify_license/202
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjkyNzA5NDMsImV4cCI6MTc2OTI3NDU0M30.wSWcraBppJN9HZd7ObPkf3kcHKZe1UbtPJwqLXC2r8o
 
 ### register
 POST {{auth_api}}/register
@@ -112,8 +122,8 @@ Content-Type: application/json
 
 {
     "username": "admin",
-    "email": "admin@erb.go.ug",
-    "password": "admin256"
+    "email": "sysadmin@erb.go.ug",
+    "password": "sysadmin@256"
 }
 
 ### Login

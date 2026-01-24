@@ -602,9 +602,38 @@ router.get( `/verify_license/:license_no`, authMiddleware, async( req, res ) => 
         // Format dates & calculate expiry
         const formattedDate = new Date(engineer.reg_date);
         const expiryData = calcExpiryDate(engineer.type, formattedDate);
+
+        // "id": 1927,
+        // "reg_date": "Jun/08/1978",
+        // "organisation": "",
+        // "country": "Uganda",
+        // "reg_no": "202",
+        // "name": "Batumbya C. M. Patrick ",
+        // "gender": "M",
+        // "field": "Civil",
+        // "address": "P.O. Box 8493, Kampala",
+        // "phones": "0772740140,",
+        // "emails": "christopher.mutenga@gmail.com; mutenga@mbw.co.ug;",
+        // "uipe_number": "",
+        // "qualification": "",
+        // "created_at": "2026-01-22T16:46:09.000Z",
+        // "updated_at": "2026-01-22T16:46:09.000Z",
+        // "status": "Expired"
     
         const response = {
-          ...engineer,
+          reg_date: engineer?.reg_date,
+          country: engineer?.country,
+          reg_no: engineer?.reg_no,
+          name: engineer?.name,
+          gender: engineer?.gender,
+          field: engineer?.field,
+          address: engineer?.address,
+          primary_email: engineer?.primary_email,
+          secondary_email: engineer?.secondary_email,
+          primary_contact: engineer?.primary_contact,
+          secondary_contact: engineer?.secondary_contact,
+          created_at: engineer?.created_at,
+          updated_at: engineer?.updated_at,
           expiry_date: expiryData?.expiry,
           status: getStatus(expiryData?.actual),
         };

@@ -60,6 +60,26 @@ const ERBEngineer = sequelize.define(
       allowNull: true,
     },
 
+    primary_email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+
+    secondary_email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+
+    primary_contact: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+
+    secondary_contact: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+
     uipe_number: {
       type: DataTypes.STRING,
       allowNull: true,
