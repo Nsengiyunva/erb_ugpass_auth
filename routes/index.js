@@ -9,7 +9,7 @@ import qs from 'qs'
 import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
 import authMiddleware from "../middleware/auth_middleware.js";
-import { ERBEngineer } from '../models/ERBEngineer';
+import ERBEngineer  from '../models/ERBEngineer.js';
 
 // import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
 
