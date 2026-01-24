@@ -9,6 +9,7 @@ import qs from 'qs'
 import dotenv from 'dotenv'
 import { engineers } from "./fixtures.js";
 import authMiddleware from "../middleware/auth_middleware.js";
+import { ERBEngineer } from '../models/ERBEngineer';
 
 // import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
 
@@ -550,37 +551,71 @@ router.post( `/logout_daes`, async( req, res ) => {
 }  )
 
 router.get( `/verify_license/:license_no`, authMiddleware, async( req, res ) => {
-    try {
-        let engineer =  engineers?.filter( item => {
-            if( item.type === "registered" )  {
-                return parseInt( item.reg_no ) === parseInt( req.params.license_no )
-            }
-            return item.reg_no === req.params.license_no
-        }  ).map( person => {
-            let formatted_date = new Date( person.registration_date  )
-            let expiry_date = calcExpiryDate( person?.type, formatted_date  );
+    // try {
+    //     let engineer =  engineers?.filter( item => {
+    //         if( item.type === "registered" )  {
+    //             return parseInt( item.reg_no ) === parseInt( req.params.license_no )
+    //         }
+    //         return item.reg_no === req.params.license_no
+    //     }  ).map( person => {
+    //         let formatted_date = new Date( person.registration_date  )
+    //         let expiry_date = calcExpiryDate( person?.type, formatted_date  );
 
-            return {
-                expiry_date: expiry_date?.expiry,
-                status: getStatus( expiry_date?.actual ),
-                ...person,
-            }
-        } )
+    //         return {
+    //             expiry_date: expiry_date?.expiry,
+    //             status: getStatus( expiry_date?.actual ),
+    //             ...person,
+    //         }
+    //     } )
 
-        if( engineer.length  > 0 ) {
-            res.status( 200  ).json( engineer )
-        }
-        else {
-            res.status( 400  ).json( {
-                message: `Engineer with the registration number ${req.params.license_no} was  not found`
-            } )
-        }
+    //     if( engineer.length  > 0 ) {
+    //         res.status( 200  ).json( engineer )
+    //     }
+    //     else {
+    //         res.status( 400  ).json( {
+    //             message: `Engineer with the registration number ${req.params.license_no} was  not found`
+    //         } )
+    //     }
         
-    } catch (error) {
-        res.status( 500  ).json( {
-            message: `Engineer with the registration number ${req.params.license_no} was  not found`
-        } )
-    }
+    // } catch (error) {
+    //     res.status( 500  ).json( {
+    //         message: `Engineer with the registration number ${req.params.license_no} was  not found`
+    //     } )
+    // }
+    try {
+        const { license_no } = req.params;
+    
+        // Fetch engineer from DB
+        const engineer = await ERBEngineer.findOne({
+          where: {
+            reg_no: license_no,
+          },
+          raw: true, // return plain object
+        });
+    
+        if (!engineer) {
+          return res.status(404).json({
+            message: `Engineer with the registration number ${license_no} was not found`,
+          });
+        }
+    
+        // Format dates & calculate expiry
+        const formattedDate = new Date(engineer.reg_date);
+        const expiryData = calcExpiryDate(engineer.type, formattedDate);
+    
+        const response = {
+          ...engineer,
+          expiry_date: expiryData?.expiry,
+          status: getStatus(expiryData?.actual),
+        };
+    
+        return res.status(200).json(response);
+      } catch (error) {
+        // console.error(error);
+        return res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
 } )
 
 

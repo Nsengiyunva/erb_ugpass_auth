@@ -178,22 +178,10 @@ import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
 import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
-// import path from "path";
 import { sequelize, connectDB } from "./config/db.js";
-// import IORedis from "ioredis";
 
 import multer from "multer";
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "attachments/");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
-
-// const upload = multer({ storage });
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -222,11 +210,6 @@ app.use(function (_, res, next) {
   next();
 });
 
-// const redis = new IORedis({
-//   host: process.env.REDIS_HOST || "127.0.0.1",
-//   port: process.env.REDIS_PORT || 6379,
-//   password: process.env.REDIS_PASSWORD || undefined,
-// });
 
   app.use( express.json() )
 
