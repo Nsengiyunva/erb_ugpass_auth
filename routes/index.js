@@ -12,6 +12,10 @@ import authMiddleware from "../middleware/auth_middleware.js";
 import ERBEngineer  from '../models/ERBEngineer.js';
 import ERBPaid from '../models/ERBPaid.js'
 
+ERBEngineer.hasMany(ERBPaid, { foreignKey: 'reg_no', sourceKey: 'reg_no', as: 'paid' });
+ERBPaid.belongsTo(ERBEngineer, { foreignKey: 'reg_no', targetKey: 'reg_no', as: 'engineer' });
+
+
 // import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
 
 dotenv.config();
