@@ -598,7 +598,7 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         secondary_contact: engineer.secondary_contact,
         created_at: engineer.created_at,
         updated_at: engineer.updated_at,
-        expiry_date: engineer.paid ? "31st December 2026" : expiryData?.expiry,
+        expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
         status: "Active",
         type: "registered",
         nin: "NA",
