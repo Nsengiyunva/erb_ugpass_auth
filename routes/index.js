@@ -585,7 +585,7 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
   
       // Combine response
       const response = {
-        reg_date: engineer.reg_date,
+        registration_date: engineer.reg_date,
         country: engineer.country,
         reg_no: engineer.reg_no,
         name: engineer.name,
@@ -598,13 +598,16 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         secondary_contact: engineer.secondary_contact,
         created_at: engineer.created_at,
         updated_at: engineer.updated_at,
-        expiry_date: expiryData?.expiry,
+        expiry_date: engineer.paid ? "31st December 2026" : expiryData?.expiry,
+        status: "Active",
+        type: "registered",
+        nin: "NA",
         licence_info: engineer.paid || null, 
       };
   
       return res.status(200).json(response);
     } catch (error) {
-      console.error(error);
+    //   console.error(error);
       return res.status(500).json({
         message: 'Internal server error',
       });
