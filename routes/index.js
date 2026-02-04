@@ -560,58 +560,56 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
       const { license_no } = req.params;
   
       // Fetch engineer AND paid record (if exists) using a LEFT JOIN
-    //   const engineer = await ERBEngineer.findOne({
-    //     where: { reg_no: license_no },
-    //     include: [
-    //       {
-    //         model: ERBPaid,
-    //         as: 'paid', // alias for the relation
-    //         required: false, // LEFT JOIN
-    //       },
-    //     ],
-    //     raw: false, // raw: false is recommended when using include
-    //     nest: true, // allows nested object
-    //   });
+      const engineer = await ERBEngineer.findOne({
+        where: { reg_no: license_no },
+        include: [
+          {
+            model: ERBPaid,
+            as: 'paid', // alias for the relation
+            required: false, // LEFT JOIN
+          },
+        ],
+        raw: false, // raw: false is recommended when using include
+        nest: true, // allows nested object
+      });
   
-    //   if (!engineer) {
-    //     return res.status(404).json({
-    //       message: `Engineer with registration number ${license_no} was not found`,
-    //     });
-    //   }
+      if (!engineer) {
+        return res.status(404).json({
+          message: `Engineer with registration number ${license_no} was not found`,
+        });
+      }
   
-    //   // Format dates & calculate expiry
-    //   const formattedDate = new Date(engineer.reg_date);
-    //   const expiryData = calcExpiryDate(engineer.type, formattedDate);
+      // Format dates & calculate expiry
+      const formattedDate = new Date(engineer.reg_date);
+      const expiryData = calcExpiryDate(engineer.type, formattedDate);
   
-    //   // Combine response
-    //   const response = {
-    //     registration_date: engineer.reg_date,
-    //     country: engineer.country,
-    //     reg_no: engineer.reg_no,
-    //     name: engineer.name,
-    //     gender: engineer.gender,
-    //     field: engineer.field,
-    //     address: engineer.address,
-    //     primary_email: engineer.primary_email,
-    //     secondary_email: engineer.secondary_email,
-    //     primary_contact: engineer.primary_contact,
-    //     secondary_contact: engineer.secondary_contact,
-    //     created_at: engineer.created_at,
-    //     updated_at: engineer.updated_at,
-    //     expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
-    //     status: "Active",
-    //     type: "registered",
-    //     nin: "NA",
-    //     licence_info: engineer.paid || null, 
-    //   };
+      // Combine response
+      const response = {
+        registration_date: engineer.reg_date,
+        country: engineer.country,
+        reg_no: engineer.reg_no,
+        name: engineer.name,
+        gender: engineer.gender,
+        field: engineer.field,
+        address: engineer.address,
+        primary_email: engineer.primary_email,
+        secondary_email: engineer.secondary_email,
+        primary_contact: engineer.primary_contact,
+        secondary_contact: engineer.secondary_contact,
+        created_at: engineer.created_at,
+        updated_at: engineer.updated_at,
+        expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
+        status: "Active",
+        type: "registered",
+        nin: "NA",
+        licence_info: engineer.paid || null, 
+      };
   
-      return res.status(200).json( {
-        license_no
-      } );
+      return res.status(200).json(response);
     } catch (error) {
       console.error("error+",error);
       return res.status(500).json({
-        error
+        message: 'Internal server error',
       });
     }
 });
