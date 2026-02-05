@@ -558,8 +558,7 @@ router.post( `/logout_daes`, async( req, res ) => {
 router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
     try {
       const { license_no } = req.params;
-  
-      // Fetch engineer AND paid record (if exists) using a LEFT JOIN
+
       const engineer = await ERBEngineer.findOne({
         where: { reg_no: license_no },
         include: [
@@ -592,10 +591,10 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         gender: engineer.gender,
         field: engineer.field,
         address: engineer.address,
-        primary_email: engineer.primary_email,
-        secondary_email: engineer.secondary_email,
-        primary_contact: engineer.primary_contact,
-        secondary_contact: engineer.secondary_contact,
+        primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
+        secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
+        primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
+        secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
         created_at: engineer.created_at,
         updated_at: engineer.updated_at,
         expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
