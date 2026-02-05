@@ -582,34 +582,28 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
       const formattedDate = new Date(engineer.reg_date);
       const expiryData = calcExpiryDate(engineer.type, formattedDate);
   
-      // Combine response
-    //   const response = {
-    //     registration_date: engineer.reg_date,
-    //     country: engineer.country,
-    //     reg_no: engineer.reg_no,
-    //     name: engineer.name,
-    //     gender: engineer.gender,
-    //     field: engineer.field,
-    //     address: engineer.address,
-    //     primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
-    //     secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
-    //     primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
-    //     secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
-    //     created_at: engineer.created_at,
-    //     updated_at: engineer.updated_at,
-    //     expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
-    //     status: "Active",
-    //     type: "registered",
-    //     nin: "NA",
-    //     licence_info: engineer.paid || null, 
-    //   };
-
-    //   console.log( response )
+      const response = {
+        registration_date: engineer.reg_date,
+        country: engineer.country,
+        reg_no: engineer.reg_no,
+        name: engineer.name,
+        gender: engineer.gender,
+        field: engineer.field,
+        address: engineer.address,
+        primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
+        secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
+        primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
+        secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
+        created_at: engineer.created_at,
+        updated_at: engineer.updated_at,
+        expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
+        status: "Active",
+        type: "registered",
+        nin: "NA",
+        licence_info: engineer.paid || null, 
+      };
   
-      return res.status(200).json( {
-        success: true,
-        engineer
-      } );
+      return res.status(200).json( response );
     } catch (error) {
       console.error("error+",error);
       return res.status(500).json({
