@@ -603,8 +603,12 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         nin: "NA",
         licence_info: engineer.paid || null, 
       };
+
+      console.log( response )
   
-      return res.status(200).json(response);
+      return res.status(200).json( {
+        success: true
+      } );
     } catch (error) {
       console.error("error+",error);
       return res.status(500).json({
