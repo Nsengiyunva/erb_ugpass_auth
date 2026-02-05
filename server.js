@@ -793,6 +793,6 @@ app.use(function (_, res, next) {
 
 
 connectDB();
-sequelize.sync().then(() => console.log("ERB Tables synced..."));
+// sequelize.sync().then(() => console.log("ERB Tables synced..."));
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

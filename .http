@@ -114,7 +114,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/1898
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzAyOTAyNTYsImV4cCI6MTc3MDI5Mzg1Nn0.eYt3_aNRkOuJ3aMOj6FJ75ymqkV5YNdzuVI-9tfkcmU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzAyOTEzNzAsImV4cCI6MTc3MDI5NDk3MH0.4ODkmR_H69nffITDRV9utkHNXhWht1hdee-o_YBdvHQ
 ### register
 POST {{auth_api}}/register
 Content-Type: application/json
