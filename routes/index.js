@@ -635,50 +635,50 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
       }
   
       // Normalize emails & phones
-      const emails = engineer.emails ? engineer.emails.split(';') : [];
-      const phones = engineer.phones ? engineer.phones.split(',') : [];
+    //   const emails = engineer.emails ? engineer.emails.split(';') : [];
+    //   const phones = engineer.phones ? engineer.phones.split(',') : [];
   
-      // Normalize paid records
-      const paidRecords = Array.isArray(engineer.paid)
-        ? engineer.paid
-        : engineer.paid
-        ? [engineer.paid]
-        : [];
+    //   // Normalize paid records
+    //   const paidRecords = Array.isArray(engineer.paid)
+    //     ? engineer.paid
+    //     : engineer.paid
+    //     ? [engineer.paid]
+    //     : [];
   
-      const formattedDate = new Date(engineer.reg_date);
-      const expiryData = calcExpiryDate(engineer.type, formattedDate);
+    //   const formattedDate = new Date(engineer.reg_date);
+    //   const expiryData = calcExpiryDate(engineer.type, formattedDate);
   
-      const response = {
-        registration_date: engineer.reg_date,
-        country: engineer.country,
-        reg_no: engineer.reg_no,
-        name: engineer.name,
-        gender: engineer.gender,
-        field: engineer.field,
-        address: engineer.address,
+    //   const response = {
+    //     registration_date: engineer.reg_date,
+    //     country: engineer.country,
+    //     reg_no: engineer.reg_no,
+    //     name: engineer.name,
+    //     gender: engineer.gender,
+    //     field: engineer.field,
+    //     address: engineer.address,
   
-        primary_email: emails[0] || '',
-        secondary_email: emails[1] || '',
+    //     primary_email: emails[0] || '',
+    //     secondary_email: emails[1] || '',
   
-        primary_contact: phones[0] || '',
-        secondary_contact: phones[1] || '',
+    //     primary_contact: phones[0] || '',
+    //     secondary_contact: phones[1] || '',
   
-        created_at: engineer.created_at,
-        updated_at: engineer.updated_at,
+    //     created_at: engineer.created_at,
+    //     updated_at: engineer.updated_at,
   
-        expiry_date:
-          paidRecords.length > 0
-            ? expiryData?.expiry   // or calculate from payment
-            : expiryData?.expiry,
+    //     expiry_date:
+    //       paidRecords.length > 0
+    //         ? expiryData?.expiry   // or calculate from payment
+    //         : expiryData?.expiry,
   
-        status: paidRecords.length > 0 ? 'Active' : 'Inactive',
-        type: 'registered',
-        nin: 'NA',
+    //     status: paidRecords.length > 0 ? 'Active' : 'Inactive',
+    //     type: 'registered',
+    //     nin: 'NA',
   
-        licence_info: paidRecords,
-      };
+    //     licence_info: paidRecords,
+    //   };
   
-      return res.status(200).json(response);
+      return res.status(200).json( engineer );
     } catch (error) {
       console.error('verify_license error:', error);
       return res.status(500).json({
