@@ -508,12 +508,16 @@ router.post( `/bulk-status`, async ( req, res )  =>  {
 
 //update all rows
 router.post('/mark-records-signed', async (req, res) => {
+    let payload = {
+        next_status: req.body.role ===  "CHAIRMAN" ?  "SIGNED"  : "PENDING CHAIRMAN",
+        where_status: req.body.role ===  "CHAIRMAN" ?  "PENDING CHAIRMAN"  : "NOT SIGNED"
+    }
     try {
       const [affectedRows] = await ERBPaid.update(
-        { license_status: 'UPLOADED' },     // column to update
+        { license_status: payload.next_status},     // column to update
         {
           where: {
-            license_status: 'PENDING CHAIRMAN',  // optional filter
+            license_status: payload.where_status,  // optional filter
           },
         }
       );
