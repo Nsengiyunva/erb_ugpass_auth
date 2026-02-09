@@ -442,14 +442,14 @@ router.post( `/bulk-sign`, async(req,  res ) =>  {
         axios.request(config)
             .then((response) => {
                 let result = JSON.stringify(response.data);
-                console.log( "bulk sign",  result  );
+                // console.log( "bulk sign",  result  );
                 res.status(200).json({
                     success: true,
                     result
                 })
             })
             .catch((error) => {
-                console.log("error bulk sign: ",error);
+                // console.log("error bulk sign: ",error);
                 res.status(500).json({
                     success: false,
                     error
@@ -506,6 +506,29 @@ router.post( `/bulk-status`, async ( req, res )  =>  {
     // }
 } )
 
+//update all rows
+router.post('/mark-records-signed', async (req, res) => {
+    try {
+      const [affectedRows] = await ERBPaid.update(
+        { license_status: 'UPLOADED' },     // column to update
+        {
+          where: {
+            license_status: 'PENDING CHAIRMAN',  // optional filter
+          },
+        }
+      );
+  
+      return res.status(200).json({
+        message: 'All records have been updated',
+        affectedRows,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Failed to update rows' });
+    }
+  });
+  
+
 
 router.post("/upload", upload.single("file"), async (req, res) => {
     if (!req.file) {
@@ -554,63 +577,6 @@ router.post( `/logout_daes`, async( req, res ) => {
         res.send( error )
     }
 }  )
-
-// router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
-//     try {
-//       const { license_no } = req.params;
-
-//       const engineer = await ERBEngineer.findOne({
-//         where: { reg_no: license_no },
-//         include: [
-//           {
-//             model: ERBPaid,
-//             as: 'paid', // alias for the relation
-//             required: false, // LEFT JOIN
-//           },
-//         ],
-//         raw: false, // raw: false is recommended when using include
-//         nest: true, // allows nested object
-//       });
-  
-//       if (!engineer) {
-//         return res.status(404).json({
-//           message: `Engineer with registration number ${license_no} was not found`,
-//         });
-//       }
-  
-//       // Format dates & calculate expiry
-//       const formattedDate = new Date(engineer.reg_date);
-//       const expiryData = calcExpiryDate(engineer.type, formattedDate);
-  
-//       const response = {
-//         registration_date: engineer.reg_date,
-//         country: engineer.country,
-//         reg_no: engineer.reg_no,
-//         name: engineer.name,
-//         gender: engineer.gender,
-//         field: engineer.field,
-//         address: engineer.address,
-//         primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
-//         secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
-//         primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
-//         secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
-//         created_at: engineer.created_at,
-//         updated_at: engineer.updated_at,
-//         expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
-//         status: "Active",
-//         type: "registered",
-//         nin: "NA",
-//         licence_info: engineer.paid || null, 
-//       };
-  
-//       return res.status(200).json( response );
-//     } catch (error) {
-//       console.error("error+",error);
-//       return res.status(500).json({
-//         message: 'Internal server error',
-//       });
-//     }
-// });
 
 
 router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
