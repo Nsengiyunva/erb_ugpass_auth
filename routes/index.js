@@ -555,21 +555,77 @@ router.post( `/logout_daes`, async( req, res ) => {
     }
 }  )
 
+// router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
+//     try {
+//       const { license_no } = req.params;
+
+//       const engineer = await ERBEngineer.findOne({
+//         where: { reg_no: license_no },
+//         include: [
+//           {
+//             model: ERBPaid,
+//             as: 'paid', // alias for the relation
+//             required: false, // LEFT JOIN
+//           },
+//         ],
+//         raw: false, // raw: false is recommended when using include
+//         nest: true, // allows nested object
+//       });
+  
+//       if (!engineer) {
+//         return res.status(404).json({
+//           message: `Engineer with registration number ${license_no} was not found`,
+//         });
+//       }
+  
+//       // Format dates & calculate expiry
+//       const formattedDate = new Date(engineer.reg_date);
+//       const expiryData = calcExpiryDate(engineer.type, formattedDate);
+  
+//       const response = {
+//         registration_date: engineer.reg_date,
+//         country: engineer.country,
+//         reg_no: engineer.reg_no,
+//         name: engineer.name,
+//         gender: engineer.gender,
+//         field: engineer.field,
+//         address: engineer.address,
+//         primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
+//         secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
+//         primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
+//         secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
+//         created_at: engineer.created_at,
+//         updated_at: engineer.updated_at,
+//         expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
+//         status: "Active",
+//         type: "registered",
+//         nin: "NA",
+//         licence_info: engineer.paid || null, 
+//       };
+  
+//       return res.status(200).json( response );
+//     } catch (error) {
+//       console.error("error+",error);
+//       return res.status(500).json({
+//         message: 'Internal server error',
+//       });
+//     }
+// });
+
+
 router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
     try {
       const { license_no } = req.params;
-
+  
       const engineer = await ERBEngineer.findOne({
         where: { reg_no: license_no },
         include: [
           {
             model: ERBPaid,
-            as: 'paid', // alias for the relation
+            as: 'paid',
             required: false, // LEFT JOIN
           },
         ],
-        raw: false, // raw: false is recommended when using include
-        nest: true, // allows nested object
       });
   
       if (!engineer) {
@@ -578,7 +634,17 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         });
       }
   
-      // Format dates & calculate expiry
+      // Normalize emails & phones
+      const emails = engineer.emails ? engineer.emails.split(';') : [];
+      const phones = engineer.phones ? engineer.phones.split(',') : [];
+  
+      // Normalize paid records
+      const paidRecords = Array.isArray(engineer.paid)
+        ? engineer.paid
+        : engineer.paid
+        ? [engineer.paid]
+        : [];
+  
       const formattedDate = new Date(engineer.reg_date);
       const expiryData = calcExpiryDate(engineer.type, formattedDate);
   
@@ -590,27 +656,37 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         gender: engineer.gender,
         field: engineer.field,
         address: engineer.address,
-        primary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 0 ] : '',
-        secondary_email: engineer.emails?.length > 0 ? engineer.emails?.split(";")?.[ 1 ] : '',
-        primary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 0 ]: '',
-        secondary_contact: engineer.phones?.length > 0 ?  engineer.phones?.split(',')?.[ 1 ] : '',
+  
+        primary_email: emails[0] || '',
+        secondary_email: emails[1] || '',
+  
+        primary_contact: phones[0] || '',
+        secondary_contact: phones[1] || '',
+  
         created_at: engineer.created_at,
         updated_at: engineer.updated_at,
-        expiry_date: engineer.paid?.length > 0 ? "31st December 2026" : expiryData?.expiry,
-        status: "Active",
-        type: "registered",
-        nin: "NA",
-        licence_info: engineer.paid || null, 
+  
+        expiry_date:
+          paidRecords.length > 0
+            ? expiryData?.expiry   // or calculate from payment
+            : expiryData?.expiry,
+  
+        status: paidRecords.length > 0 ? 'Active' : 'Inactive',
+        type: 'registered',
+        nin: 'NA',
+  
+        licence_info: paidRecords,
       };
   
-      return res.status(200).json( response );
+      return res.status(200).json(response);
     } catch (error) {
-      console.error("error+",error);
+      console.error('verify_license error:', error);
       return res.status(500).json({
         message: 'Internal server error',
       });
     }
-});
+  });
+  
 
 
 export default router;
