@@ -215,7 +215,7 @@ app.use(function (_, res, next) {
   app.use('/uploads', express.static('/home/user1/ERB/uploads'));
 
   app.use("/auth/api", authRoutes )
-  app.use( "/engineers/api", engineerRoutes  )
+  app.use( "/person/api", engineerRoutes  )
   app.use( "/api", router )
     
   app.post("/email/send", async (req, res) => {
