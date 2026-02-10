@@ -177,6 +177,7 @@ import express from "express";
 import * as dotenv from 'dotenv'
 import router from './routes/index.js'
 import authRoutes from './routes/auth.js'
+import engineerRoutes from './routes/engineer.routes.js'
 import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 import { sequelize, connectDB } from "./config/db.js";
 
@@ -199,8 +200,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8754;
-   
-app.use(express.json());
+
 
 app.use(function (_, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); 
@@ -212,18 +212,16 @@ app.use(function (_, res, next) {
 
 
   app.use( express.json() )
+  app.use('/uploads', express.static('/home/user1/ERB/uploads'));
 
   app.use("/auth/api", authRoutes )
+  app.use( "/engineers/api", engineerRoutes  )
   app.use( "/api", router )
-
-  // const emailQueue = new Queue( "email_queue", {
-  //   connection: redisConnection
-  // } )
     
   app.post("/email/send", async (req, res) => {
     const { name, email } = req.body
 
-    const htmlContent = `
+  const htmlContent = `
 <div style="font-family: Arial, Helvetica, sans-serif; background-color: #f8f2f2; padding: 30px;">
   <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
 
@@ -290,7 +288,7 @@ app.use(function (_, res, next) {
 
   </div>
 </div>
-   `;
+  `;
 
     try {
       // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");

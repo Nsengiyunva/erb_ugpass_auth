@@ -89,6 +89,10 @@ const ERBEngineer = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    photo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,
