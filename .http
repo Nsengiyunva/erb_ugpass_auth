@@ -112,9 +112,9 @@ Content-Type: application/json
 }
 
 ### verify
-GET {{url}}/verify_license/716
+GET {{url}}/verify_license/2129
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzA2NTIwMTYsImV4cCI6MTc3MDY1NTYxNn0.0TlXUK9JosN1LOq2tDaCXnrXabcuBoggtj-oydQ6tQQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzE3NzM3ODYsImV4cCI6MTc3MTc3NzM4Nn0.IsseZfQJpD9t2lFek1UTTxLEwcO4iSMiHD6ZdDvkYGs
 ### register
 POST {{auth_api}}/register
 Content-Type: application/json

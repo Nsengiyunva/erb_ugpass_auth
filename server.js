@@ -741,10 +741,10 @@ app.use(function (_, res, next) {
             </div>
   
             <div style="padding: 25px;">
-              <h2>Hello, Eng. ${name} 📄</h2>
-              <p>Your registration document is attached to this email.</p>
-              <p>Please download and keep it safely.</p>
-  
+              <h2>Hello, Eng. ${name}</h2>
+              <p>Your Practicing Licence for 2026 is attached to this mail.</p>
+              <p>Please download and keep it safely. Also Kindly note that with the security features on the license, you need to print it and then scan to share it or attach it to a bid lest it will appear corrupted once you try to attach it to another pdf document using any pdf reader.</p>
+              <p>This is to ensure that we serve you better</p>
               <p>
                 Regards,<br/>
                 <strong>ERB Support Team</strong>
