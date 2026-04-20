@@ -17,9 +17,9 @@ POST  {{url}}/sign-with-agent
 Content-Type: application/json
 
 {
-    "access_token":  "VS79HVVncpLCJdgoSgskIGSHhgE85XG4oHe1cg3Q5l9PfJG68j8rV3zs80GbxAMJMslCGCpn5x0pZBoa0B1yVR2jlLbOsvohWZ25GNWoH7mDzTSGnkg4fIG9Xnn5tsNAs0EdrMYpRJTD05CI",
-    "email_address": "rnamugera@gmail.com",
-    "role": "REGISTRAR"
+    "access_token":  "",
+    "email_address": "james.lutalo@nita.go.ug",
+    "role": "CHAIRMAN"
 }
 
 #  rnamugera@gmail.com
@@ -33,9 +33,9 @@ POST  {{url}}/bulk-sign
 Content-Type: application/json
 
 {
-    "access_token":  "3GUcmHe7jPE6KEyBDmKxBuLMyD06yBfCmlPlCKNVNTfWRBRygJb7G5JdnqvXFeKTt1RjbXbQKXQEdKgc8Nm3VtsUqTcvui8l16aJCy4U7ehjhyl8n6ZyYRgTXuRvZ8aQASF8e5G5thjxhTF6",
-    "email_address": "rnamugera@gmail.com",
-    "role": "REGISTRAR"
+    "access_token":  "",
+    "email_address": "",
+    "role": ""
 }
 
 ### check for the status
