@@ -1,178 +1,3 @@
-// import express from "express";
-// import * as dotenv from 'dotenv'
-// import router from './routes/index.js'
-// import authRoutes from './routes/auth.js'
-// import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
-// import path from "path";
-
-// import { sequelize, connectWithRetry } from "./config/db.js";
-
-// import IORedis from 'ioredis'
-// import bodyParser from "body-parser";
-// import { Queue } from "bullmq";
-// import client from 'prom-client'
-
-
-// dotenv.config();
-
-// const uploadDir = path.join(process.cwd(), "uploads");
-
-// const app = express();
-
-// app.use(express.json({ limit: "200mb" }));
-// app.use(express.urlencoded({ extended: true, limit: "200mb" }));
-// app.use(bodyParser.json())
-
-
-// client.collectDefaultMetrics();
-
-// const httpRequestCounter = new client.Counter({
-//   name: 'http_requests_total',
-//   help: 'Total number of HTTP requests',
-//   labelNames: ['method', 'route', 'status_code'],
-// });
-
-// const redisConnection  =  new IORedis( {
-//   host: process.env.REDIS_HOST,
-//   port: process.env.REDIS_PORT
-// } )
-
-// const PORT = process.env.PORT || 8754;
-
-// const startServer = async () => {
-//   await connectWithRetry(); 
-
-//   await sequelize.sync({ alter: true }); 
-
-//     app.use(function (_, res, next) {
-
-//       res.header("Access-Control-Allow-Origin", "*"); // or "*" if you must
-//       res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
-//       res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
-//       res.header("Access-Control-Allow-Credentials", "true");
-//       next();
-//     });
-//     app.use( express.json() )
-
-//     // Count all HTTP requests except /api/metrics
-//     app.use((req, res, next) => {
-//       if (req.path === '/api/metrics') return next();
-
-//       res.on('finish', () => {
-//         let routeLabel = req.route?.path || req.path;
-//         httpRequestCounter.labels(req.method, routeLabel, res.statusCode).inc();
-//       });
-//       next();
-//     } );
-
-
-//     app.get('/api/metrics', async (req, res) => {
-//       res.set('Content-Type', client.register.contentType);
-//       res.end(await client.register.metrics());
-//     });
-
-
-//     app.use("/auth/api", authRoutes )
-//     app.use( "/api", router )
-
-//     app.use("/uploads", express.static(uploadDir));
-
-//     const emailQueue = new Queue( "email_queue", {
-//       connection: redisConnection
-//     } )
-    
-//     app.get("/email/send", async (_, res) => {
-
-//       const htmlContent = `
-//       <div style="font-family: Arial, sans-serif; background-color: #f6f9fc; padding: 20px;">
-//         <div style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-//           <h2 style="color: #007bff;">Hello, King Isaac 👋</h2>
-//           <p style="font-size: 16px; color: #333;">
-//             This is a <strong>styled email</strong> sent from your Node.js API.
-//           </p>
-//           <p style="font-size: 15px; color: #666;">
-//             It supports full HTML and inline CSS — so you can design beautiful email templates.
-//           </p>
-//           <a href="https://www.erb.go.ug" 
-//             style="display:inline-block; margin-top:20px; background-color:#007bff; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">
-//             Visit ERB Website
-//           </a>
-//           <p style="margin-top:30px; font-size:13px; color:#999;">© 2025 ERB Uganda</p>
-//         </div>
-//       </div>
-//     `;
-
-//       try {
-//         // await sendMail("isaacnsengiyunva@gmail.com", "Hello!", "This is a test email please.");
-//         await sendStyledMail("isaacnsengiyunva@gmail.com", "Email Test", htmlContent);
-//         res.json({ message: "Email sent successfully!" });
-//       } catch (err) {
-//         // console.error( "failed to send email", err );
-//         res.status(500).json({ error: "Failed to send email" });
-//       }
-//     });
-
-//     app.post("/send-batch", async (req, res) => {
-//       const { emails } = req.body;
-
-//       const htmlContent = `
-//       <div style="font-family: Arial, sans-serif; background-color: #f6f9fc; padding: 20px;">
-//         <div style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-//           <h2 style="color: #007bff;">Hello, King Isaac 👋</h2>
-//           <p style="font-size: 16px; color: #333;">
-//             This is a <strong>styled email</strong> sent from your Node.js API.
-//           </p>
-//           <p style="font-size: 15px; color: #666;">
-//             It supports full HTML and inline CSS — so you can design beautiful email templates.
-//           </p>
-//           <a href="https://www.erb.go.ug" 
-//             style="display:inline-block; margin-top:20px; background-color:#007bff; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">
-//             Visit ERB Website
-//           </a>
-//           <p style="margin-top:30px; font-size:13px; color:#999;">© 2025 ERB Uganda</p>
-//         </div>
-//       </div>
-//     `;
-
-//       if (!emails || !Array.isArray(emails) || emails.length === 0) {
-//         return res.status(400).json({ message: "Emails array is required" });
-//       }
-
-//       let subject = "RE: ERB TEST MAIL:";
-
-//       try {
-//         await sendEmailsInChunks(emails, subject, htmlContent, {
-//           chunkSize: 50,
-//           retryLimit: 3,
-//           rateLimitPerSec: 5, // adjust as needed
-//         });
-//         // let subject = "RE: ERB TEST MAILS";
-//         // await emailQueue.add( "batch_email", { emails, subject, htmlContent } )
-
-//         res.status( 202 ).json( {
-//           message: "Emails queued successfully",
-//           count: emails.length
-//         } )
-
-//       } catch (err) {
-//         res.status(500).json({ message: "Failed to send some emails", error: err.message });
-//       }
-//     });
-
-//     app.listen(PORT, () => {
-//       console.log(`The Server is running on port: ${PORT}`);
-//     });
-// };
-
-// startServer();
-
-
-// import express from "express";
-// import dotenv from "dotenv";
-// import engineers_routes  from "./routes/engineer_routes"
-
-
-
 import express from "express";
 import * as dotenv from 'dotenv'
 import router from './routes/index.js'
@@ -180,6 +5,8 @@ import authRoutes from './routes/auth.js'
 import engineerRoutes from './routes/engineer.routes.js'
 import { sendStyledMail, sendEmailsInChunks } from "./mailer.js";
 import { sequelize, connectDB } from "./config/db.js";
+import fs from "fs";
+import path from "path";
 
 import multer from "multer";
 
@@ -540,139 +367,7 @@ app.use(function (_, res, next) {
     }
   });
 
-  //send email with attachment
-  // app.post("/email/send-attachment", upload.single("file"), async (req, res) => {
-  //   try {
-  //     const { name, email } = req.body;
-  
-  //     if (!req.file) {
-  //       return res.status(400).json({ error: "PDF file is required" });
-  //     }
-  
-  //     const htmlContent = `
-  //     <div style="font-family: Arial, Helvetica, sans-serif; background-color: #f8f2f2; padding: 30px;">
-  //       <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      
-  //         <!-- Header -->
-  //         <div style="background-color: #b30000; padding: 20px; text-align: center;">
-  //           <h1 style="color: #ffffff; margin: 0; font-size: 22px;">
-  //             Engineers Registration Board (ERB)
-  //           </h1>
-  //         </div>
-      
-  //         <!-- Body -->
-  //         <div style="padding: 25px; color: #333333;">
-  //           <h2 style="color: #b30000; font-size: 20px;">
-  //             Hello, Eng. ${name} 📄
-  //           </h2>
-      
-  //           <p style="font-size: 15px; line-height: 1.6;">
-  //             We are pleased to inform you that your registration document has been successfully processed and is now ready for your review.
-  //           </p>
-      
-  //           <p style="font-size: 15px; line-height: 1.6;">
-  //             Please find your <strong>official registration document attached</strong> to this email. This document contains important information regarding your registration with the Engineers Registration Board.
-  //           </p>
-      
-  //           <!-- Document Info Box -->
-  //           <div style="background-color: #fff8f8; border-left: 4px solid #b30000; padding: 15px; margin: 25px 0; border-radius: 4px;">
-  //             <p style="margin: 0; font-size: 14px; color: #555555;">
-  //               📎 <strong style="color: #b30000;">Attached Document:</strong> Your registration certificate and related documents
-  //             </p>
-  //           </div>
-      
-  //           <!-- Important Instructions -->
-  //           <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
-  //             <h3 style="color: #b30000; font-size: 16px; margin-top: 0; margin-bottom: 10px;">
-  //               📋 Next Steps:
-  //             </h3>
-  //             <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
-  //               <li style="font-size: 14px; color: #555555;">Download and save the attached document for your records</li>
-  //               <li style="font-size: 14px; color: #555555;">Review the document carefully and verify all information</li>
-  //               <li style="font-size: 14px; color: #555555;">Keep this document in a safe place as proof of your registration</li>
-  //               <li style="font-size: 14px; color: #555555;">Contact us if you notice any discrepancies</li>
-  //             </ul>
-  //           </div>
-      
-  //           <!-- CTA Button -->
-  //           <div style="text-align: center; margin: 30px 0;">
-  //             <a href="https://registration.erb.go.ug"
-  //               style="
-  //                 background-color: #b30000;
-  //                 color: #ffffff;
-  //                 padding: 12px 28px;
-  //                 font-size: 15px;
-  //                 text-decoration: none;
-  //                 border-radius: 5px;
-  //                 display: inline-block;
-  //               ">
-  //               Access ERB Portal
-  //             </a>
-  //           </div>
-      
-  //           <!-- Security Notice -->
-  //           <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 20px 0; border-radius: 4px;">
-  //             <p style="font-size: 13px; color: #856404; margin: 0;">
-  //               ⚠️ <strong>Important:</strong> This document is confidential and intended solely for your use. Please do not share it with unauthorized parties.
-  //             </p>
-  //           </div>
-      
-  //           <p style="font-size: 14px; color: #555555; line-height: 1.6;">
-  //             If you have any questions or require assistance, please don't hesitate to contact our support team at 
-  //             <a href="mailto:support@erb.go.ug" style="color: #b30000; text-decoration: none;">support@erb.go.ug</a> 
-  //             or call us during business hours.
-  //           </p>
-      
-  //           <p style="margin-top: 25px; font-size: 15px;">
-  //             Kind regards,<br />
-  //             <strong>ERB Support Team</strong><br />
-  //             <span style="font-size: 13px; color: #777777;">Uganda Engineers Registration Board of Uganda</span>
-  //           </p>
-  //         </div>
-      
-  //         <!-- Footer -->
-  //         <div style="background-color: #f2f2f2; padding: 15px; text-align: center; font-size: 12px; color: #777777;">
-  //           <p style="margin: 0 0 8px 0;">
-  //             © 2025 Engineers Registration Board (ERB) Uganda
-  //           </p>
-  //           <p style="margin: 0;">
-  //             <a href="https://www.erb.go.ug" style="color: #b30000; text-decoration: none; margin: 0 8px;">
-  //               www.erb.go.ug
-  //             </a>
-  //             |
-  //             <a href="mailto:info@erb.go.ug" style="color: #b30000; text-decoration: none; margin: 0 8px;">
-  //               info@erb.go.ug
-  //             </a>
-  //             |
-  //             <a href="tel:+256123456789" style="color: #b30000; text-decoration: none; margin: 0 8px;">
-  //               +256 123 456 789
-  //             </a>
-  //           </p>
-  //         </div>
-      
-  //       </div>
-  //     </div>
-  //     `;
-  
-  //     await sendStyledMail(
-  //       email,
-  //       "RE: YOUR ERB PROFESSIONAL LICENSE",
-  //       htmlContent,
-  //       [
-  //         {
-  //           filename: req.file.originalname,
-  //           content: req.file.buffer,
-  //           contentType: "application/pdf",
-  //         },
-  //       ]
-  //     );
-  
-  //     res.json({ message: "Email sent successfully with attachment" });
-  //   } catch (err) {
-  //     console.error(err);
-  //     res.status(500).json({ error: "Failed to send email" });
-  //   }
-  // });
+
   const sendAttachmentWithRetry = async (
     sendFn,
     retries = 3,
@@ -712,7 +407,7 @@ app.use(function (_, res, next) {
     }
   
     throw lastError;
-  };
+  }
 
   
   app.post(
@@ -784,13 +479,63 @@ app.use(function (_, res, next) {
         });
       }
     }
-  );
-  
-  
-  
+  )
 
 
-connectDB();
-// sequelize.sync().then(() => console.log("ERB Tables synced..."));
+  app.get("/display/:filename", (req, res) => {
+    const { filename } = req.params;
 
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+    // ── Authorization check ───────────────────────────────────────────────────
+    const authHeader = req.headers["Authorization"];
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(403).json({ error: "Forbidden: Invalid token" });
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Sanitize filename to prevent directory traversal attacks
+    const safeName = path.basename(filename);
+    const filePath = path.join("/var/ugpass/destination", safeName);
+  
+    // Check file exists
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: "File not found" });
+    }
+  
+    // Check it's actually a PDF
+    if (!safeName.endsWith(".pdf")) {
+      return res.status(400).json({ error: "Only PDF files are supported" });
+    }
+  
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `inline; filename="${safeName}"`);
+    
+    const stream = fs.createReadStream(filePath);
+    stream.on("error", (err) => {
+      console.error("❌ Stream error:", err);
+      res.status(500).json({ error: "Failed to read file" });
+    });
+    stream.pipe(res);
+});
+
+
+  app.get("/pdf/list", (req, res) => {
+    const dir = "/var/ugpass/destination";
+    fs.readdir(dir, (err, files) => {
+      if (err) return res.status(500).json({ error: "Could not read directory" });
+      const pdfs = files.filter(f => f.endsWith(".pdf"));
+      res.json({ files: pdfs, count: pdfs.length });
+    });
+  });
+
+
+  connectDB();
+  // sequelize.sync().then(() => console.log("ERB Tables synced..."));
+
+  app.listen(PORT, () => console.log(`Server running on ${PORT}`));
