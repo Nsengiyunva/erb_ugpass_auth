@@ -95,7 +95,8 @@ const formatDateLong = (date) => {
 
 const calcExpiryDate  = (type, date)  =>  {
     if( date  ){
-        let year = date.getFullYear();
+        // let year = date.getFullYear();
+        let year = new Date().getFullYear();
 
         switch( type?.toLowerCase()  ){
             case "registered":
@@ -498,12 +499,6 @@ router.post( `/bulk-status`, async ( req, res )  =>  {
                     error
                 })
             });
-    // } catch (error) {
-    //     res.status( 500 ).json( {
-    //         success: "failed",
-    //         error
-    //     }  )
-    // }
 } )
 
 //update all rows
@@ -615,7 +610,6 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         : [];
   
       const formattedDate = new Date(engineer.reg_date);
-      console.log( "yinginiya",engineer )
       const expiryData = calcExpiryDate(engineer.type ?? 'registered', formattedDate);
   
       const response = {
