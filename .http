@@ -5,6 +5,10 @@
 
 @file_api = https://api.erb.go.ug/display/2000.pdf 
 
+###
+GET https://api.erb.go.ug/pdf/list
+Content-Type: application/json
+
 ### Health Checkpoint API
 GET {{url}}
 Content-Type: application/json
@@ -116,7 +120,7 @@ Content-Type: application/json
 ### verify
 GET {{url}}/verify_license/2129
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzY5MzQ5MDMsImV4cCI6MTc3NjkzODUwM30.qKer-MzDIO-6gEdCAHhusMPe_6yKy3aMDP894bODoKM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzcwMzEzNTQsImV4cCI6MTc3NzAzNDk1NH0.73LbO0vkiqVnv-3BlH-iH3-LRPPAut1FAiDQiT14BRc
 ### register
 POST {{auth_api}}/register
 Content-Type: application/json

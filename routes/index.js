@@ -101,7 +101,7 @@ const calcExpiryDate  = (type, date)  =>  {
             case "registered":
             case "temporary":
                 let last_day = new Date(year, 11, 31);
-                return { expiry:formatDateLong(last_day), actual: last_day };
+                return { expiry: formatDateLong(last_day), actual: last_day };
             case "techinician":
             case "technician":
             case "technologist":
@@ -637,8 +637,8 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
   
         expiry_date:
           paidRecords.length > 0
-            ? expiryData?.expiry   // or calculate from payment
-            : expiryData?.expiry,
+            ? expiryData?.expiry 
+            : "",
   
         status: paidRecords.length > 0 ? 'Active' : 'Inactive',
         type: 'registered',
