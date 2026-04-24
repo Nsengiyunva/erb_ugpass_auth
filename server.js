@@ -484,42 +484,35 @@ app.use(function (_, res, next) {
 
   app.get("/display/:filename", (req, res) => {
     const { filename } = req.params;
-
-    // ── Authorization check ───────────────────────────────────────────────────
-    // const authHeader = req.headers["Authorization"];
-
-    // if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    //   return res.status(401).json({ error: "Unauthorized: No token provided" });
-    // }
-
-    // const token = authHeader.split(" ")[1];
-
-    // if (!token) {
-    //   return res.status(403).json({ error: "Forbidden: Invalid token" });
-    // }
-    // ─────────────────────────────────────────────────────────────────────────
-
-    // Sanitize filename to prevent directory traversal attacks
     const safeName = path.basename(filename);
+
+    // Check extension first
+    if (!safeName.endsWith(".pdf")) {
+        return res.status(400).json({ error: "Only PDF files are supported" });
+    }
+
     const filePath = path.join("/var/ugpass/destination", safeName);
-  
+
+    console.log("📂 Serving file:", filePath); // ← add this
+
     // Check file exists
     if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ error: "File not found" });
+        return res.status(404).json({ error: "File not found" });
     }
-  
-    // Check it's actually a PDF
-    if (!safeName.endsWith(".pdf")) {
-      return res.status(400).json({ error: "Only PDF files are supported" });
-    }
-  
+
+    // Get file size for Content-Length header
+    const stat = fs.statSync(filePath);
+
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", `inline; filename="${safeName}"`);
-    
+    res.setHeader("Content-Length", stat.size); // ← critical, tells client how much to expect
+
     const stream = fs.createReadStream(filePath);
     stream.on("error", (err) => {
-      console.error("❌ Stream error:", err);
-      res.status(500).json({ error: "Failed to read file" });
+        console.error("❌ Stream error:", err);
+        if (!res.headersSent) {
+            res.status(500).json({ error: "Failed to read file" });
+        }
     });
     stream.pipe(res);
 });
