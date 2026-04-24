@@ -636,15 +636,13 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         updated_at: engineer.updated_at,
   
         expiry_date:
-          paidRecords.length > 0
+        paidRecords?.length > 0
             ? expiryData?.expiry 
             : "",
   
         status: paidRecords.length > 0 ? 'Active' : 'Inactive',
         type: 'registered',
         nin: 'NA',
-        paid_records: paidRecords?.length,
-  
         licence_info: paidRecords,
       };
   
