@@ -643,6 +643,7 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         status: paidRecords.length > 0 ? 'Active' : 'Inactive',
         type: 'registered',
         nin: 'NA',
+        paid_records: paidRecords,
   
         licence_info: paidRecords,
       };
