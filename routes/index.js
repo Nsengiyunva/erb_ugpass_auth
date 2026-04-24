@@ -615,7 +615,8 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         : [];
   
       const formattedDate = new Date(engineer.reg_date);
-      const expiryData = calcExpiryDate(engineer.type, formattedDate);
+      console.log( "yinginiya",engineer )
+      const expiryData = calcExpiryDate(engineer.type ?? 'registered', formattedDate);
   
       const response = {
         registration_date: engineer.reg_date,
