@@ -15,9 +15,6 @@ import ERBPaid from '../models/ERBPaid.js'
 ERBEngineer.hasMany(ERBPaid, { foreignKey: 'reg_no', sourceKey: 'reg_no', as: 'paid' });
 ERBPaid.belongsTo(ERBEngineer, { foreignKey: 'reg_no', targetKey: 'reg_no', as: 'engineer' });
 
-
-// import  { bulkSignDocuments } from '../controllers/bulk_sign_controller.js' 
-
 dotenv.config();
 
 const uploadDir = path.join(process.cwd(), "uploads");
@@ -578,6 +575,78 @@ router.post( `/logout_daes`, async( req, res ) => {
 }  )
 
 
+// router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
+//     try {
+//       const { license_no } = req.params;
+  
+//       const engineer = await ERBEngineer.findOne({
+//         where: { reg_no: license_no },
+//         include: [
+//           {
+//             model: ERBPaid,
+//             as: 'paid',
+//             required: false, // LEFT JOIN
+//           },
+//         ],
+//       });
+  
+//       if (!engineer) {
+//         return res.status(404).json({
+//           message: `Engineer with registration number ${license_no} was not found`,
+//         });
+//       }
+
+//       const emails = engineer.emails ? engineer.emails.split(';') : [];
+//       const phones = engineer.phones ? engineer.phones.split(',') : [];
+  
+//       // Normalize paid records
+//       const paidRecords = Array.isArray(engineer.paid)
+//         ? engineer.paid
+//         : engineer.paid
+//         ? [engineer.paid]
+//         : [];
+  
+//       const formattedDate = new Date(engineer.reg_date);
+//       const expiryData = calcExpiryDate(engineer.type ?? 'registered', formattedDate);
+  
+//       const response = {
+//         registration_date: engineer.reg_date,
+//         country: engineer.country,
+//         reg_no: engineer.reg_no,
+//         name: engineer.name,
+//         gender: engineer.gender,
+//         field: engineer.field,
+//         address: engineer.address,
+  
+//         primary_email: emails[0] || '',
+//         secondary_email: emails[1] || '',
+  
+//         primary_contact: phones[0] || '',
+//         secondary_contact: phones[1] || '',
+  
+//         created_at: engineer.created_at,
+//         updated_at: engineer.updated_at,
+  
+//         expiry_date:
+//         paidRecords?.length > 0
+//             ? expiryData?.expiry 
+//             : "",
+  
+//         status: paidRecords.length > 0 ? 'Active' : 'Inactive',
+//         type: 'registered',
+//         nin: 'NA',
+//         licence_info: paidRecords,
+//       };
+  
+//       return res.status(200).json( response );
+//     } catch (error) {
+//       console.error('verify_license error:', error);
+//       return res.status(500).json({
+//         message: 'Internal server error',
+//       });
+//     }
+//   } );
+
 router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
     try {
       const { license_no } = req.params;
@@ -588,7 +657,8 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
           {
             model: ERBPaid,
             as: 'paid',
-            required: false, // LEFT JOIN
+            required: false,
+            order: [['created_at', 'DESC']],
           },
         ],
       });
@@ -598,50 +668,63 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
           message: `Engineer with registration number ${license_no} was not found`,
         });
       }
-
+  
       const emails = engineer.emails ? engineer.emails.split(';') : [];
       const phones = engineer.phones ? engineer.phones.split(',') : [];
   
-      // Normalize paid records
+      // Normalize paid records (already ordered DESC)
       const paidRecords = Array.isArray(engineer.paid)
         ? engineer.paid
         : engineer.paid
         ? [engineer.paid]
         : [];
   
-      const formattedDate = new Date(engineer.reg_date);
-      const expiryData = calcExpiryDate(engineer.type ?? 'registered', formattedDate);
+      const engineerType = engineer.type ?? 'registered';
+  
+      // Use the most recent paid record's created_at as expiry base
+      const latestPaidRecord = paidRecords[0] ?? null;
+      const expiryBaseDate = latestPaidRecord
+        ? new Date(latestPaidRecord.created_at)
+        : new Date(engineer.reg_date);
+  
+      const expiryData = calcExpiryDate(engineerType, expiryBaseDate);
   
       const response = {
         registration_date: engineer.reg_date,
-        country: engineer.country,
-        reg_no: engineer.reg_no,
-        name: engineer.name,
-        gender: engineer.gender,
-        field: engineer.field,
-        address: engineer.address,
+        country:           engineer.country,
+        reg_no:            engineer.reg_no,
+        name:              engineer.name,
+        gender:            engineer.gender,
+        field:             engineer.field,
+        address:           engineer.address,
   
-        primary_email: emails[0] || '',
-        secondary_email: emails[1] || '',
+        primary_email:     emails[0]?.trim() || '',
+        secondary_email:   emails[1]?.trim() || '',
   
-        primary_contact: phones[0] || '',
-        secondary_contact: phones[1] || '',
+        primary_contact:   phones[0]?.trim() || '',
+        secondary_contact: phones[1]?.trim() || '',
   
-        created_at: engineer.created_at,
-        updated_at: engineer.updated_at,
+        created_at:        engineer.created_at,
+        updated_at:        engineer.updated_at,
   
-        expiry_date:
-        paidRecords?.length > 0
-            ? expiryData?.expiry 
-            : "",
+        expiry_date:       paidRecords.length > 0 ? expiryData?.expiry ?? '' : '',
+        status:            paidRecords.length > 0 ? getStatus(expiryData?.actual) : 'Inactive',
+        type:              engineerType,
+        nin:               'NA',
   
-        status: paidRecords.length > 0 ? 'Active' : 'Inactive',
-        type: 'registered',
-        nin: 'NA',
-        licence_info: paidRecords,
+        licence_info: paidRecords.map(r => ({
+          id:             r.id,
+          license_no:     r.license_no,
+          specialization: r.specialization,
+          license_status: r.license_status,
+          email_address:  r.email_address,
+          created_at:     r.created_at,
+          updated_at:     r.updated_at,
+          expiry:         calcExpiryDate(engineerType, new Date(r.created_at))?.expiry ?? '',
+        })),
       };
   
-      return res.status(200).json( response );
+      return res.status(200).json(response);
     } catch (error) {
       console.error('verify_license error:', error);
       return res.status(500).json({

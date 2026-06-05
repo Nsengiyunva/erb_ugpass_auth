@@ -117,10 +117,10 @@ Content-Type: application/json
     "password": "admin256"
 }
 
-### verify
-GET {{url}}/verify_license/2000
+### verify  - 2189
+GET {{url}}/verify_license/2189
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzcwMzk5NjcsImV4cCI6MTc3NzA0MzU2N30.aXIl-8kW655NvWva87rs9c9KYGLd0G9uU_OYgDgeOJo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3ODA2NjE3OTIsImV4cCI6MTc4MDY2NTM5Mn0.Cvtg81WT9_Gh_BO2haQBeQJJ-SzipjIX7hBimMRQaI0
 ### register
 POST {{auth_api}}/register
 Content-Type: application/json
