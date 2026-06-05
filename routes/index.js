@@ -651,7 +651,8 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
     try {
       const { license_no } = req.params;
   
-      const engineer = await ERBEngineer.findOne({
+      // 1. Try erb_engineer first (with paid records joined)
+      let engineer = await ERBEngineer.findOne({
         where: { reg_no: license_no },
         include: [
           {
@@ -663,33 +664,71 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         ],
       });
   
+      // 2. If not in erb_engineer, check erb_paid_list directly
       if (!engineer) {
-        return res.status(404).json({
-          message: `Engineer with registration number ${license_no} was not found`,
+        const paidOnly = await ERBPaid.findOne({
+          where: { reg_no: license_no },
+        });
+  
+        if (!paidOnly) {
+          return res.status(404).json({
+            message: `Engineer with registration number ${license_no} was not found`,
+          });
+        }
+  
+        // Build response from paid record alone
+        const engineerType = 'registered';
+        const expiryData = calcExpiryDate(engineerType, new Date(paidOnly.created_at));
+  
+        return res.status(200).json({
+          registration_date: null,
+          country:           null,
+          reg_no:            paidOnly.reg_no,
+          name:              paidOnly.name,
+          gender:            null,
+          field:             paidOnly.specialization ?? null,
+          address:           null,
+          primary_email:     paidOnly.email_address?.split(';')[0]?.trim() || '',
+          secondary_email:   paidOnly.email_address?.split(';')[1]?.trim() || '',
+          primary_contact:   '',
+          secondary_contact: '',
+          created_at:        paidOnly.created_at,
+          updated_at:        paidOnly.updated_at,
+          expiry_date:       expiryData?.expiry ?? '',
+          status:            getStatus(expiryData?.actual),
+          type:              engineerType,
+          nin:               'NA',
+          licence_info: [{
+            id:             paidOnly.id,
+            license_no:     paidOnly.license_no,
+            specialization: paidOnly.specialization,
+            license_status: paidOnly.license_status,
+            email_address:  paidOnly.email_address,
+            created_at:     paidOnly.created_at,
+            updated_at:     paidOnly.updated_at,
+            expiry:         expiryData?.expiry ?? '',
+          }],
         });
       }
   
+      // 3. Normal path — engineer found in erb_engineer
       const emails = engineer.emails ? engineer.emails.split(';') : [];
       const phones = engineer.phones ? engineer.phones.split(',') : [];
   
-      // Normalize paid records (already ordered DESC)
       const paidRecords = Array.isArray(engineer.paid)
         ? engineer.paid
         : engineer.paid
         ? [engineer.paid]
         : [];
   
-      const engineerType = engineer.type ?? 'registered';
-  
-      // Use the most recent paid record's created_at as expiry base
-      const latestPaidRecord = paidRecords[0] ?? null;
-      const expiryBaseDate = latestPaidRecord
-        ? new Date(latestPaidRecord.created_at)
+      const engineerType   = engineer.type ?? 'registered';
+      const latestPaid     = paidRecords[0] ?? null;
+      const expiryBaseDate = latestPaid
+        ? new Date(latestPaid.created_at)
         : new Date(engineer.reg_date);
+      const expiryData     = calcExpiryDate(engineerType, expiryBaseDate);
   
-      const expiryData = calcExpiryDate(engineerType, expiryBaseDate);
-  
-      const response = {
+      return res.status(200).json({
         registration_date: engineer.reg_date,
         country:           engineer.country,
         reg_no:            engineer.reg_no,
@@ -697,21 +736,16 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         gender:            engineer.gender,
         field:             engineer.field,
         address:           engineer.address,
-  
         primary_email:     emails[0]?.trim() || '',
         secondary_email:   emails[1]?.trim() || '',
-  
         primary_contact:   phones[0]?.trim() || '',
         secondary_contact: phones[1]?.trim() || '',
-  
         created_at:        engineer.created_at,
         updated_at:        engineer.updated_at,
-  
         expiry_date:       paidRecords.length > 0 ? expiryData?.expiry ?? '' : '',
         status:            paidRecords.length > 0 ? getStatus(expiryData?.actual) : 'Inactive',
         type:              engineerType,
         nin:               'NA',
-  
         licence_info: paidRecords.map(r => ({
           id:             r.id,
           license_no:     r.license_no,
@@ -722,14 +756,11 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
           updated_at:     r.updated_at,
           expiry:         calcExpiryDate(engineerType, new Date(r.created_at))?.expiry ?? '',
         })),
-      };
+      });
   
-      return res.status(200).json(response);
     } catch (error) {
       console.error('verify_license error:', error);
-      return res.status(500).json({
-        message: 'Internal server error',
-      });
+      return res.status(500).json({ message: 'Internal server error' });
     }
   });
   

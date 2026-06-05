@@ -120,7 +120,7 @@ Content-Type: application/json
 ### verify  - 2189
 GET {{url}}/verify_license/2189
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3ODA2NjE3OTIsImV4cCI6MTc4MDY2NTM5Mn0.Cvtg81WT9_Gh_BO2haQBeQJJ-SzipjIX7hBimMRQaI0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE3ODA2NzM0NDMsImV4cCI6MTc4MDY3NzA0M30.qfPPlOOQlQ1FVi1QZzQy6MJAqhZUdB8zRG2JX2L9dmE
 ### register
 POST {{auth_api}}/register
 Content-Type: application/json
