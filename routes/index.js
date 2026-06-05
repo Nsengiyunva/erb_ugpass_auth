@@ -676,18 +676,18 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
           });
         }
   
-        // Build response from paid record alone
+        //if engineer is in paid records only
         const engineerType = 'registered';
         const expiryData = calcExpiryDate(engineerType, new Date(paidOnly.created_at));
   
         return res.status(200).json({
-          registration_date: null,
-          country:           null,
+          registration_date: "",
+          country:           "",
           reg_no:            paidOnly.reg_no,
           name:              paidOnly.name,
-          gender:            null,
-          field:             paidOnly.specialization ?? null,
-          address:           null,
+          gender:            "",
+          field:             paidOnly.specialization ?? "",
+          address:           "",
           primary_email:     paidOnly.email_address?.split(';')[0]?.trim() || '',
           secondary_email:   paidOnly.email_address?.split(';')[1]?.trim() || '',
           primary_contact:   '',
@@ -711,7 +711,7 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
         });
       }
   
-      // 3. Normal path — engineer found in erb_engineer
+      //if eng has a user account
       const emails = engineer.emails ? engineer.emails.split(';') : [];
       const phones = engineer.phones ? engineer.phones.split(',') : [];
   
@@ -759,7 +759,6 @@ router.get('/verify_license/:license_no', authMiddleware, async (req, res) => {
       });
   
     } catch (error) {
-      console.error('verify_license error:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
   });
